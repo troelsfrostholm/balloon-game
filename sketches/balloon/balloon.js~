@@ -1,0 +1,67 @@
+var mousepos = null;
+
+background = new Sprite();
+background.image = "skydive.jpg";
+background.scale = 2;
+background.place(440, 300);
+
+balloon = new Sprite();
+balloon.image = "balloon.png";
+balloon.scale = 0.5;
+
+sprites.push(background);
+sprites.push(balloon);
+
+var windpower = -100;
+var resistance = 0.9;
+
+var downpos = null;
+
+function begin()
+{
+    initdraw();
+    canvas.onmousedown = function(evt) {
+	downpos = new Point(evt.offsetX, evt.offsetY)
+	clickfunc(new Point(downpos));
+    }
+
+    canvas.onmousemove = function(evt) {
+	if(downpos) downpos = new Point(evt.offsetX, evt.offsetY);
+    }
+
+    canvas.onmouseup = function(evt) {
+	releasefunc(new Point(evt.offsetX, evt.offsetY));
+	downpos = false;
+    }
+
+    behaviours.push(function() { if(downpos) downfunc(downpos); });
+};
+
+function clickfunc(point) {}
+function releasefunc(point) {}
+function downfunc(point) {}
+
+function bdist(point)
+{
+    return point.sub(balloon.pos[0]);
+}
+
+function bouncy(obj) 
+{
+    p = obj.pos[0];
+    dp = obj.pos[1];
+    if(p.x<obj.image.width/2 && dp.x<0) dp.x=-dp.x;
+    if(p.y<0 && dp.x<0) dp.y=-dp.y;
+    if(p.x>canvas.width && dp.x>0) dp.x=-dp.x;
+    if(p.y>canvas.width && dp.y>0) dp.y=-dp.y;
+}
+
+function pushpoint(point) { 
+    d = bdist(point); 
+    d2 = d.dot(d); 
+    return d.mult(windpower/d2); 
+}
+
+function brake(obj) {
+    obj.pos[1] = obj.pos[1].mult(resistance);
+}

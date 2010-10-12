@@ -1,0 +1,51 @@
+function Point(_x, _y) {
+    this.x = _x;
+    this.y = _y;
+}
+
+Point.prototype.add = function(point) {
+    return new Point(this.x + point.x, this.y + point.y);
+}
+
+Point.prototype.sub = function(point) {
+    return new Point(this.x - point.x, this.y - point.y);
+}
+
+Point.prototype.mult = function(scalar) {
+    return new Point(this.x*scalar, this.y*scalar);
+};
+
+Point.prototype.div = function(scalar) {
+    return new Point(scalar/this.x, scalar/this.y);
+}
+
+Point.prototype.dot = function(point) {
+    return this.x*point.x+this.y*point.y;
+}
+
+Point.prototype.hat = function() {
+    return new Point(-this.y, this.x);
+}
+
+//Takes a variable with derivatives as an array, like this:
+//[x, dx, ddx, dddx ... ]
+function euler(values) {
+    result = Array();
+    n = values.length-1
+    result[n] = values[n]
+    for(i = n; i>0; i--)  {
+	result[i-1] = add(values[i-1], values[i]);
+    }
+    return result;
+}
+
+function add(a, b) {
+    map = Array();
+    map[["number", "number"]] = function(a, b) { return a+b };
+    map[["Point", "Point"]] = function(a, b) { 
+	return new Point(a.x+b.x, a.y+b.y);
+    }
+    addition_function = map[[classof(a), classof(b)]];
+    if(addition_function) return addition_function(a, b);
+    return undefined;
+}

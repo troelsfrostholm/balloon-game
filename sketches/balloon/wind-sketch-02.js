@@ -1,10 +1,10 @@
 background = new Sprite();
-background.setImg("skydive.jpg");
+background.setImg("gradient_example_1.jpg");
 background.scale = 2;
 background.place(440, 300);
 
 balloon = new Sprite();
-balloon.setImg("balloon.png");
+balloon.setImg("balloon.gif");
 balloon.scale = 0.5;
 balloon.place(440, 200);
 

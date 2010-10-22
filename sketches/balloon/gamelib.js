@@ -114,7 +114,20 @@ Sprite.prototype.reset = function()
     o = new Point(0, 0);
     this.pos = new Array(o, o, o);
     this.angle = new Array(0, 0, 0);
-}
+};
+
+Sprite.prototype.boundingBox = function()
+{
+    rotate_around_origin = function(p, a) //point, angle 
+    {
+	cos = Math.cos;
+	sin = Math.sin;
+	return new Point( p.x*cos(a) - p.y*sin(a),
+			  p.x*sin(a) - p.y*cos(a) );
+    }
+    
+};
+
 
 function draw()
 {
@@ -126,15 +139,18 @@ function draw()
 
 function clear()
 {
-    ctx.fillStyle = "rgb(255, 255, 255)";
+    //    ctx.fillStyle = "rgb(255, 255, 255)";
     ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    //ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
 function animate()
 {
-    draw();
+    //    dirty_rects = calculateDirtyRects();
     step();
+    //    clearRects(dirty_rects);
+    draw();
     setTimeout(animate, 1.0/framerate);
 }
 

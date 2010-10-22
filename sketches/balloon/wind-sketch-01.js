@@ -21,6 +21,21 @@ balloon.behave(resisting);
 balloon.behave(buoyant);
 mouseisdown = windblow;
 
+function setWindpower(value)
+{
+    	windpower = value*1;
+}
+
+function setResistance(value)
+{
+    resistance = value*1;
+}
+
+function setBuoyancy(value)
+{
+    buoyancy = value*1;
+}
+
 function bdist(point)
 {
     return point.sub(balloon.pos[0]);

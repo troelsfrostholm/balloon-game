@@ -10,7 +10,7 @@
       function load() 
       {
       document.getElementById("windpower").value = windpower;
-      document.getElementById("resistance").value = resistance;
+      document.getElementById("resistance").value = (1-resistance)*100;
       document.getElementById("buoyancy").value = buoyancy;
       begin();
       }

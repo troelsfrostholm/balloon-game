@@ -23,16 +23,19 @@ mouseisdown = windblow;
 
 function setWindpower(value)
 {
-    	windpower = value*1;
+    if(isNaN(value)) return;
+    windpower = value*1;
 }
 
 function setResistance(value)
 {
-    resistance = value*1;
+    if(isNaN(value)) return;
+    resistance = 1 - value*1/100;
 }
 
 function setBuoyancy(value)
 {
+    if(isNaN(value)) return;
     buoyancy = value*1;
 }
 

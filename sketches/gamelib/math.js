@@ -25,6 +25,15 @@ Point.prototype.dot = function(point) {
 
 Point.prototype.hat = function() {
     return new Point(-this.y, this.x);
+};
+
+Point.prototype.squared = function() {
+    return this.dot(this);
+}
+
+Point.prototype.squaredDistance = function(point) {
+    distVec = this.sub(point);
+    return distVec.squared();
 }
 
 //Takes a variable with derivatives as an array, like this:

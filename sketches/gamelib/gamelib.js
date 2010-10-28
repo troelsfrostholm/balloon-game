@@ -58,7 +58,13 @@ function Sprite()
 	    this.angle = euler(this.angle)
 	    this.pos = euler(this.pos)
 	    for(i in this.behaviours) {
-		this.behaviours[i](this);
+		//A sprite's behaviours may be removed during the 
+		//game. If this happens while in this loop, 
+		//this.behaviours[i] may point to an element that has been
+		//removed. So we only execute it, if it is a function
+		//This is in stead of proper thread safety and locking
+		if(typeof(this.behaviours[i])=="function")
+		    this.behaviours[i](this);
 	    }
 	}
 
@@ -199,15 +205,25 @@ function animate()
 
 function step()
 {
+    //Because resources are not locked (threading) we have to make sure
+    //the contents of our game objects are what we think they are
     for(var i in sprites) {
-	sprites[i].step();
+	if(classof(sprites[i]) == "Sprite")
+	    sprites[i].step();
     }
     for(i in behaviours) {
-	behaviours[i]();
+	if(typeof(behaviours[i]) == "function")
+	   behaviours[i]();
     }
 }
 
 function sideScrollTransform()
 {
     ctx.setTransform(1, 0, 0, 1, -scrollPoint.x, -scrollPoint.y);
+}
+
+function removeSprite(sprite)
+{
+    itAintMe = function(elm, index, arr) { return (elm != sprite) };
+	sprites = sprites.filter(itAintMe);
 }

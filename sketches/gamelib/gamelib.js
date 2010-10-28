@@ -3,6 +3,7 @@ var ctx;
 var framerate = 60;
 var sprites = Array();
 var behaviours = Array();
+var debugMode = false;
 
 function initdraw() {
     canvas = document.getElementById("canvas");
@@ -12,10 +13,33 @@ function initdraw() {
     }
 }
 
+function BoundingBox(x, y, width, height)
+{
+    this.x = x;
+    this.y = y;
+    this.width=width;
+    this.height=height;
+
+    this.collidesWith = function(bbox) {
+	dx = bbox.x - this.x;
+	dy = bbox.y - this.y;
+	overlaps_on_x_axis = (dx > 0 && dx <= this.width) ||
+	                     (dx <=0 && -dx <= bbox.width)
+	overlaps_on_y_axis = (dy > 0 && dy <= this.height) ||
+	                     (dy <=0 && -dy <= bbox.height)
+	return overlaps_on_x_axis && overlaps_on_y_axis;
+    }
+
+    this.debugDraw = function(canvas) {
+	ctx.setTransform(1, 0, 0, 1, 0, 0);
+	canvas.strokeRect(this.x, this.y, this.width, this.height);
+    }
+}
+
 function Sprite()
 {
     this.image = new Image();
-    this.image.src = "missing.gif"
+    this.image.src = "assets/missing.gif"
     this.angle = [0, 0, 0];
     o = new Point(0, 0);
     this.pos = [o, o, o];
@@ -30,6 +54,17 @@ function Sprite()
 		this.behaviours[i](this);
 	    }
 	}
+
+    this.getBoundingBox = function()
+    {
+	width = this.image.width*this.scale;
+	height = this.image.height*this.scale;
+	pos = this.pos[0]
+	return new BoundingBox( pos.x - width/2, 
+				pos.y - height/2, 
+				width, 
+				height );
+    }
 }
 
 Sprite.prototype.draw = function()
@@ -134,6 +169,11 @@ function draw()
     clear();
     for(var i in sprites) {
 	sprites[i].draw();
+    }
+    if(debugMode) {
+	for(var i in sprites) {
+	    sprites[i].getBoundingBox().debugDraw(ctx);
+	}
     }
 }
 

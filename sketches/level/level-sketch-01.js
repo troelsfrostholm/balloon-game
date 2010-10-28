@@ -22,6 +22,8 @@ var windpower = -100;
 var resistance = 0.9;
 var downpos = null;
 var buoyancy = -0.3;
+var sideScrollSpeed = 0.05;
+var levelBounds;
 
 balloon.behave(bouncy);
 balloon.behave(resisting);
@@ -32,6 +34,13 @@ pig.behave(bouncy);
 mouseisdown = windblow;
 
 behaviours.push(collisionTest);
+behaviours.push(sideScrollAfterBalloon);
+
+function documentLoaded()
+{
+    levelBounds = background.getBoundingBox();
+    begin();
+}
 
 function setWindpower(value)
 {
@@ -75,4 +84,9 @@ function collisionTest() {
 
 function followBalloon(obj) {
     obj.pos[0] = balloon.pos[0].add(new Point(0, 100));
+}
+
+function sideScrollAfterBalloon() {
+    screenCenter = new Point(scrollPoint.x + canvas.width/2, scrollPoint.y + canvas.height/2);
+    scrollPoint = scrollPoint.add(balloon.pos[0].sub(screenCenter).mult(sideScrollSpeed));
 }

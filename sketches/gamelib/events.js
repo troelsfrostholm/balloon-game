@@ -4,20 +4,32 @@ function mouseclick(point) {}
 function mouserelease(point) {}
 function mouseisdown(point) {}
 
+//Converts a point from screen to world coordinates
+function screenToWorldCoords(point)
+{
+    return point.add(scrollPoint);
+}
+
+//Fetches world coordinates from a mouse event
+function getWorldCoords(evt)
+{
+    return screenToWorldCoords(new Point(evt.offsetX, evt.offsetY));
+}
+
 function begin()
 {
     initdraw();
     canvas.onmousedown = function(evt) {
-	downpos = new Point(evt.offsetX, evt.offsetY);
-	mouseclick(new Point(downpos));
+	downpos = getWorldCoords(evt);
+	mouseclick(downpos);
     }
 
     canvas.onmousemove = function(evt) {
-	if(downpos) downpos = new Point(evt.offsetX, evt.offsetY);
+	if(downpos) downpos = getWorldCoords(evt);
     }
 
     canvas.onmouseup = function(evt) {
-	mouserelease(new Point(evt.offsetX, evt.offsetY));
+	mouserelease(getWorldCoords(evt));
 	downpos = false;
     }
 

@@ -4,6 +4,7 @@ var framerate = 60;
 var sprites = Array();
 var behaviours = Array();
 var debugMode = false;
+var scrollPoint = new Point(-100, 0);
 
 function initdraw() {
     canvas = document.getElementById("canvas");
@@ -31,7 +32,7 @@ function BoundingBox(x, y, width, height)
     }
 
     this.debugDraw = function(canvas) {
-	ctx.setTransform(1, 0, 0, 1, 0, 0);
+	sideScrollTransform();
 	canvas.strokeRect(this.x, this.y, this.width, this.height);
     }
 }
@@ -44,6 +45,7 @@ function Sprite()
     o = new Point(0, 0);
     this.pos = [o, o, o];
     this.scale = 1;
+    this.depth = 0;
     this.behaviours = Array();
     
     this.step = function()
@@ -69,7 +71,7 @@ function Sprite()
 
 Sprite.prototype.draw = function()
 {
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    sideScrollTransform();
     ctx.translate(this.pos[0].x, this.pos[0].y);
     ctx.scale(this.scale, this.scale);
     ctx.rotate(this.angle[0]);
@@ -202,4 +204,9 @@ function step()
     for(i in behaviours) {
 	behaviours[i]();
     }
+}
+
+function sideScrollTransform()
+{
+    ctx.setTransform(1, 0, 0, 1, -scrollPoint.x, -scrollPoint.y);
 }

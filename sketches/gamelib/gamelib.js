@@ -6,6 +6,11 @@ var behaviours = Array();
 var debugMode = false;
 var scrollPoint = new Point(-100, 0);
 
+function runGame() {
+    initdraw();
+    bindMouseEvents();
+};
+
 function initdraw() {
     canvas = document.getElementById("canvas");
     if (canvas.getContext) {
@@ -181,17 +186,13 @@ function draw()
 
 function clear()
 {
-    //    ctx.fillStyle = "rgb(255, 255, 255)";
     ctx.setTransform(1, 0, 0, 1, 0, 0);
-    //ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
 function animate()
 {
-    //    dirty_rects = calculateDirtyRects();
     step();
-    //    clearRects(dirty_rects);
     draw();
     setTimeout(animate, 1.0/framerate);
 }

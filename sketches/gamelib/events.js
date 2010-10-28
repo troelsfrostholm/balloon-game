@@ -14,11 +14,10 @@ function screenToWorldCoords(point)
 function getWorldCoords(evt)
 {
     return screenToWorldCoords(new Point(evt.offsetX, evt.offsetY));
-}
+};
 
-function begin()
+function bindMouseEvents()
 {
-    initdraw();
     canvas.onmousedown = function(evt) {
 	downpos = getWorldCoords(evt);
 	mouseclick(downpos);

@@ -1,23 +1,3 @@
-background = new Sprite();
-background.setImg("assets/Level-background-4.png");
-background.scale = 2;
-background.place(840, 300);
-
-balloon = new Sprite();
-balloon.setImg("assets/balloon.gif");
-balloon.scale = 0.5;
-balloon.place(100, 200);
-
-pig = new Sprite();
-pig.setImg("assets/pig.gif");
-pig.scale = 0.5;
-pig.place(500, 100);
-pig.move(-2, 0.5);
-
-sprites.push(background);
-sprites.push(balloon);
-sprites.push(pig);
-
 var windpower = -100;
 var resistance = 0.9;
 var downpos = null;
@@ -25,21 +5,51 @@ var buoyancy = -0.3;
 var sideScrollSpeed = 0.05;
 var levelBounds;
 
-balloon.behave(bouncy);
-balloon.behave(resisting);
-balloon.behave(buoyant);
+var background;
+var balloon;
+var pig;
 
-pig.behave(bouncy);
-
-mouseisdown = windblow;
-
-behaviours.push(collisionTest);
-behaviours.push(sideScrollAfterBalloon);
-
-function documentLoaded()
+function begin()
 {
+    sprites = createSprites();
+    setBehaviours();
     levelBounds = background.getBoundingBox();
-    begin();
+    runGame();
+}
+
+function createSprites() 
+{
+    background = new Sprite();
+    background.setImg("assets/Level-background-4.png");
+    background.scale = 2;
+    background.place(840, 300);
+    
+    balloon = new Sprite();
+    balloon.setImg("assets/balloon.gif");
+    balloon.scale = 0.5;
+    balloon.place(100, 200);
+
+    pig = new Sprite();
+    pig.setImg("assets/pig.gif");
+    pig.scale = 0.5;
+    pig.place(500, 100);
+    pig.move(-2, 0.5);
+
+    return [background, balloon, pig];
+}
+
+function setBehaviours()
+{
+    //sprite behaviours
+    balloon.behave(bouncy);
+    balloon.behave(resisting);
+    balloon.behave(buoyant);
+    pig.behave(bouncy);
+    
+    //global behaviours
+    mouseisdown = blowAtBalloon;
+    behaviours.push(collisionTest);
+    behaviours.push(sideScrollAfterBalloon);
 }
 
 function setWindpower(value)
@@ -60,19 +70,19 @@ function setBuoyancy(value)
     buoyancy = value*1;
 }
 
-function bdist(point)
+function distToBalloon(point)
 {
     return point.sub(balloon.pos[0]);
 }
 
-function pushpoint(point) { 
-    d = bdist(point); 
+function pushForce(point) { 
+    d = distToBalloon(point); 
     d2 = d.dot(d); 
     return d.mult(windpower/d2); 
 }
 
-function windblow(point) {
-    balloon.pos[1] = balloon.pos[1].add(pushpoint(point));
+function blowAtBalloon(point) {
+    balloon.pos[1] = balloon.pos[1].add(pushForce(point));
 }
 
 function collisionTest() {

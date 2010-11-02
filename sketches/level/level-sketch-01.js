@@ -49,7 +49,8 @@ function initializeLevel()
     spawnZones = createSpawnZones();
     hud = new Sprite();
     hud.image.src = "assets/hud.png";
-    hud.place(hud.image.width/2, hud.image.height/2);
+    canvas = document.getElementById("canvas");
+    hud.place(canvas.width/2, canvas.height/2);
     hudElements.push(hud);
     scoreElement = new TextElement("0", new Point(810, 418));
     hudElements.push(scoreElement);
@@ -60,7 +61,7 @@ function createSprites()
 {
     balloon = new Sprite();
     balloon.setImg("assets/balloon.gif");
-    balloon.scale = 0.5;
+    balloon.scale = 0.3;
     balloon.place(500, 500);
 
     pig = makeFlatFlyer(new Point(500, 100), "pig.gif");

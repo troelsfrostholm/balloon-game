@@ -35,7 +35,7 @@ function loadBackground()
 {
     console.log("Loading background");
     background = new Sprite();
-    background.setImg("assets/Level-background-4.png");
+    background.setImg("assets/background-wrap2.png");
     background.scale = 1;
     background.place(0, 0);
 }
@@ -43,9 +43,9 @@ function loadBackground()
 function initializeLevel()
 {  
     console.log("Background loaded");
+    levelBounds = new BoundingBox(-1500, -2100, 3000, 4200);
     sprites = createSprites();
     setBehaviours();
-    levelBounds = new BoundingBox(-1500, -2100, 3000, 4200);
     spawnZones = createSpawnZones();
     hud = new Sprite();
     hud.image.src = "assets/hud.png";
@@ -61,14 +61,14 @@ function createSprites()
 {
     balloon = new Sprite();
     balloon.setImg("assets/balloon.gif");
-    balloon.scale = 0.3;
+    balloon.scale = 0.5;
     balloon.place(500, 500);
 
     pig = makeFlatFlyer(new Point(500, 100), "pig.gif");
     carpetman = makeFlatFlyer(new Point(500, 100), "carpetman.png");
     penguin = makeFlatFlyer(new Point(500, 100), "penguin.png");;
     superhero = makeFlatFlyer(new Point(500, 100), "superhero.png");;
-    bear = makeFlatFlyer(new Point(500, 100), "bear.png");;
+    bear = makeFlatFlyer(new Point(500, 100), "bear.png");
 
     return [background, balloon, pig];
 };

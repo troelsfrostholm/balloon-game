@@ -11,6 +11,28 @@ function bouncy(obj)
     if(p.y>canvas.height-halfheight && dp.y>0) dp.y=-dp.y;*/
 };
 
+function wrapping()
+{
+    p = scrollPoint;
+    b = levelBounds;
+    min = levelBounds.x-canvas.width;
+    max = levelBounds.x+levelBounds.width;
+    t = 0;
+    if(p.x<min)      t=b.width;
+    if(p.x>max)  t=-b.width;
+    scrollPoint = scrollPoint.add(new Point(t, 0));
+    translateEverything(new Point(t, 0));
+    background.pos[0] = background.pos[0].add(new Point(-t, 0));
+};
+
+function translateEverything(byPoint)
+{
+    for(var i in sprites)
+	{
+	    sprites[i].pos[0] = sprites[i].pos[0].add(byPoint);
+	}
+};
+
 function resisting(obj) {
     obj.pos[1] = obj.pos[1].mult(resistance);
 };

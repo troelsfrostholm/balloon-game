@@ -203,6 +203,7 @@ function draw()
 	for(i in spawnZones) {
 	    spawnZones[i].boundingBox.debugDraw(ctx);
 	}
+	levelBounds.debugDraw(ctx);
     }
 }
 

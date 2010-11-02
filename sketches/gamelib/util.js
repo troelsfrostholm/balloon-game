@@ -38,4 +38,13 @@ function classof(obj) {
         }
     }
     return undefined;
+};
+
+function onLoadImage(image, callback, pollFrequency)
+{
+    if(!pollFrequency) pollFrequency=100;
+    if(!image.width || !image.height) {
+	setTimeout(onLoadImage, pollFrequency);
+    }
+    return callback();
 }

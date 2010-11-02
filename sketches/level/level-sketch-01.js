@@ -172,6 +172,8 @@ function dieWhenFarAway(obj) {
 function sideScrollAfterBalloon() {
     screenCenter = new Point(scrollPoint.x + canvas.width/2, scrollPoint.y + canvas.height/2);
     scrollPoint = scrollPoint.add(balloon.pos[0].sub(screenCenter).mult(sideScrollSpeed));
+    if(scrollPoint.y<levelBounds.y) scrollPoint.y=levelBounds.y;
+    if(scrollPoint.y+canvas.height>levelBounds.y+levelBounds.height) scrollPoint.y=levelBounds.y+levelBounds.height-canvas.height;
 }
 
 function randomSpawnPoint()

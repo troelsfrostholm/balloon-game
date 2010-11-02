@@ -10,7 +10,6 @@ var penguin;
 var superhero;
 var bear;
 
-
 var spawnZones;
 var scoreElement;
 

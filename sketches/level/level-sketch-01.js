@@ -5,6 +5,14 @@ var levelBounds;
 var background;
 var balloon;
 var pig;
+var carpetman;
+var penguin;
+var superhero;
+var bear;
+
+
+var spawnZones;
+var scoreElement;
 
 //game parameters
 var windpower = -100;
@@ -15,45 +23,102 @@ var sideScrollSpeed = 0.05;
 var pigsPerSecond = 0.5;
 var pigDieDistance = 600*600;
 
+var score = 0;
+
 function begin()
 {
+    loadBackground();
+    background.image.onLoad = initializeLevel();
+}
+
+function loadBackground()
+{
+    console.log("Loading background");
+    background = new Sprite();
+    background.setImg("assets/Level-background-4.png");
+    background.scale = 1;
+    background.place(0, 0);
+}
+
+function initializeLevel()
+{  
+    console.log("Background loaded");
     sprites = createSprites();
     setBehaviours();
-    levelBounds = background.getBoundingBox();
+    levelBounds = new BoundingBox(-1500, -2100, 3000, 4200);
+    spawnZones = createSpawnZones();
+    hud = new Sprite();
+    hud.image.src = "assets/hud.png";
+    hud.place(hud.image.width/2, hud.image.height/2);
+    hudElements.push(hud);
+    scoreElement = new TextElement("0", new Point(810, 418));
+    hudElements.push(scoreElement);
     runGame();
 }
 
 function createSprites() 
 {
-    background = new Sprite();
-    background.setImg("assets/Level-background-4.png");
-    background.scale = 2;
-    background.place(840, 300);
-    
     balloon = new Sprite();
     balloon.setImg("assets/balloon.gif");
     balloon.scale = 0.5;
-    balloon.place(100, 200);
+    balloon.place(500, 500);
 
-    pig = makePig(new Point(500, 100));
+    pig = makeFlatFlyer(new Point(500, 100), "pig.gif");
+    carpetman = makeFlatFlyer(new Point(500, 100), "carpetman.png");
+    penguin = makeFlatFlyer(new Point(500, 100), "penguin.png");;
+    superhero = makeFlatFlyer(new Point(500, 100), "superhero.png");;
+    bear = makeFlatFlyer(new Point(500, 100), "bear.png");;
 
     return [background, balloon, pig];
 };
 
-function makePig(pos)
+function makeFlatFlyer(pos, image)
 {
-    pig = new Sprite();
-    pig.setImg("assets/pig.gif");
-    pig.scale = 0.5;
-    pig.place(pos.x, pos.y);
-    pig.move(-2, 0.5);
-    pig.weight = 20;
-    pig.behave(bouncy);
-    pig.behave(collisionTest);
-    pig.behave(dieWhenFarAway);
+    flyer = new Sprite();
+    flyer.setImg("assets/"+image);
+    flyer.scale = 0.5;
+    flyer.place(pos.x, pos.y);
+    flyer.move(-2, 0.5);
+    flyer.weight = 20;
+    flyer.behave(bouncy);
+    flyer.behave(collisionTest);
+    flyer.behave(dieWhenFarAway);
 
-    return pig;
+    return flyer;
 };
+
+function createSpawnZones()
+{
+    zones = new Array();
+    zones.push(new SpawnZone(levelBounds,
+			     [pig, carpetman, penguin, superhero,bear],
+			     1));
+    return zones;
+};
+
+function SpawnZone(bbox, objects, spawnsPerSecond)
+{
+    this.boundingBox = bbox;
+    this.spawnObjects = objects;
+    this.spawnsPerSecond = spawnsPerSecond;
+    
+    this.spawn = function(spawnPoint)
+	{
+	    pickAtRandom = function(array) {
+		index = Math.floor(Math.random()*array.length);
+		return array[index];
+	    };
+	    obj = pickAtRandom(this.spawnObjects).copy();
+	    obj.pos[0] = spawnPoint;
+	    return obj;
+	};
+
+    this.inZone = function()
+	{
+	    return this.boundingBox.collidesWith(balloon.getBoundingBox());
+	}
+};
+
 
 function setBehaviours()
 {
@@ -65,7 +130,7 @@ function setBehaviours()
     //global behaviours
     mouseisdown = blowAtBalloon;
     behaviours.push(sideScrollAfterBalloon);
-    behaviours.push(spawnPigsAtRandomTimes);
+    behaviours.push(spawnObjectsAtRandomTimes);
 }
 
 function distToBalloon(point)
@@ -85,7 +150,10 @@ function blowAtBalloon(point) {
 
 function collisionTest(obj) {
     if(balloon.getBoundingBox().collidesWith(obj.getBoundingBox())) {
-	obj.behaviours = [followBalloon];
+	//obj.behaviours = [followBalloon];
+	removeSprite(obj);
+	score+=1;
+	scoreElement.text = score + "";
 	balloon.acc(0, obj.weight);
     }
 };
@@ -119,13 +187,11 @@ function randomSpawnPoint()
     return (new Point(x, y)).add(scrollPoint);
 }
 
-function spawnPig() {
-    pig = makePig(randomSpawnPoint());
-    sprites.push(pig);
-}
-
-function spawnPigsAtRandomTimes() {
-    chanceOfPigThisSecond = pigsPerSecond * 1.0/framerate;
-    if(Math.random()<chanceOfPigThisSecond)
-	spawnPig();
+function spawnObjectsAtRandomTimes() {
+    for(i in spawnZones) {
+	if(!spawnZones[i].inZone()) continue;
+	chanceOfObjThisSecond = spawnZones[i].spawnsPerSecond * 1.0/framerate;
+	if(Math.random()<chanceOfObjThisSecond)
+	    sprites.push(spawnZones[i].spawn(randomSpawnPoint()));
+    }
 }

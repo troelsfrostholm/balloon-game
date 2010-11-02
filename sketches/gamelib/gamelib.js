@@ -2,6 +2,7 @@ var canvas;
 var ctx;
 var framerate = 60;
 var sprites = Array();
+var hudElements = Array();
 var behaviours = Array();
 var debugMode = false;
 var scrollPoint = new Point(-100, 0);
@@ -77,12 +78,20 @@ function Sprite()
 				pos.y - height/2, 
 				width, 
 				height );
-    }
+    };
+
+    this.copy = function()
+	{
+	    s = new Sprite();
+	    for(i in this) {
+		s[i] = this[i];
+	    }
+	    return s;
+	}
 }
 
 Sprite.prototype.draw = function()
 {
-    sideScrollTransform();
     ctx.translate(this.pos[0].x, this.pos[0].y);
     ctx.scale(this.scale, this.scale);
     ctx.rotate(this.angle[0]);
@@ -164,28 +173,35 @@ Sprite.prototype.reset = function()
     this.angle = new Array(0, 0, 0);
 };
 
-Sprite.prototype.boundingBox = function()
+function TextElement(text, pos)
 {
-    rotate_around_origin = function(p, a) //point, angle 
-    {
-	cos = Math.cos;
-	sin = Math.sin;
-	return new Point( p.x*cos(a) - p.y*sin(a),
-			  p.x*sin(a) - p.y*cos(a) );
-    }
+    this.text = text;
+    this.pos = pos;
     
-};
+    this.draw = function() {
+	ctx.font = "bold 20px sans-serif";
+	ctx.fillText(this.text, this.pos.x, this.pos.y);
+    }
+}
 
 
 function draw()
 {
     clear();
     for(var i in sprites) {
+	sideScrollTransform();
 	sprites[i].draw();
+    }
+    for(var i in hudElements) {
+	ctx.setTransform(1, 0, 0, 1, 0, 0);
+	hudElements[i].draw();
     }
     if(debugMode) {
 	for(var i in sprites) {
 	    sprites[i].getBoundingBox().debugDraw(ctx);
+	}
+	for(i in spawnZones) {
+	    spawnZones[i].boundingBox.debugDraw(ctx);
 	}
     }
 }

@@ -10,9 +10,11 @@ var penguin;
 var superhero;
 var bear;
 
-
 var spawnZones;
+
 var scoreElement;
+var pauseButton;
+var soundButton;
 
 //game parameters
 var windpower = -100;
@@ -25,8 +27,14 @@ var pigDieDistance = 600*600;
 
 var score = 0;
 
+var soundOn = true;
+
 function begin()
 {
+    canvas = document.getElementById("canvas");
+    context = canvas.getContext("2d");
+    context.font = "bold 20px sans-serif";
+    context.fillText("loading ...", canvas.width/2, canvas.height/2);
     loadBackground();
     if(background.image.width) {
 	console.log("Background already loaded");
@@ -50,17 +58,30 @@ function loadBackground()
 function initializeLevel()
 {  
     levelBounds = new BoundingBox(-1500, -2100, 3000, 4200);
+    hudElements = createHudElements();
     sprites = createSprites();
     setBehaviours();
     spawnZones = createSpawnZones();
+    runGame();
+}
+
+function createHudElements()
+{
     hud = new Sprite();
-    hud.image.src = "assets/hud.png";
+    hud.image.src = "assets/hud-02.png";
     canvas = document.getElementById("canvas");
     hud.place(canvas.width/2, canvas.height/2);
     hudElements.push(hud);
     scoreElement = new TextElement("0", new Point(810, 418));
-    hudElements.push(scoreElement);
-    runGame();
+    soundButton = new Sprite();
+    soundButton.image.src = "assets/sound-on-button.png";
+    soundButton.place(100, 33);
+    soundButton.onclick = toggleSound;
+    pauseButton = new Sprite();
+    pauseButton.image.src = "assets/pause-button.png";
+    pauseButton.place(50, 33);
+    pauseButton.onclick = togglePause;
+    return [hud, scoreElement, soundButton, pauseButton];
 }
 
 function createSprites() 
@@ -203,5 +224,26 @@ function spawnObjectsAtRandomTimes() {
 	chanceOfObjThisSecond = spawnZones[i].spawnsPerSecond * 1.0/framerate;
 	if(Math.random()<chanceOfObjThisSecond)
 	    sprites.push(spawnZones[i].spawn(randomSpawnPoint()));
+    }
+}
+
+function togglePause()
+{
+    paused = !paused;
+    if(paused) pauseButton.setImg("assets/play-button.png");
+    if(!paused) pauseButton.setImg("assets/pause-button.png");
+}
+
+function toggleSound()
+{
+    soundOn = !soundOn;
+    soundElm = document.getElementById("audio");
+    if(soundOn) {
+	soundElm.play();
+	soundButton.setImg("assets/sound-on-button.png");
+    }
+    if(!soundOn) {
+	soundElm.pause();
+	soundButton.setImg("assets/sound-off-button.png");
     }
 }

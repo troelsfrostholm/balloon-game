@@ -6,6 +6,7 @@ var hudElements = Array();
 var behaviours = Array();
 var debugMode = false;
 var scrollPoint = new Point(-100, 0);
+var paused = false;
 
 function runGame() {
     initdraw();
@@ -215,9 +216,18 @@ function clear()
 
 function animate()
 {
-    step();
+    if(!paused) {
+	step();
+    }
     draw();
-    setTimeout(animate, 1.0/framerate);
+
+    setTimeout(animate, waitTime());
+}
+
+function waitTime()
+{
+    frameWaitTime = (1000.0/framerate);
+    return frameWaitTime;
 }
 
 function step()

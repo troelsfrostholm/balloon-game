@@ -48,3 +48,17 @@ function swinging(obj) {
 function dampened(obj) { 
     obj.angle[1] *= dampening; 
 }
+
+function heightVulnerable(obj) {
+    height = obj.pos[0].y;
+    obj.image = obj.normalImage;
+    if(height < obj.dangerHeight)  obj.image = obj.dangerImage;
+    if(height < obj.deathHeight)   {
+	obj.image = obj.blowUpImage;
+	obj.behaviours = [falling];
+    }
+}
+
+function falling(obj) {
+    obj.acc(0,1);
+}

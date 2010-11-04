@@ -90,6 +90,11 @@ function createSprites()
     balloon.setImg("assets/balloon.gif");
     balloon.scale = 0.5;
     balloon.place(500, 500);
+    balloon.dangerHeight = -3000/2;
+    balloon.deathHeight = -4000/2;
+    balloon.normalImage = createImage("assets/balloon.gif");
+    balloon.dangerImage = createImage("assets/balloon-danger2.png");
+    balloon.blowUpImage = createImage("assets/balloon-blown.png");
 
     pig = makeFlatFlyer(new Point(500, 100), "pig.gif");
     carpetman = makeFlatFlyer(new Point(500, 100), "carpetman.png");
@@ -154,6 +159,7 @@ function setBehaviours()
     balloon.behave(bouncy);
     balloon.behave(resisting);
     balloon.behave(buoyant);
+    balloon.behave(heightVulnerable);
     
     //global behaviours
     mouseisdown = blowAtBalloon;

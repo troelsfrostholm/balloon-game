@@ -55,3 +55,10 @@ function loadScript(filename)
     fileref.setAttribute("type","text/javascript");
     fileref.setAttribute("src", filename);
 }
+
+function createImage(filename)
+{
+    img = new Image();
+    img.src = filename;
+    return img;
+}

@@ -5,6 +5,7 @@ var levelBounds;
 var background;
 var balloon;
 var betterBalloon;
+var boy;
 var pig;
 var carpetman;
 var penguin;
@@ -94,18 +95,23 @@ function createHudElements()
 function createSprites() 
 {
     balloon = new Sprite();
-    balloon.setImg("assets/balloon.gif");
+    balloon.setImg("assets/balloon.png");
     balloon.scale = 0.5;
     balloon.place(500, 500);
     balloon.dangerHeight = -3000/2;
     balloon.deathHeight = -4000/2;
-    balloon.normalImage = createImage("assets/balloon.gif");
+    balloon.normalImage = createImage("assets/balloon.png");
     balloon.dangerImage = createImage("assets/balloon-danger2.png");
+    balloon.kablouieImage = createImage("assets/balloon-kablouie.png");
     balloon.blowUpImage = createImage("assets/balloon-blown.png");
 
     betterBalloon = new Sprite();
     betterBalloon.setImg("assets/better-balloon.png");
     betterBalloon.scale=0.5;
+
+    boy = new Sprite();
+    boy.setImg("assets/boy.png");
+    boy.scale=0.5;
 
     pig = makeFlatFlyer(new Point(500, 100), "pig.gif");
     carpetman = makeFlatFlyer(new Point(500, 100), "carpetman.png");
@@ -113,7 +119,7 @@ function createSprites()
     superhero = makeFlatFlyer(new Point(500, 100), "superhero.png");;
     bear = makeFlatFlyer(new Point(500, 100), "bear.png");
 
-    return [background, balloon];
+    return [background, balloon, boy];
 };
 
 function createTriggers()
@@ -145,6 +151,10 @@ function playWinSequence()
     betterBalloon.pos = balloon.pos;
     removeSprite(balloon);
     sprites.push(betterBalloon);
+    followNewBalloon = function(obj) {
+	obj.pos[0] = betterBalloon.pos[0].add(new Point(0, 100));
+    }
+    boy.behaviours = [followNewBalloon];	    
 }
 
 function girlShutup()
@@ -238,6 +248,8 @@ function setBehaviours()
 
     betterBalloon.behave(buoyant);
     betterBalloon.behave(resisting);
+
+    boy.behave(followBalloon);
     
     //global behaviours
     mouseisdown = blowAtBalloon;

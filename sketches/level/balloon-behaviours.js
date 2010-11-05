@@ -54,8 +54,11 @@ function heightVulnerable(obj) {
     obj.image = obj.normalImage;
     if(height < obj.dangerHeight)  obj.image = obj.dangerImage;
     if(height < obj.deathHeight)   {
-	obj.image = obj.blowUpImage;
-	obj.behaviours = [falling];
+	obj.image = obj.kablouieImage;
+	setTimeout(function () {
+		obj.image = obj.blowUpImage;
+		obj.behaviours = [falling];
+	    }, 300);
     }
 }
 

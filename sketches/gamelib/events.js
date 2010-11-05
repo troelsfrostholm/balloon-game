@@ -27,15 +27,18 @@ function bindMouseEvents()
 	downpos = getWorldCoords(evt);
 	passClickToHudElements(evt);
 	mouseclick(downpos);
+	return false;
     }
 
     canvas.onmousemove = function(evt) {
 	if(downpos) downpos = getWorldCoords(evt);
+	return false;
     }
 
     canvas.onmouseup = function(evt) {
 	mouserelease(getWorldCoords(evt));
 	downpos = false;
+	return false;
     }
 
     behaviours.push(function() { if(downpos) mouseisdown(downpos); });

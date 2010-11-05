@@ -4,6 +4,7 @@ var framerate = 60;
 var sprites = Array();
 var hudElements = Array();
 var behaviours = Array();
+var triggers = Array();
 var debugMode = false;
 var scrollPoint = new Point(-100, 0);
 var paused = false;
@@ -43,6 +44,25 @@ function BoundingBox(x, y, width, height)
 	canvas.strokeRect(this.x, this.y, this.width, this.height);
     }
 }
+
+function Trigger(object, bbox, onEnter, onInside, onExit)
+{
+    this.object = object;
+    this.bbox = bbox;    
+    this.onEnter = onEnter;
+    this.onExit = onExit;
+    this.onInside = onInside;
+    this.alreadyInside = false;
+};
+
+Trigger.prototype.evaluate = function()
+{
+    insideNow = this.bbox.collidesWith(this.object.getBoundingBox());
+    if(!this.alreadyInside && insideNow) this.onEnter();
+    if(this.alreadyInside && !insideNow) this.onExit();
+    if(insideNow) this.onInside();
+    this.alreadyInside = insideNow;
+};
 
 function Sprite()
 {
@@ -204,6 +224,9 @@ function draw()
 	for(i in spawnZones) {
 	    spawnZones[i].boundingBox.debugDraw(ctx);
 	}
+	for(i in triggers) {
+	    triggers[i].bbox.debugDraw(ctx);
+	}
 	levelBounds.debugDraw(ctx);
     }
 }
@@ -218,11 +241,19 @@ function animate()
 {
     if(!paused) {
 	step();
+	evalTriggers();
     }
     draw();
 
     setTimeout(animate, waitTime());
 }
+
+function evalTriggers()
+{
+    for(var i in triggers) {
+	triggers[i].evaluate();
+    };
+};
 
 function waitTime()
 {

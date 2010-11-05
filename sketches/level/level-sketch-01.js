@@ -29,6 +29,9 @@ var score = 0;
 
 var soundOn = true;
 
+var poorDialogue = [1, 2, 6, 7, 8];
+var richDialogue = [25, 29];
+
 function begin()
 {
     canvas = document.getElementById("canvas");
@@ -62,6 +65,7 @@ function initializeLevel()
     sprites = createSprites();
     setBehaviours();
     spawnZones = createSpawnZones();
+    createTriggers();
     runGame();
 }
 
@@ -72,7 +76,7 @@ function createHudElements()
     canvas = document.getElementById("canvas");
     hud.place(canvas.width/2, canvas.height/2);
     hudElements.push(hud);
-    scoreElement = new TextElement("0", new Point(810, 418));
+    scoreElement = new TextElement("0", new Point(720, 558));
     soundButton = new Sprite();
     soundButton.image.src = "assets/sound-on-button.png";
     soundButton.place(100, 33);
@@ -105,6 +109,37 @@ function createSprites()
     return [background, balloon, pig];
 };
 
+function createTriggers()
+{
+    bbox = new BoundingBox(-1300, -1700, 400, 400);
+    trigger = new Trigger(balloon, bbox, girlSpeak, function(){}, girlShutup);
+    triggers.push(trigger);
+}
+
+function girlSpeak()
+{
+    //pick a scenario: Does player have enough points to win?
+    win = score >= 30;
+    //pick a line of dialogue
+    if(win) dialogueLines = richDialogue;
+    else dialogueLines = poorDialogue;
+    dialogue = pickAtRandom(dialogueLines);
+    
+    
+}
+
+function girlShutup()
+{
+    alert("Hej hej");
+}
+
+function createDialogueImage(dialogueNumber)
+{
+    img = new Image();
+    img.src = "assets/dialogue/"+dialogueNumber+".png";
+    return img;
+}
+
 function makeFlatFlyer(pos, image)
 {
     flyer = new Sprite();
@@ -129,6 +164,12 @@ function createSpawnZones()
     return zones;
 };
 
+function pickAtRandom(array) 
+{
+    index = Math.floor(Math.random()*array.length);
+    return array[index];
+};
+
 function SpawnZone(bbox, objects, spawnsPerSecond)
 {
     this.boundingBox = bbox;
@@ -137,10 +178,6 @@ function SpawnZone(bbox, objects, spawnsPerSecond)
     
     this.spawn = function(spawnPoint)
 	{
-	    pickAtRandom = function(array) {
-		index = Math.floor(Math.random()*array.length);
-		return array[index];
-	    };
 	    obj = pickAtRandom(this.spawnObjects).copy();
 	    obj.pos[0] = spawnPoint;
 	    return obj;

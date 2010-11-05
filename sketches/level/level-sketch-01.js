@@ -29,8 +29,9 @@ var score = 0;
 
 var soundOn = true;
 
-var poorDialogue = [1, 2, 6, 7, 8];
-var richDialogue = [25, 29];
+var poorDialogue = ["01", "02", "06", "07", "08"].map(createDialogueSprite);
+var richDialogue = ["25", "29"].map(createDialogueSprite);
+var activeDialogue = null;
 
 function begin()
 {
@@ -124,20 +125,38 @@ function girlSpeak()
     if(win) dialogueLines = richDialogue;
     else dialogueLines = poorDialogue;
     dialogue = pickAtRandom(dialogueLines);
-    
-    
+    setDialogue(dialogue);
 }
 
 function girlShutup()
 {
-    alert("Hej hej");
+    unsetDialogue();
 }
 
-function createDialogueImage(dialogueNumber)
+function setDialogue(dialogue)
 {
+    sprites.push(dialogue);
+    activeDialogue = dialogue;
+}
+
+function unsetDialogue()
+{
+    if(activeDialogue)
+	{
+	    removeSprite(activeDialogue);
+	    activeDialogue = null;
+	}
+}
+
+function createDialogueSprite(dialogueNumber)
+{
+    position = new Point(-1000, -1700);
     img = new Image();
     img.src = "assets/dialogue/"+dialogueNumber+".png";
-    return img;
+    dialogueSprite = new Sprite();
+    dialogueSprite.image = img;
+    dialogueSprite.pos[0] = position;
+    return dialogueSprite;
 }
 
 function makeFlatFlyer(pos, image)

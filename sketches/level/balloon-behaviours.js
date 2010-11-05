@@ -62,3 +62,10 @@ function heightVulnerable(obj) {
 function falling(obj) {
     obj.acc(0,1);
 }
+
+function ancorAt(point)
+{
+    return function(obj) {
+	obj.pos[0] = point;
+    }
+}

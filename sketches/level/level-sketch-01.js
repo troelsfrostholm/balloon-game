@@ -4,6 +4,7 @@ var levelBounds;
 //Sprites
 var background;
 var balloon;
+var betterBalloon;
 var pig;
 var carpetman;
 var penguin;
@@ -28,6 +29,8 @@ var pigDieDistance = 600*600;
 var score = 0;
 
 var soundOn = true;
+
+var girlPosition = new Point(-1000, -1600);
 
 var poorDialogue = ["01", "02", "06", "07", "08"].map(createDialogueSprite);
 var richDialogue = ["25", "29"].map(createDialogueSprite);
@@ -101,6 +104,10 @@ function createSprites()
     balloon.dangerImage = createImage("assets/balloon-danger2.png");
     balloon.blowUpImage = createImage("assets/balloon-blown.png");
 
+    betterBalloon = new Sprite();
+    betterBalloon.setImg("assets/better-balloon.png");
+    betterBalloon.scale=0.5;
+
     pig = makeFlatFlyer(new Point(500, 100), "pig.gif");
     carpetman = makeFlatFlyer(new Point(500, 100), "carpetman.png");
     penguin = makeFlatFlyer(new Point(500, 100), "penguin.png");;
@@ -125,7 +132,21 @@ function girlSpeak()
     if(win) dialogueLines = richDialogue;
     else dialogueLines = poorDialogue;
     dialogue = pickAtRandom(dialogueLines);
+    //say it. Play the win sequence if the player has enough
+    //points to buy a better balloon
     setDialogue(dialogue);
+    if(win) {
+	balloon.behave(ancorAt(girlPosition));
+	setTimeout(playWinSequence, 5000);
+    }
+}
+
+function playWinSequence()
+{
+    betterBalloon.pos = balloon.pos;
+    removeSprite(balloon);
+    sprites.push(betterBalloon);
+    //balloon = betterBalloon;
 }
 
 function girlShutup()
@@ -216,6 +237,9 @@ function setBehaviours()
     balloon.behave(resisting);
     balloon.behave(buoyant);
     balloon.behave(heightVulnerable);
+
+    betterBalloon.behave(buoyant);
+    betterBalloon.behave(resisting);
     
     //global behaviours
     mouseisdown = blowAtBalloon;

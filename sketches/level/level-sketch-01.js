@@ -154,7 +154,7 @@ function playWinSequence()
     followNewBalloon = function(obj) {
 	obj.pos[0] = betterBalloon.pos[0].add(new Point(0, 100));
     }
-    boy.behaviours = [followNewBalloon];	    
+    boy.behaviours = [createFollowBehaviour(betterBalloon, new Point(0, 60))];
 }
 
 function girlShutup()
@@ -237,7 +237,6 @@ function SpawnZone(bbox, objects, spawnsPerSecond)
 	}
 };
 
-
 function setBehaviours()
 {
     //sprite behaviours
@@ -249,7 +248,7 @@ function setBehaviours()
     betterBalloon.behave(buoyant);
     betterBalloon.behave(resisting);
 
-    boy.behave(followBalloon);
+    boy.behave(createFollowBehaviour(balloon, new Point(0, 60)));
     
     //global behaviours
     mouseisdown = blowAtBalloon;
@@ -276,7 +275,7 @@ function blowAtBalloon(point) {
 
 function collisionTest(obj) {
     if(balloon.getBoundingBox().collidesWith(obj.getBoundingBox())) {
-	obj.behaviours = [followBalloon];
+	obj.behaviours = [createFollowBehaviour(balloon, new Point(20, 110))];
 	obj.scale = 0.25;
 	setTimeout(function () {removeSprite(obj);}, 1500);
 	score+=1;
@@ -287,6 +286,12 @@ function collisionTest(obj) {
 
 function followBalloon(obj) {
     obj.pos[0] = balloon.pos[0].add(new Point(0, 100));
+}
+
+function createFollowBehaviour(object, offset) {
+    return function(obj) {
+	obj.pos[0] = object.pos[0].add(offset);
+    }
 }
 
 function dieWhenFarAway(obj) {

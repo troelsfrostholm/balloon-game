@@ -55,15 +55,17 @@ function heightVulnerable(obj) {
     if(height < obj.dangerHeight)  obj.image = obj.dangerImage;
     if(height < obj.deathHeight)   {
 	obj.image = obj.kablouieImage;
+	obj.scale=0.75;
 	setTimeout(function () {
 		obj.image = obj.blowUpImage;
 		obj.behaviours = [falling];
-	    }, 300);
+		obj.scale=0.5;
+	    }, 500);
     }
 }
 
 function falling(obj) {
-    obj.acc(0,1);
+    obj.acc(0,0.5);
 }
 
 function ancorAt(point)

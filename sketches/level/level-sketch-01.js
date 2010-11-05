@@ -23,14 +23,13 @@ var resistance = 0.9;
 var downpos = null;
 var buoyancy = -0.3;
 var sideScrollSpeed = 0.05;
-var pigsPerSecond = 0.5;
-var pigDieDistance = 600*600;
+var squaredMaxItemDistance = 1000*1000;
 
 var score = 0;
 
 var soundOn = true;
 
-var girlPosition = new Point(-1000, -1600);
+var girlPosition = new Point(-1000, -1400);
 
 var poorDialogue = ["01", "02", "06", "07", "08"].map(createDialogueSprite);
 var richDialogue = ["25", "29"].map(createDialogueSprite);
@@ -114,7 +113,7 @@ function createSprites()
     superhero = makeFlatFlyer(new Point(500, 100), "superhero.png");;
     bear = makeFlatFlyer(new Point(500, 100), "bear.png");
 
-    return [background, balloon, pig];
+    return [background, balloon];
 };
 
 function createTriggers()
@@ -146,7 +145,6 @@ function playWinSequence()
     betterBalloon.pos = balloon.pos;
     removeSprite(balloon);
     sprites.push(betterBalloon);
-    //balloon = betterBalloon;
 }
 
 function girlShutup()
@@ -256,7 +254,8 @@ function distToBalloon(point)
 function pushForce(point) { 
     d = distToBalloon(point); 
     d2 = d.dot(d); 
-    return d.mult(windpower/d2); 
+    pushforce = d.mult(windpower/d2);
+    return new Point(pushforce.x, pushforce.y*0.2);
 }
 
 function blowAtBalloon(point) {
@@ -265,8 +264,9 @@ function blowAtBalloon(point) {
 
 function collisionTest(obj) {
     if(balloon.getBoundingBox().collidesWith(obj.getBoundingBox())) {
-	//obj.behaviours = [followBalloon];
-	removeSprite(obj);
+	obj.behaviours = [followBalloon];
+	obj.scale = 0.25;
+	setTimeout(function () {removeSprite(obj);}, 1500);
 	score+=1;
 	scoreElement.text = score + "";
 	balloon.acc(0, obj.weight);
@@ -278,7 +278,7 @@ function followBalloon(obj) {
 }
 
 function dieWhenFarAway(obj) {
-    if(obj.pos[0].squaredDistance(balloon.pos[0])>pigDieDistance) {
+    if(obj.pos[0].squaredDistance(balloon.pos[0])>squaredMaxItemDistance) {
     	removeSprite(obj);
     }
 }
@@ -292,12 +292,12 @@ function sideScrollAfterBalloon() {
 
 function randomSpawnPoint()
 {
-    spawnEdge = Math.floor(Math.random()*4);
-    if(spawnEdge>2) {
+    spawnEdge = Math.floor(Math.random()*3);
+    if(spawnEdge>=2) {
 	x = Math.random()*canvas.width;
-	y = canvas.height*(spawnEdge%2);
+	y = 0;//canvas.height;//*(spawnEdge%2);
     }
-    if(spawnEdge<=2) {
+    if(spawnEdge<2) {
 	x = canvas.width*(spawnEdge%2);
 	y = Math.random()*canvas.height;
     }

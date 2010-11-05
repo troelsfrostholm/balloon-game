@@ -66,6 +66,6 @@ function falling(obj) {
 function ancorAt(point)
 {
     return function(obj) {
-	obj.pos[0] = point;
+	obj.pos[1] = obj.pos[1].add(point.sub(obj.pos[0]).mult(0.001));
     }
 }

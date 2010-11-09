@@ -23,8 +23,12 @@ function bindMouseEvents()
 	mouseclick(downpos);
     }
 
-    canvas.onmousemove = function(evt) {
-	if(downpos) downpos = getWorldCoords(evt);
+    canvas.onmousemove = function(evt)
+	{
+		if(downpos)
+		{
+			downpos = getWorldCoords(evt);
+		}
     }
 
     canvas.onmouseup = function(evt) {

@@ -22,6 +22,8 @@ var buoyancy = -0.3;
 var sideScrollSpeed = 0.05;
 var pigsPerSecond = 0.5;
 var pigDieDistance = 600*600;
+// var gravity = 0.001;
+var dampening = 0.88;
 
 var score = 0;
 
@@ -133,6 +135,8 @@ function setBehaviours()
     balloon.behave(bouncy);
     balloon.behave(resisting);
     balloon.behave(buoyant);
+//	balloon.behave(swinging);
+	balloon.behave(dampened);
     
     //global behaviours
     mouseisdown = blowAtBalloon;
@@ -148,12 +152,47 @@ function distToBalloon(point)
 
 function pushForce(point) { 
     d = distToBalloon(point); 
-    d2 = d.dot(d); 
-    return d.mult(windpower/d2); 
+    d2 = d.dot(d);
+    return d.mult(windpower/d2);
 }
 
-function blowAtBalloon(point) {
-    balloon.pos[1] = balloon.pos[1].add(pushForce(point));
+function blowAtBalloon(point)
+{
+	// Move balloon
+	balloon.pos[1] = balloon.pos[1].add(pushForce(point));
+
+	// If blowing from right
+	if (distToBalloon(point).x < 0 && distToBalloon(point).y > 0)
+	{
+		if (balloon.angle[0] > -0.1)
+		{
+			balloon.angle[1] += 0.02;
+		}
+	}
+	// If blowing from left
+	else if (distToBalloon(point).x < 0 && distToBalloon(point).y < 0)
+	{
+		if (balloon.angle[0] > -0.1)
+		{
+			balloon.angle[1] += 0.02;
+		}
+	}
+	else if (distToBalloon(point).x > 0 && distToBalloon(point).y > 0)
+	{
+		if (balloon.angle[0] > -0.1)
+		{
+			balloon.angle[1] += 0.02;
+		}
+	}
+	else if (distToBalloon(point).x > 0 && distToBalloon(point).y < 0)
+	{
+		if (balloon.angle[0] < 0.1)
+		{
+			balloon.angle[1] -= 0.02;
+		}
+	}
+	
+
 }
 
 function collisionTest(obj) {

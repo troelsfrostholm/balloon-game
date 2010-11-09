@@ -304,8 +304,6 @@ function blowAtBalloon(point)
 			balloon.angle[1] -= 0.02;
 		}
 	}
-	
-
 }
 
 function collisionTest(obj) {

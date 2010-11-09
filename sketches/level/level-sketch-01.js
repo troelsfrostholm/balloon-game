@@ -25,7 +25,9 @@ var downpos = null;
 var buoyancy = -0.3;
 var sideScrollSpeed = 0.05;
 var squaredMaxItemDistance = 1000*1000;
-
+var pigDieDistance = 600*600;
+// var gravity = 0.001;
+var dampening = 0.88;
 var score = 0;
 
 var soundOn = true;
@@ -196,7 +198,6 @@ function makeFlatFlyer(pos, image)
     flyer.place(pos.x, pos.y);
     flyer.move(-2, 0.5);
     flyer.weight = 20;
-    flyer.behave(bouncy);
     flyer.behave(collisionTest);
     flyer.behave(dieWhenFarAway);
 
@@ -244,11 +245,10 @@ function setBehaviours()
     balloon.behave(resisting);
     balloon.behave(buoyant);
     balloon.behave(heightVulnerable);
-
-    betterBalloon.behave(buoyant);
-    betterBalloon.behave(resisting);
-
     boy.behave(createFollowBehaviour(balloon, new Point(0, 60)));
+
+    //	balloon.behave(swinging);
+    balloon.behave(dampened);
     
     //global behaviours
     mouseisdown = blowAtBalloon;
@@ -264,13 +264,48 @@ function distToBalloon(point)
 
 function pushForce(point) { 
     d = distToBalloon(point); 
-    d2 = d.dot(d); 
-    pushforce = d.mult(windpower/d2);
-    return new Point(pushforce.x, pushforce.y*0.2);
+
+    d2 = d.dot(d);
+    return d.mult(windpower/d2);
 }
 
-function blowAtBalloon(point) {
-    balloon.pos[1] = balloon.pos[1].add(pushForce(point));
+function blowAtBalloon(point)
+{
+	// Move balloon
+	balloon.pos[1] = balloon.pos[1].add(pushForce(point));
+
+	// If blowing from right
+	if (distToBalloon(point).x < 0 && distToBalloon(point).y > 0)
+	{
+		if (balloon.angle[0] > -0.1)
+		{
+			balloon.angle[1] += 0.02;
+		}
+	}
+	// If blowing from left
+	else if (distToBalloon(point).x < 0 && distToBalloon(point).y < 0)
+	{
+		if (balloon.angle[0] > -0.1)
+		{
+			balloon.angle[1] += 0.02;
+		}
+	}
+	else if (distToBalloon(point).x > 0 && distToBalloon(point).y > 0)
+	{
+		if (balloon.angle[0] > -0.1)
+		{
+			balloon.angle[1] += 0.02;
+		}
+	}
+	else if (distToBalloon(point).x > 0 && distToBalloon(point).y < 0)
+	{
+		if (balloon.angle[0] < 0.1)
+		{
+			balloon.angle[1] -= 0.02;
+		}
+	}
+	
+
 }
 
 function collisionTest(obj) {

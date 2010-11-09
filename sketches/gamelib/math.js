@@ -41,7 +41,7 @@ Point.prototype.squaredDistance = function(point) {
 function euler(values) {
     result = Array();
     n = values.length-1;
-    result[n] = values[n];
+	result[n] = values[n];
     for(i = n; i>0; i--)  {
 	result[i-1] = add(values[i-1], values[i]);
     }

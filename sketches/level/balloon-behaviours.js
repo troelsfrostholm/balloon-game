@@ -41,13 +41,18 @@ function buoyant(obj) {
     obj.acc(0,buoyancy);
 };
 
-function swinging(obj) { 
-    obj.angle[2] = -gravity*Math.sin(obj.angle[0]); 
+function swinging(obj)
+{
+	obj.angle[2] = -gravity*Math.sin(obj.angle[0]);
 };
 
-function dampened(obj) { 
-    obj.angle[1] *= dampening; 
-}
+function dampened(obj)
+{
+	obj.angle[0] *= dampening;
+	obj.angle[1] *= dampening;
+	obj.angle[2] *= dampening;
+
+};
 
 function heightVulnerable(obj) {
     height = obj.pos[0].y;

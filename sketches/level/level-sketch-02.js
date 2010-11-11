@@ -30,9 +30,9 @@ var score = 0;
 
 var soundOn = true;
 
-var girlPosition = new Point(-1000, -1400);
+var girlPosition = new Point(-1000, -927);
 
-var poorDialogue = ["01", "02", "06", "07", "08"].map(createDialogueSprite);
+var poorDialogue = ["02", "04", "06"].map(createDialogueSprite);
 var richDialogue = ["25", "29"].map(createDialogueSprite);
 var activeDialogue = null;
 
@@ -57,7 +57,7 @@ function loadBackground()
 {
     console.log("Loading background");
     background = new Sprite();
-    background.setImg("assets/background-wrap2.png");
+    background.setImg("assets/background.jpg");
     background.scale = 1;
     background.place(0, 0);
 }
@@ -70,6 +70,7 @@ function initializeLevel()
     setBehaviours();
     spawnZones = createSpawnZones();
     createTriggers();
+    scrollPoint = balloon.pos[0].add(new Point(-300, 0));
     runGame();
 }
 
@@ -97,7 +98,7 @@ function createSprites()
     balloon = new Sprite();
     balloon.setImg("assets/balloon.png");
     balloon.scale = 0.5;
-    balloon.place(0, 1500);
+    balloon.place(0, 1900);
     balloon.dangerHeight = -3000/2;
     balloon.deathHeight = -4000/2;
     balloon.normalImage = createImage("assets/balloon.png");
@@ -128,9 +129,9 @@ function createSprites()
 function createStaticObjects()
 {
     addStaticObject("assets/arrow_4.png", new Point(-800, -230), 0.2);
-    addStaticObject("assets/arrow_1.png", new Point(-160, -530), 0.05);
-    addStaticObject("assets/arrow_3.png", new Point(736, -1454), -0.3);
-    addStaticObject("assets/arrow_2.png", new Point(-285, -1512), 0.15);
+    addStaticObject("assets/arrow_1.png", new Point(-160, -530), -0.3);
+    addStaticObject("assets/arrow_3.png", new Point(710, -1454), -1);
+    addStaticObject("assets/arrow_2.png", new Point(-285, -1512), -1.4);
 }
 
 function addStaticObject(image, position, rotation)
@@ -152,8 +153,8 @@ function addStaticItem(image, position, rotation)
 
 function createTriggers()
 {
-    bbox = new BoundingBox(-1300, -1700, 400, 400);
-    trigger = new Trigger(balloon, bbox, girlSpeak, function(){}, girlShutup);
+    bbox = new BoundingBox(-1300, -1050, 400, 300);
+    trigger = new Trigger(balloon, bbox, girlSpeak, hoverBalloon, girlShutup);
     triggers.push(trigger);
 }
 
@@ -167,11 +168,18 @@ function girlSpeak()
     dialogue = pickAtRandom(dialogueLines);
     //say it. Play the win sequence if the player has enough
     //points to buy a better balloon
-    setDialogue(dialogue);
-    if(win) {
+    if(win) {	
+	setDialogue(pickAtRandom(richDialogue));
 	balloon.behave(ancorAt(girlPosition));
 	setTimeout(playWinSequence, 5000);
     }
+    else {
+	setDialogue(poorDialogue[0]);
+	setTimeout(function () { 
+		girlShutup();
+		setDialogue(poorDialogue[1]); }, 2000);
+    }
+    setTimeout(girlShutup, 5000);
 }
 
 function playWinSequence()
@@ -188,6 +196,11 @@ function playWinSequence()
 function girlShutup()
 {
     unsetDialogue();
+}
+
+function hoverBalloon()
+{
+    balloon.pos[2] = balloon.pos[2].add(new Point(0, 0.3));
 }
 
 function setDialogue(dialogue)
@@ -207,7 +220,7 @@ function unsetDialogue()
 
 function createDialogueSprite(dialogueNumber)
 {
-    position = new Point(-1000, -1700);
+    position = girlPosition;
     img = new Image();
     img.src = "assets/dialogue/"+dialogueNumber+".png";
     dialogueSprite = new Sprite();
@@ -216,13 +229,13 @@ function createDialogueSprite(dialogueNumber)
     return dialogueSprite;
 }
 
-function makeFlatFlyer(pos, image)
+function makeFlatFlyer(image, speed)
 {
     flyer = new Sprite();
     flyer.setImg("assets/"+image);
     flyer.scale = 0.5;
-    flyer.place(pos.x, pos.y);
-    flyer.move(-2, 0.5);
+    flyer.place(0, 0);
+    flyer.move(speed.x, speed.y);
     flyer.weight = 20;
     flyer.behave(bouncy);
     flyer.behave(collisionTest);
@@ -234,7 +247,7 @@ function makeFlatFlyer(pos, image)
 function makeStillItem(image_file)
 {
     item = new Sprite();
-    item.setImg("assets/hills/"+image_file);
+    item.setImg("assets/"+image_file);
     item.scale = 0.5;
     item.place(0, 0);
     item.move(0, 0);
@@ -245,19 +258,55 @@ function makeStillItem(image_file)
     
 };
 
+function makeCannonBall(img, vel, acc, spin)
+{
+    if(spin == undefined) spin = 0;
+    item = makeStillItem(img);
+    item.pos[1] = vel;
+    item.pos[2] = acc;
+    item.spin(spin);
+    return item;
+}
+
 function createSpawnZones()
 {
     zones = new Array();
-    hillItems = ["spy_1.png", "spy_2.png", "spy_3.png", "lumberjack_1.png", "lumberjack_2.png", "lumberjack_3.png", "riding_hood.png", "deer.png"].map(makeStillItem);
-    hillBounds = new BoundingBox(-1500, 1700, 3000, 960);
-    //    forestBounds = new BoundingBox(
+    hillItems = ["hills/spy_1.png", "hills/spy_2.png", "hills/spy_3.png", "hills/lumberjack_1.png", "hills/lumberjack_2.png", "hills/lumberjack_3.png", "hills/riding_hood.png", "hills/deer.png"].map(makeStillItem);
+    makeLeftFlyer = function(img) { 
+	return makeFlatFlyer(img, new Point(-2,0));
+    };
+    makeRightFlyer = function(img) { 
+	return makeFlatFlyer(img, new Point(2,0));
+    };
+    leftFlyers = ["trees/duck.png", "trees/flying_squirrel.png", "trees/stork_with_baby.png", "trees/tucan.png"].map(makeLeftFlyer);
+    rightFlyers = ["trees/bat.png", "trees/penguin.png", "trees/swan.png"].map(makeRightFlyer);
+
+    monkey = makeCannonBall("trees/monkey.png", new Point(-3, -2), new Point(0, 0.2), 0.1);
+    forestItems = leftFlyers.concat(rightFlyers).concat([monkey]);
+    
+    bear = makeFlatFlyer("circus/flying_circus_bear.png", new Point(-1,0));
+    carpet_man = makeFlatFlyer("circus/magic_carpet_man.png", new Point(-1,0));
+    chicken = makeFlatFlyer("circus/barbecue_chicken.png", new Point(1,0));
+    cannon_king = makeCannonBall("circus/canon_king.png", new Point(10, -4), new Point(0, 0.5), 0.05);
+    circusItems = [bear, carpet_man, chicken, cannon_king];
+
+    leftFlyers = ["sky/flying_pig.png", "sky/hotair_balloon_1.png", "sky/hotair_balloon_2.png"].map(makeLeftFlyer);
+    rightFlyers = ["sky/hotair_balloon_3.png", "sky/hotair_balloon_4.png", "sky/superhero.png"].map(makeRightFlyer);
+    music = makeFlatFlyer("sky/music.png", new Point(0.1, -1));
+    skyItems = leftFlyers.concat(rightFlyers).concat(music);
+
+    hillBounds = new BoundingBox(-2000, 1500, 4000, 960);
+    forestBounds = new BoundingBox(-2000, -200, 4000, 1600);
+    circusBounds = new BoundingBox(-600, -1500, 3000, 1300);
+    skyBounds = new BoundingBox(-2000, -2400, 4000, 900);
     //    forestItems = ...;
     //    circusItems = ...;
     //    airItems = ....;
-    zones.push(new SpawnZone(hillBounds,
-			     hillItems,
-			     1));
+    zones.push(new SpawnZone(hillBounds, hillItems, 1.2));
+    zones.push(new SpawnZone(forestBounds, forestItems, 1.2));
     //    			     [pig, carpetman, penguin, superhero,bear],
+    zones.push(new SpawnZone(circusBounds, circusItems, 1.2));
+    zones.push(new SpawnZone(skyBounds, skyItems, 1.2));
     return zones;
 };
 

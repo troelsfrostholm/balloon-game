@@ -6,7 +6,7 @@ var hudElements = Array();
 var behaviours = Array();
 var triggers = Array();
 var debugMode = false;
-var scrollPoint = new Point(-100, 0);
+var scrollPoint = new Point(0, 0);
 var paused = false;
 
 function runGame() {

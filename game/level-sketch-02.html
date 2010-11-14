@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <script type="application/x-javascript" src="gamelib/util.js"></script>
+    <script type="application/x-javascript" src="gamelib/math.js"></script>
+    <script type="application/x-javascript" src="gamelib/gamelib.js"></script>
+    <script type="application/x-javascript" src="gamelib/events.js"></script>
+    <script type="application/x-javascript" src="balloon-behaviours.js"></script>
+    <script type="application/x-javascript" src="level-sketch-02.js"></script>
+    <script type="application/x-javascript">
+      function documentLoaded() 
+      {
+      begin();
+      }
+    </script>
+    <link rel="StyleSheet" href="style.css" type="text/css" media="screen"></link>
+  </head>
+  <body onload="documentLoaded();">
+    <audio id="audio" src="assets/soundtrack.ogg" autoplay loop>
+    </audio>
+    <canvas id="canvas" width="800" height="600" style="border:1px dashed black;">
+      <p>You need a canvas with HTML5 canvas support to play this game: 
+	<a href="http://www.w3.org/html/wg/html5/">HTML5</a> 
+	&lt;canvas&gt; feature.</p>
+    </canvas>
+    <p id="credits">Game by: Han Nguyen, Jens Lauridsen, Emil Norsk-Nielsen & Troels Frostholm. Music by various artists from <a href="http://www.kahvi.org/">Kahvi Collective</a> (Creative Commons)</p>
+  </body>
+</html>

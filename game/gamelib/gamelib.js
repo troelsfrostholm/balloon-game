@@ -1,103 +1,104 @@
-var canvas;
-var ctx;
-var framerate = 60;
-var sprites = Array();
-var hudElements = Array();
-var behaviours = Array();
-var triggers = Array();
-var debugMode = false;
-var scrollPoint = new Point(0, 0);
-var paused = false;
+Game = {
 
-function runGame() {
-    initdraw();
-    bindMouseEvents();
-};
+    framerate : 60,
+    sprites : Array(),
+    hudElements : Array(),
+    behaviours : Array(),
+    triggers : Array(),
+    debugMode : false,
+    scrollPoint : new Point(0, 0),
+    paused : false,
 
-function initdraw() {
-    canvas = document.getElementById("canvas");
-    if (canvas.getContext) {
-	ctx = canvas.getContext("2d");
-	animate();
-    }
-}
+    runGame : function() {
+	initdraw();
+	bindMouseEvents();
+    },
 
-function draw()
-{
-    clear();
-    for(var i in sprites) {
-	sideScrollTransform();
-	sprites[i].draw();
-    }
-    for(var i in hudElements) {
-	ctx.setTransform(1, 0, 0, 1, 0, 0);
-	hudElements[i].draw();
-    }
-    if(debugMode) {
+    initdraw : function() {
+	canvas = document.getElementById("canvas");
+	if (canvas.getContext) {
+	    ctx = canvas.getContext("2d");
+	    animate();
+	}
+    },
+
+    draw : function()
+    {
+	clear();
 	for(var i in sprites) {
-	    sprites[i].getBoundingBox().debugDraw(ctx);
+	    sideScrollTransform();
+	    sprites[i].draw();
 	}
-	for(i in spawnZones) {
-	    spawnZones[i].boundingBox.debugDraw(ctx);
+	for(var i in hudElements) {
+	    ctx.setTransform(1, 0, 0, 1, 0, 0);
+	    hudElements[i].draw();
 	}
-	for(i in triggers) {
-	    triggers[i].bbox.debugDraw(ctx);
+	if(debugMode) {
+	    for(var i in sprites) {
+		sprites[i].getBoundingBox().debugDraw(ctx);
 	}
-	levelBounds.debugDraw(ctx);
-    }
-}
+	    for(i in spawnZones) {
+		spawnZones[i].boundingBox.debugDraw(ctx);
+	    }
+	    for(i in triggers) {
+		triggers[i].bbox.debugDraw(ctx);
+	    }
+	    levelBounds.debugDraw(ctx);
+	}
+    },
 
-function clear()
-{
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-}
+    clear : function()
+    {
+	ctx.setTransform(1, 0, 0, 1, 0, 0);
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+    },
 
-function animate()
-{
-    if(!paused) {
-	step();
-	evalTriggers();
-    }
-    draw();
+    animate : function()
+    {
+	if(!paused) {
+	    step();
+	    evalTriggers();
+	}
+	draw();
+	
+	setTimeout(animate, waitTime());
+    },
 
-    setTimeout(animate, waitTime());
-}
+    evalTriggers : function()
+    {
+	for(var i in triggers) {
+	    triggers[i].evaluate();
+	};
+    },
 
-function evalTriggers()
-{
-    for(var i in triggers) {
-	triggers[i].evaluate();
-    };
-};
+    waitTime : function()
+    {
+	frameWaitTime = (1000.0/framerate);
+	return frameWaitTime;
+    },
 
-function waitTime()
-{
-    frameWaitTime = (1000.0/framerate);
-    return frameWaitTime;
-}
+    step : function()
+    {
+	//Because resources are not locked (threading) we have to make sure
+	//the contents of our game objects are what we think they are
+	for(var i in sprites) {
+	    if(classof(sprites[i]) == "Sprite")
+		sprites[i].step();
+	}
+	for(i in behaviours) {
+	    if(typeof(behaviours[i]) == "function")
+		behaviours[i]();
+	}
+    },
 
-function step()
-{
-    //Because resources are not locked (threading) we have to make sure
-    //the contents of our game objects are what we think they are
-    for(var i in sprites) {
-	if(classof(sprites[i]) == "Sprite")
-	    sprites[i].step();
-    }
-    for(i in behaviours) {
-	if(typeof(behaviours[i]) == "function")
-	   behaviours[i]();
-    }
-}
+    sideScrollTransform : function()
+    {
+	ctx.setTransform(1, 0, 0, 1, -scrollPoint.x, -scrollPoint.y);
+    },
 
-function sideScrollTransform()
-{
-    ctx.setTransform(1, 0, 0, 1, -scrollPoint.x, -scrollPoint.y);
-}
-
-function removeSprite(sprite)
-{
-    itAintMe = function(elm, index, arr) { return (elm != sprite) };
+    removeSprite : function(sprite)
+    {
+	itAintMe = function(elm, index, arr) { return (elm != sprite) };
 	sprites = sprites.filter(itAintMe);
+    }
 }

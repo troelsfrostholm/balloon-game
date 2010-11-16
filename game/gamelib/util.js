@@ -31,13 +31,29 @@ function classof(obj) {
     return undefined;
 };
 
-/*
+
+var loadedYet = false;
+
 function loadScript(filename)
 {
+    var head = document.getElementsByTagName('head')[0];
     var fileref=document.createElement('script');
     fileref.setAttribute("type","text/javascript");
     fileref.setAttribute("src", filename);
-    }*/
+
+    //    var loadedYet = false;
+    fileref.onload = function () {
+	alert("loaded!");
+	loadedYet = true;
+	console.log(loadedYet);
+    }
+    head.appendChild(fileref);
+    //    while(!loadedYet) {
+	for(i = 0; i< 10000000; i++) {}
+	console.log(loadedYet);
+	//blocking for script to load the evil `I hate my cpu` way
+	//    }
+}
 
 function createImage(filename)
 {

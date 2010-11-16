@@ -2,19 +2,16 @@
   <head>
     <script type="application/x-javascript" src="gamelib/util.js"></script>
     <script type="application/x-javascript" src="gamelib/math.js"></script>
+    <script type="application/x-javascript" src="gamelib/boundingbox.js"></script>
+    <script type="application/x-javascript" src="gamelib/sprite.js"></script>
+    <script type="application/x-javascript" src="gamelib/trigger.js"></script>
     <script type="application/x-javascript" src="gamelib/gamelib.js"></script>
     <script type="application/x-javascript" src="gamelib/events.js"></script>
     <script type="application/x-javascript" src="balloon-behaviours.js"></script>
     <script type="application/x-javascript" src="level-sketch-02.js"></script>
-    <script type="application/x-javascript">
-      function documentLoaded() 
-      {
-      begin();
-      }
-    </script>
     <link rel="StyleSheet" href="style.css" type="text/css" media="screen"></link>
   </head>
-  <body onload="documentLoaded();">
+  <body onload="begin()">
     <audio id="audio" src="assets/soundtrack.ogg" autoplay loop>
     </audio>
     <canvas id="canvas" width="800" height="600" style="border:1px dashed black;">

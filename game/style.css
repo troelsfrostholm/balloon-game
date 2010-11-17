@@ -1,0 +1,10 @@
+#canvas {
+    cursor: url("assets/cursor.gif"), auto
+}
+
+#credits {
+    font-size: xx-small;
+    font-weight: bold;
+    text-decoration: italic;
+    line-height:0em;
+}

@@ -13,7 +13,8 @@ level = {
     spawnZones : {
 	forest : {
 	    bounds : [-1500, -2100, 3000, 4200],
-	    items : ["monkey"]
+	    items : ["monkey"],
+	    frequency : 1
 	}
     }
 };

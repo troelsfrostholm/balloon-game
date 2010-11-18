@@ -8,7 +8,7 @@ Game = {
     debugMode : false,
     paused : false,
     
-    runGame : function() {
+    run : function() {
 	Game.initdraw();
 	bindMouseEvents();
     },
@@ -88,6 +88,22 @@ Game = {
 	    if(typeof(Game.behaviours[i]) == "function")
 		Game.behaviours[i]();
 	}
+    },
+
+    addSprite : function(sprite)
+    {
+	Game.sprites.push(sprite);
+    },
+
+    /*
+      sprites : Array or object of sprites
+    */
+    addSprites : function(sprites)
+    {
+	for(var i in sprites) {
+	    if(classof(sprites[i]) == "Sprite")
+	       this.addSprite(sprites[i]);
+	}	    
     },
 
     removeSprite : function(sprite)

@@ -40,7 +40,8 @@ function begin()
     context = canvas.getContext("2d");
     context.font = "bold 20px sans-serif";
     context.fillText("loading ...", canvas.width/2, canvas.height/2);
-    loadBackground();
+    LevelLoader.load(level, initialize);
+    /*    loadBackground();
     if(background.image.width) {
 	console.log("Background already loaded");
 	initializeLevel();
@@ -48,7 +49,7 @@ function begin()
     else {
 	console.log("Background not loaded yet");
 	background.image.onload = initializeLevel;
-    }
+	}*/
 }
 
 function loadBackground()
@@ -60,17 +61,23 @@ function loadBackground()
     background.place(0, 0);
 }
 
-function initializeLevel()
+function initialize()
 {  
-    SideScroll.levelBounds = new BoundingBox(level.bounds[0], level.bounds[1], level.bounds[2], level.bounds[3]);
-    SideScroll.enableWrap();
     Game.hudElements = createHudElements();
-    createSprites();
+    Game.addSprite(Level.background);
+    createBalloon();
+    Game.addSprites([balloon, boy]);
     setBehaviours();
+    SideScroll.enableWrap();
+    /*    SideScroll.levelBounds = new BoundingBox(level.bounds[0], level.bounds[1], level.bounds[2], level.bounds[3]);
+    SideScroll.enableWrap();
+
+    createSprites();
+
     spawnZones = createSpawnZones();
     createTriggers();
-    SideScroll.scrollPoint = balloon.pos[0].add(new Point(-300, 0));
-    Game.runGame();
+    SideScroll.scrollPoint = balloon.pos[0].add(new Point(-300, 0));*/
+    Game.run();
 }
 
 function createHudElements()
@@ -90,6 +97,28 @@ function createHudElements()
     pauseButton.place(50, 33);
     pauseButton.onclick = togglePause;
     return [hud, scoreElement, soundButton, pauseButton];
+}
+
+function createBalloon()
+{
+    balloon = new Sprite();
+    balloon.setImg("assets/balloon.png");
+    balloon.scale = 0.5;
+    balloon.place(0, 1900);
+    balloon.dangerHeight = -3000/2;
+    balloon.deathHeight = -4000/2;
+    balloon.normalImage = createImage("assets/balloon.png");
+    balloon.dangerImage = createImage("assets/balloon-danger2.png");
+    balloon.kablouieImage = createImage("assets/balloon-kablouie.png");
+    balloon.blowUpImage = createImage("assets/balloon-blown.png");
+
+    betterBalloon = new Sprite();
+    betterBalloon.setImg("assets/better-balloon.png");
+    betterBalloon.scale=0.5;
+
+    boy = new Sprite();
+    boy.setImg("assets/boy.png");
+    boy.scale=0.5;
 }
 
 function createSprites() 
@@ -415,6 +444,7 @@ function randomSpawnPoint()
 }
 
 function spawnObjectsAtRandomTimes() {
+    spawnZones = Level.spawnZones;
     for(i in spawnZones) {
 	if(!spawnZones[i].inZone()) continue;
 	chanceOfObjThisSecond = spawnZones[i].spawnsPerSecond * 1.0/Game.framerate;

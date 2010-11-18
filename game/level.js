@@ -1,4 +1,5 @@
 var Level = {
+    bounds : new BoundingBox(),
     images : {},
     sprites : {},
     spawnZones : {},
@@ -22,8 +23,8 @@ LevelLoader = {
     
     continueLoadingLevel : function(leveldata, continuation)
     {
-	console.log(Level.images);
-	console.log(this.loadSprites(leveldata.sprites));
+	Level.background = this.loadBackground(leveldata.background);
+	Level.bounds = this.loadBounds(leveldata.bounds);
 	Level.sprites = this.loadSprites(leveldata.sprites);
 	Level.spawnZones = this.loadSpawnZones(leveldata.spawnZones);
 	continuation(Level);
@@ -107,14 +108,29 @@ LevelLoader = {
     loadSpawnZone : function(spawnZoneData)
     {
 	bounds = spawnZoneData.bounds;
-	spawnZone = new SpawnZone(new BoundingBox(bounds[0], bounds[1], bounds[2], bounds[3]),
-				  spawnZoneData.items.map(LevelLoader.lookupSprite));
+	sprites =  spawnZoneData.items.map(LevelLoader.lookupSprite);
+	bbox = new BoundingBox(bounds[0], bounds[1], bounds[2], bounds[3]);
+	spawnZone = new SpawnZone(bbox, sprites,spawnZoneData.frequency);
 	return spawnZone;
     },
 
     lookupSprite : function(spriteName)
     {
 	return Level.sprites[spriteName];
+    },
+
+    loadBounds : function(boundsData)
+    {
+	return new BoundingBox(boundsData[0], boundsData[1], boundsData[2], boundsData[3]);
+    },
+
+    loadBackground : function(backgroundData)
+    {
+	var background = new Sprite();
+	background.setImg(backgroundData);
+	background.scale = 1;
+	background.place(0, 0);
+	return background;
     }
 
 };

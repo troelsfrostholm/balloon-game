@@ -47,10 +47,10 @@ function Sprite()
 
 Sprite.prototype.draw = function()
 {
-    ctx.translate(this.pos[0].x, this.pos[0].y);
-    ctx.scale(this.scale, this.scale);
-    ctx.rotate(this.angle[0]);
-    ctx.drawImage(this.image, (-this.image.width)/2.0, -this.image.height/2.0);
+    Game.ctx.translate(this.pos[0].x, this.pos[0].y);
+    Game.ctx.scale(this.scale, this.scale);
+    Game.ctx.rotate(this.angle[0]);
+    Game.ctx.drawImage(this.image, (-this.image.width)/2.0, -this.image.height/2.0);
 };
 
 Sprite.prototype.setImg = function(image)

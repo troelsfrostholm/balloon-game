@@ -60,4 +60,12 @@ function createImage(filename)
     img = new Image();
     img.src = filename;
     return img;
-}
+};
+
+function mapObject(func, obj) { 
+    var copy = {}; 
+    for(var i in obj) { 
+	copy[i] = func(obj[i]);
+    } 
+    return copy; 
+};

@@ -6,74 +6,73 @@ Game = {
     behaviours : Array(),
     triggers : Array(),
     debugMode : false,
-    scrollPoint : new Point(0, 0),
     paused : false,
-
+    
     runGame : function() {
-	initdraw();
+	Game.initdraw();
 	bindMouseEvents();
     },
-
+    
     initdraw : function() {
-	canvas = document.getElementById("canvas");
-	if (canvas.getContext) {
-	    ctx = canvas.getContext("2d");
-	    animate();
+	Game.canvas = document.getElementById("canvas");
+	if (Game.canvas.getContext) {
+	    Game.ctx = canvas.getContext("2d");
+	    Game.animate();
 	}
     },
 
     draw : function()
     {
-	clear();
-	for(var i in sprites) {
-	    sideScrollTransform();
-	    sprites[i].draw();
+	Game.clear();
+	for(var i in Game.sprites) {
+	    SideScroll.transform();
+	    Game.sprites[i].draw();
 	}
-	for(var i in hudElements) {
-	    ctx.setTransform(1, 0, 0, 1, 0, 0);
-	    hudElements[i].draw();
+	for(var i in Game.hudElements) {
+	    Game.ctx.setTransform(1, 0, 0, 1, 0, 0);
+	    Game.hudElements[i].draw();
 	}
-	if(debugMode) {
-	    for(var i in sprites) {
-		sprites[i].getBoundingBox().debugDraw(ctx);
+	if(Game.debugMode) {
+	    for(var i in Game.sprites) {
+		Game.sprites[i].getBoundingBox().debugDraw(Game.ctx);
 	}
-	    for(i in spawnZones) {
-		spawnZones[i].boundingBox.debugDraw(ctx);
+	    for(i in Game.spawnZones) {
+		Game.spawnZones[i].boundingBox.debugDraw(Game.ctx);
 	    }
-	    for(i in triggers) {
-		triggers[i].bbox.debugDraw(ctx);
+	    for(i in Game.triggers) {
+		Game.triggers[i].bbox.debugDraw(Game.ctx);
 	    }
-	    levelBounds.debugDraw(ctx);
+	    Game.levelBounds.debugDraw(Game.ctx);
 	}
     },
 
     clear : function()
     {
-	ctx.setTransform(1, 0, 0, 1, 0, 0);
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	Game.ctx.setTransform(1, 0, 0, 1, 0, 0);
+	Game.ctx.clearRect(0, 0, Game.canvas.width, Game.canvas.height);
     },
 
     animate : function()
     {
-	if(!paused) {
-	    step();
-	    evalTriggers();
+	if(!Game.paused) {
+	    Game.step();
+	    Game.evalTriggers();
 	}
-	draw();
+	Game.draw();
 	
-	setTimeout(animate, waitTime());
+	setTimeout(Game.animate, Game.waitTime());
     },
 
     evalTriggers : function()
     {
-	for(var i in triggers) {
-	    triggers[i].evaluate();
+	for(var i in Game.triggers) {
+	    Game.triggers[i].evaluate();
 	};
     },
 
     waitTime : function()
     {
-	frameWaitTime = (1000.0/framerate);
+	frameWaitTime = (1000.0/Game.framerate);
 	return frameWaitTime;
     },
 
@@ -81,24 +80,28 @@ Game = {
     {
 	//Because resources are not locked (threading) we have to make sure
 	//the contents of our game objects are what we think they are
-	for(var i in sprites) {
-	    if(classof(sprites[i]) == "Sprite")
-		sprites[i].step();
+	for(var i in Game.sprites) {
+	    if(classof(Game.sprites[i]) == "Sprite")
+		Game.sprites[i].step();
 	}
-	for(i in behaviours) {
-	    if(typeof(behaviours[i]) == "function")
-		behaviours[i]();
+	for(i in Game.behaviours) {
+	    if(typeof(Game.behaviours[i]) == "function")
+		Game.behaviours[i]();
 	}
-    },
-
-    sideScrollTransform : function()
-    {
-	ctx.setTransform(1, 0, 0, 1, -scrollPoint.x, -scrollPoint.y);
     },
 
     removeSprite : function(sprite)
     {
 	itAintMe = function(elm, index, arr) { return (elm != sprite) };
-	sprites = sprites.filter(itAintMe);
+	Game.sprites = Game.sprites.filter(itAintMe);
+    },
+
+    translateEverything : function(byPoint)
+    {
+	for(var i in Game.sprites)
+	    {
+		Game.sprites[i].pos[0] = Game.sprites[i].pos[0].add(byPoint);
+	    }
     }
+
 }

@@ -1,6 +1,4 @@
 //level properties
-var levelBounds;
-
 //Sprites
 var background;
 var balloon;
@@ -57,21 +55,22 @@ function loadBackground()
 {
     console.log("Loading background");
     background = new Sprite();
-    background.setImg("assets/background.jpg");
+    background.setImg(level.background);
     background.scale = 1;
     background.place(0, 0);
 }
 
 function initializeLevel()
 {  
-    levelBounds = new BoundingBox(-1500, -2100, 3000, 4200);
-    hudElements = createHudElements();
+    SideScroll.levelBounds = new BoundingBox(level.bounds[0], level.bounds[1], level.bounds[2], level.bounds[3]);
+    SideScroll.enableWrap();
+    Game.hudElements = createHudElements();
     createSprites();
     setBehaviours();
     spawnZones = createSpawnZones();
     createTriggers();
-    scrollPoint = balloon.pos[0].add(new Point(-300, 0));
-    runGame();
+    SideScroll.scrollPoint = balloon.pos[0].add(new Point(-300, 0));
+    Game.runGame();
 }
 
 function createHudElements()
@@ -80,7 +79,7 @@ function createHudElements()
     hud.image.src = "assets/hud-02.png";
     canvas = document.getElementById("canvas");
     hud.place(canvas.width/2, canvas.height/2);
-    hudElements.push(hud);
+    Game.hudElements.push(hud);
     scoreElement = new TextElement("0", new Point(720, 558));
     soundButton = new Sprite();
     soundButton.image.src = "assets/sound-on-button.png";
@@ -120,10 +119,10 @@ function createSprites()
     superhero = makeFlatFlyer(new Point(500, 100), "superhero.png");;
     bear = makeFlatFlyer(new Point(500, 100), "bear.png");
 
-    sprites.push(background);
+    Game.sprites.push(background);
     createStaticObjects();
-    sprites.push(balloon);
-    sprites.push(boy);
+    Game.sprites.push(balloon);
+    Game.sprites.push(boy);
 };
 
 function createStaticObjects()
@@ -141,7 +140,7 @@ function addStaticObject(image, position, rotation)
     object.image.src = image;
     object.pos[0] = position;
     object.angle[0] = rotation;
-    sprites.push(object);
+    Game.sprites.push(object);
 };
 
 function addStaticItem(image, position, rotation)
@@ -155,7 +154,7 @@ function createTriggers()
 {
     bbox = new BoundingBox(-1300, -1050, 400, 300);
     trigger = new Trigger(balloon, bbox, girlSpeak, hoverBalloon, girlShutup);
-    triggers.push(trigger);
+    Game.triggers.push(trigger);
 }
 
 function girlSpeak()
@@ -185,8 +184,8 @@ function girlSpeak()
 function playWinSequence()
 {
     betterBalloon.pos = balloon.pos;
-    removeSprite(balloon);
-    sprites.push(betterBalloon);
+    Game.removeSprite(balloon);
+    Game.sprites.push(betterBalloon);
     followNewBalloon = function(obj) {
 	obj.pos[0] = betterBalloon.pos[0].add(new Point(0, 100));
     }
@@ -205,7 +204,7 @@ function hoverBalloon()
 
 function setDialogue(dialogue)
 {
-    sprites.push(dialogue);
+    Game.sprites.push(dialogue);
     activeDialogue = dialogue;
 }
 
@@ -213,7 +212,7 @@ function unsetDialogue()
 {
     if(activeDialogue)
 	{
-	    removeSprite(activeDialogue);
+	    Game.removeSprite(activeDialogue);
 	    activeDialogue = null;
 	}
 }
@@ -350,9 +349,8 @@ function setBehaviours()
     
     //global behaviours
     mouseisdown = blowAtBalloon;
-    behaviours.push(sideScrollAfterBalloon);
-    behaviours.push(spawnObjectsAtRandomTimes);
-    behaviours.push(wrapping);
+    Game.behaviours.push(sideScrollAfterBalloon);
+    Game.behaviours.push(spawnObjectsAtRandomTimes);
 }
 
 function distToBalloon(point)
@@ -375,7 +373,7 @@ function collisionTest(obj) {
     if(balloon.getBoundingBox().collidesWith(obj.getBoundingBox())) {
 	obj.behaviours = [createFollowBehaviour(balloon, new Point(20, 110))];
 	obj.scale = 0.25;
-	setTimeout(function () {removeSprite(obj);}, 1500);
+	setTimeout(function () {Game.removeSprite(obj);}, 1500);
 	score+=1;
 	scoreElement.text = score + "";
 	balloon.acc(0, obj.weight);
@@ -394,15 +392,12 @@ function createFollowBehaviour(object, offset) {
 
 function dieWhenFarAway(obj) {
     if(obj.pos[0].squaredDistance(balloon.pos[0])>squaredMaxItemDistance) {
-    	removeSprite(obj);
+    	Game.removeSprite(obj);
     }
 }
 
 function sideScrollAfterBalloon() {
-    screenCenter = new Point(scrollPoint.x + canvas.width/2, scrollPoint.y + canvas.height/2);
-    scrollPoint = scrollPoint.add(balloon.pos[0].sub(screenCenter).mult(sideScrollSpeed));
-    if(scrollPoint.y<levelBounds.y) scrollPoint.y=levelBounds.y;
-    if(scrollPoint.y+canvas.height>levelBounds.y+levelBounds.height) scrollPoint.y=levelBounds.y+levelBounds.height-canvas.height;
+    SideScroll.followSprite(balloon);
 }
 
 function randomSpawnPoint()
@@ -416,23 +411,23 @@ function randomSpawnPoint()
 	x = canvas.width*(spawnEdge%2);
 	y = Math.random()*canvas.height;
     }
-    return (new Point(x, y)).add(scrollPoint);
+    return (new Point(x, y)).add(SideScroll.scrollPoint);
 }
 
 function spawnObjectsAtRandomTimes() {
     for(i in spawnZones) {
 	if(!spawnZones[i].inZone()) continue;
-	chanceOfObjThisSecond = spawnZones[i].spawnsPerSecond * 1.0/framerate;
+	chanceOfObjThisSecond = spawnZones[i].spawnsPerSecond * 1.0/Game.framerate;
 	if(Math.random()<chanceOfObjThisSecond)
-	    sprites.push(spawnZones[i].spawn(randomSpawnPoint()));
+	    Game.sprites.push(spawnZones[i].spawn(randomSpawnPoint()));
     }
 }
 
 function togglePause()
 {
-    paused = !paused;
-    if(paused) pauseButton.setImg("assets/play-button.png");
-    if(!paused) pauseButton.setImg("assets/pause-button.png");
+    Game.paused = !Game.paused;
+    if(Game.paused) pauseButton.setImg("assets/play-button.png");
+    if(!Game.paused) pauseButton.setImg("assets/pause-button.png");
 }
 
 function toggleSound()

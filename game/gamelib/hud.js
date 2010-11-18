@@ -4,7 +4,7 @@ function TextElement(text, pos)
     this.pos = pos;
     
     this.draw = function() {
-	ctx.font = "bold 20px sans-serif";
-	ctx.fillText(this.text, this.pos.x, this.pos.y);
+	Game.ctx.font = "bold 20px sans-serif";
+	Game.ctx.fillText(this.text, this.pos.x, this.pos.y);
     }
 }

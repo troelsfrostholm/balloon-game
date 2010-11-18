@@ -1,0 +1,48 @@
+SideScroll = {
+
+    scrollPoint : new Point(0, 0),
+    levelBounds : new BoundingBox(),
+
+    transform : function()
+    {
+	Game.ctx.setTransform(1, 0, 0, 1, -SideScroll.scrollPoint.x, -SideScroll.scrollPoint.y);
+    },
+
+    followSprite : function(sprite) {
+	screenCenter = new Point(SideScroll.scrollPoint.x + Game.canvas.width/2, 
+				 SideScroll.scrollPoint.y + Game.canvas.height/2);
+	SideScroll.scrollPoint = SideScroll.scrollPoint.add(sprite.pos[0].sub(screenCenter).mult(sideScrollSpeed));
+	if(SideScroll.scrollPoint.y<SideScroll.levelBounds.y) 
+	    SideScroll.scrollPoint.y=SideScroll.levelBounds.y;
+	if(SideScroll.scrollPoint.y+canvas.height>SideScroll.levelBounds.y+SideScroll.levelBounds.height) 
+	    SideScroll.scrollPoint.y=SideScroll.levelBounds.y+
+		SideScroll.levelBounds.height-
+		Game.canvas.height;
+    },
+
+//Converts a point from screen to world coordinates
+    screenToWorldCoords : function(point)
+    {
+	return point.add(SideScroll.scrollPoint);
+    },
+
+    wrapping : function()
+    {
+	p = SideScroll.scrollPoint;
+	b = SideScroll.levelBounds;
+	min = SideScroll.levelBounds.x-Game.canvas.width;
+	max = SideScroll.levelBounds.x+SideScroll.levelBounds.width;
+	t = 0;
+	//	console.log("p.x : " + p.x + ", min : " + min + ", max : " + max);
+	if(p.x<min)  { console.log("left"); t=b.width; }
+	if(p.x>max)  { console.log("right"); t=-b.width; }
+	SideScroll.scrollPoint = SideScroll.scrollPoint.add(new Point(t, 0));
+	Game.translateEverything(new Point(t, 0));
+	background.pos[0] = background.pos[0].add(new Point(-t, 0));
+    },
+
+    enableWrap : function()
+    {
+	Game.behaviours.push(SideScroll.wrapping);
+    }
+}

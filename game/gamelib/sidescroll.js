@@ -12,11 +12,11 @@ SideScroll = {
 	screenCenter = new Point(SideScroll.scrollPoint.x + Game.canvas.width/2, 
 				 SideScroll.scrollPoint.y + Game.canvas.height/2);
 	SideScroll.scrollPoint = SideScroll.scrollPoint.add(sprite.pos[0].sub(screenCenter).mult(sideScrollSpeed));
-	if(SideScroll.scrollPoint.y<SideScroll.levelBounds.y) 
-	    SideScroll.scrollPoint.y=SideScroll.levelBounds.y;
-	if(SideScroll.scrollPoint.y+canvas.height>SideScroll.levelBounds.y+SideScroll.levelBounds.height) 
-	    SideScroll.scrollPoint.y=SideScroll.levelBounds.y+
-		SideScroll.levelBounds.height-
+	if(SideScroll.scrollPoint.y<Level.bounds.y) 
+	    SideScroll.scrollPoint.y=Level.bounds.y;
+	if(SideScroll.scrollPoint.y+canvas.height>Level.bounds.y+Level.bounds.height) 
+	    SideScroll.scrollPoint.y=Level.bounds.y+
+		Level.bounds.height-
 		Game.canvas.height;
     },
 

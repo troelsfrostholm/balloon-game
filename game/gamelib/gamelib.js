@@ -1,6 +1,7 @@
 Game = {
 
     framerate : 60,
+    frame : 0.0,
     sprites : Array(),
     hudElements : Array(),
     behaviours : Array(),
@@ -18,6 +19,8 @@ Game = {
 	if (Game.canvas.getContext) {
 	    Game.ctx = canvas.getContext("2d");
 	    Game.animate();
+	    setInterval(Game.animate, Game.waitTime());
+	    
 	}
     },
 
@@ -59,8 +62,9 @@ Game = {
 	    Game.evalTriggers();
 	}
 	Game.draw();
-	
-	setTimeout(Game.animate, Game.waitTime());
+	Game.frame++;
+
+	//setTimeout(Game.animate, Game.waitTime());
     },
 
     evalTriggers : function()
@@ -118,6 +122,21 @@ Game = {
 	    {
 		Game.sprites[i].pos[0] = Game.sprites[i].pos[0].add(byPoint);
 	    }
+    },
+
+    /*
+      Measures framerate and passes it to callback
+      in frames per second. 
+    */
+    measureFramerate : function(callback)
+    {
+	var t1 = new Date().getTime();
+	var f1 = Game.frame;
+	setTimeout(function() {
+		var t2 = new Date().getTime();
+		var f2 = Game.frame;
+		callback(1000.0*(f2 - f1)/(t2 - t1));
+	    }, 1000 );
     }
 
 }

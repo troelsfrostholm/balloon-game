@@ -27,6 +27,10 @@ LevelLoader = {
 	Level.bounds = this.loadBounds(leveldata.bounds);
 	Level.sprites = this.loadSprites(leveldata.sprites);
 	Level.spawnZones = this.loadSpawnZones(leveldata.spawnZones);
+	Level.balloonStand = new BoundingBox(leveldata.balloonStand[0],
+					     leveldata.balloonStand[1],
+					     leveldata.balloonStand[2],
+					     leveldata.balloonStand[3]);
 	continuation(Level);
     },
     
@@ -96,7 +100,9 @@ LevelLoader = {
 	if(spriteData.position) sprite.place(spriteData.position[0], spriteData.position[1]);
 	if(spriteData.velocity) sprite.move(spriteData.velocity[0], spriteData.velocity[1]);
 	if(spriteData.acceleration) sprite.acc(spriteData.acceleration[0], spriteData.acceleration[1]);
+	if(spriteData.spin) sprite.spin(spriteData.spin);
 	if(spriteData.behaviours) sprite.behaviours = spriteData.behaviours.map(LevelLoader.loadBehaviour);
+	if(spriteData.weight) sprite.weight = spriteData.weight;
 	return sprite;
     },
 

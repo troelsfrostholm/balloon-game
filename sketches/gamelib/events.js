@@ -1,4 +1,4 @@
-var mousepos = null;
+var mousepos = new Point();
 
 function mouseclick(point) {}
 function mouserelease(point) {}
@@ -31,6 +31,7 @@ function bindMouseEvents()
     }
 
     canvas.onmousemove = function(evt) {
+	mousepos = clickPoint(evt);
 	if(downpos) downpos = getWorldCoords(evt);
 	return false;
     }

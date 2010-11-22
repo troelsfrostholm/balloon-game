@@ -3,6 +3,7 @@ var levelBounds;
 
 //Sprites
 var background;
+var altitudeslider;
 var balloon;
 var betterBalloon;
 var boy;
@@ -26,7 +27,14 @@ var buoyancy = -0.3;
 var sideScrollSpeed = 0.05;
 var squaredMaxItemDistance = 1000*1000;
 
+var vectorXaxis = new Point(-1,0);
+var vectorYaxis = new Point(1,1);
+var cursorInWorld = new Point();
+var cursorToBalloon = new Point();
+
 var score = 0;
+
+var cursor;
 
 var soundOn = true;
 
@@ -76,8 +84,12 @@ function initializeLevel()
 
 function createHudElements()
 {
-    hud = new Sprite();
-    hud.image.src = "assets/hud-02.png";
+	cursor = new Sprite();
+	cursor.image.src=("assets/cursor.png");
+	altitudeslider = new Sprite();
+	altitudeslider.image.src = ("assets/altitude_slider.png");
+	hud = new Sprite();
+    hud.image.src = "assets/hud_05.png";
     canvas = document.getElementById("canvas");
     hud.place(canvas.width/2, canvas.height/2);
     hudElements.push(hud);
@@ -90,7 +102,7 @@ function createHudElements()
     pauseButton.image.src = "assets/pause-button.png";
     pauseButton.place(50, 33);
     pauseButton.onclick = togglePause;
-    return [hud, scoreElement, soundButton, pauseButton];
+    return [hud, scoreElement, soundButton, pauseButton, altitudeslider, cursor];
 }
 
 function createSprites() 
@@ -353,6 +365,7 @@ function setBehaviours()
     behaviours.push(sideScrollAfterBalloon);
     behaviours.push(spawnObjectsAtRandomTimes);
     behaviours.push(wrapping);
+	behaviours.push(cursorBehaviour);
 }
 
 function distToBalloon(point)

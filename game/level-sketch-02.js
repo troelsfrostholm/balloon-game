@@ -97,31 +97,6 @@ function createBalloon()
     boy.scale=0.5;
 }
 
-function createStaticObjects()
-{
-    addStaticObject("assets/arrow_4.png", new Point(-800, -230), 0.2);
-    addStaticObject("assets/arrow_1.png", new Point(-160, -530), -0.3);
-    addStaticObject("assets/arrow_3.png", new Point(710, -1454), -1);
-    addStaticObject("assets/arrow_2.png", new Point(-285, -1512), -1.4);
-}
-
-function addStaticObject(image, position, rotation)
-{
-    if(!rotation) rotation = 0;
-    object = new Sprite();
-    object.image.src = image;
-    object.pos[0] = position;
-    object.angle[0] = rotation;
-    Game.sprites.push(object);
-};
-
-function addStaticItem(image, position, rotation)
-{
-    item = createStaticObject(image, position, rotation);
-    item.behave(collisionTest);
-    sprites.push(item);
-};
-
 function createTriggers()
 {
     bbox = Level.balloonStand;
@@ -141,7 +116,7 @@ function girlSpeak()
     //points to buy a better balloon
     if(win) {	
 	setDialogue(pickAtRandom(richDialogue));
-	balloon.behave(ancorAt(girlPosition));
+	balloon.behave(Behaviours.ancorAt(girlPosition));
 	setTimeout(playWinSequence, 5000);
     }
     else {
@@ -209,13 +184,12 @@ function pickAtRandom(array)
 function setBehaviours()
 {
     //sprite behaviours
-    balloon.behave(bouncy);
-    balloon.behave(resisting);
-    balloon.behave(buoyant);
-    balloon.behave(heightVulnerable);
+    balloon.behave(Behaviours.resisting);
+    balloon.behave(Behaviours.buoyant);
+    balloon.behave(Behaviours.heightVulnerable);
 
-    betterBalloon.behave(buoyant);
-    betterBalloon.behave(resisting);
+    betterBalloon.behave(Behaviours.buoyant);
+    betterBalloon.behave(Behaviours.resisting);
 
     boy.behave(createFollowBehaviour(balloon, new Point(0, 60)));
     

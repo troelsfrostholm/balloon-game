@@ -115,8 +115,7 @@ LevelLoader = {
 
     loadBehaviour : function(behaviour)
     {
-	//not sure how to do this. 
-	return;
+	return Behaviours[behaviour];
     },
 
     loadSpawnZones : function(spawnZoneData)

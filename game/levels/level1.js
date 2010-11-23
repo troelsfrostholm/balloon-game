@@ -8,7 +8,7 @@ level = {
 	monkey : {
 	    image : "assets/trees/monkey.png",
 	    position : [30, 20],
-	    behaviours : ["collisionDetection"] },
+	    behaviours : ["collisionTest"] },
 	arrow1 : {
 	    image : "assets/arrow_1.png",
 	    position : [300, 220],

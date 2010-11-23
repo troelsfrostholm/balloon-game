@@ -8,8 +8,8 @@ function SpawnZone(bbox, objects, spawnsPerSecond)
 	{
 	    obj = pickAtRandom(this.spawnObjects).copy();
 	    obj.pos[0] = spawnPoint;
-	    obj.behave(collisionTest);
-	    obj.behave(dieWhenFarAway);
+	    obj.behave(Behaviours.collisionTest);
+	    obj.behave(Behaviours.dieWhenFarAway);
 	    return obj;
 	};
 

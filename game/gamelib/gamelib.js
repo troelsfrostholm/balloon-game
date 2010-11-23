@@ -1,3 +1,4 @@
+Behaviours = {};
 Game = {
 
     framerate : 60,

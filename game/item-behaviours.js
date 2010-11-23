@@ -1,4 +1,5 @@
-function collisionTest(obj) {
+Behaviours.collisionTest = function (obj) 
+{
     if(balloon.getBoundingBox().collidesWith(obj.getBoundingBox())) {
 	obj.behaviours = [createFollowBehaviour(balloon, new Point(20, 110))];
 	obj.scale = 0.25;
@@ -9,7 +10,8 @@ function collisionTest(obj) {
     }
 };
 
-function dieWhenFarAway(obj) {
+Behaviours.dieWhenFarAway = function(obj) 
+{
     if(obj.pos[0].squaredDistance(balloon.pos[0])>squaredMaxItemDistance) {
     	Game.removeSprite(obj);
     }

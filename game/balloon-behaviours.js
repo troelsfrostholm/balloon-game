@@ -1,30 +1,17 @@
-function bouncy(obj) 
-{
-    /*    p = obj.pos[0];
-    dp = obj.pos[1];
-    halfwidth = obj.image.width/2*obj.scale;
-    halfheight = obj.image.height/2*obj.scale;
-	
-    if(p.x<halfwidth && dp.x<0) dp.x=-dp.x;
-    if(p.y<halfheight && dp.y<0) dp.y=-dp.y;
-    if(p.x>canvas.width-halfwidth && dp.x>0) dp.x=-dp.x;
-    if(p.y>canvas.height-halfheight && dp.y>0) dp.y=-dp.y;*/
-};
-
-function resisting(obj) {
+Behaviours.resisting = function(obj) {
     obj.pos[1] = obj.pos[1].mult(resistance);
 };
 
-function buoyant(obj) {
+Behaviours.buoyant = function(obj) {
     obj.acc(0,buoyancy);
 };
 
-function swinging(obj)
+Behaviours.swinging = function(obj)
 {
 	obj.angle[2] = -gravity*Math.sin(obj.angle[0]);
 };
 
-function dampened(obj)
+Behaviours.dampened = function(obj)
 {
 	obj.angle[0] *= dampening;
 	obj.angle[1] *= dampening;
@@ -32,7 +19,7 @@ function dampened(obj)
 
 };
 
-function heightVulnerable(obj) {
+Behaviours.heightVulnerable = function(obj) {
     height = obj.pos[0].y;
     obj.image = obj.normalImage;
     if(height < obj.dangerHeight)  obj.image = obj.dangerImage;
@@ -45,15 +32,11 @@ function heightVulnerable(obj) {
 		obj.scale=0.5;
 	    }, 500);
     }
-}
+};
 
-function falling(obj) {
-    obj.acc(0,0.5);
-}
-
-function ancorAt(point)
+Behaviours.ancorAt = function(point)
 {
     return function(obj) {
 	obj.pos[1] = obj.pos[1].add(point.sub(obj.pos[0]).mult(0.001));
     }
-}
+};

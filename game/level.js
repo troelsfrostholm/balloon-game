@@ -1,7 +1,8 @@
 var Level = {
     bounds : new BoundingBox(),
     images : {},
-    sprites : {},
+    staticSprites : {},
+    spawnableSprites : {},
     spawnZones : {},
 };
 
@@ -23,9 +24,11 @@ LevelLoader = {
     
     continueLoadingLevel : function(leveldata, continuation)
     {
+	Level.startPoint = leveldata.startPoint;
 	Level.background = this.loadBackground(leveldata.background);
 	Level.bounds = this.loadBounds(leveldata.bounds);
-	Level.sprites = this.loadSprites(leveldata.sprites);
+	Level.staticSprites = this.loadSprites(leveldata.staticSprites);
+	Level.spawnableSprites = this.loadSprites(leveldata.spawnableSprites);
 	Level.spawnZones = this.loadSpawnZones(leveldata.spawnZones);
 	Level.balloonStand = new BoundingBox(leveldata.balloonStand[0],
 					     leveldata.balloonStand[1],
@@ -46,7 +49,7 @@ LevelLoader = {
     {
 	this.imagesToGo = imageFiles.length;
 	loadfunc = function(file) {
-	    img = new Image();
+	    var img = new Image();
 	    done = function() {
 		if(--LevelLoader.imagesToGo <= 0)
 		    if(typeof(continuation) == "function")
@@ -78,9 +81,13 @@ LevelLoader = {
 	var images = [];
 	var temp = {}
 	temp[leveldata.background] = leveldata.background;
-	var sprites = leveldata.sprites;
+	var sprites = leveldata.spawnableSprites;
 	for(var i in sprites) {
 	    temp[sprites[i].image] = sprites[i].image;
+	}
+	var moresprites = leveldata.staticSprites;
+	for(var i in moresprites) {
+	    temp[moresprites[i].image] = moresprites[i].image;
 	}
 	for(i in temp) {
 	    images.push(temp[i]);
@@ -106,6 +113,12 @@ LevelLoader = {
 	return sprite;
     },
 
+    loadBehaviour : function(behaviour)
+    {
+	//not sure how to do this. 
+	return;
+    },
+
     loadSpawnZones : function(spawnZoneData)
     {
 	return mapObject(LevelLoader.loadSpawnZone, spawnZoneData);
@@ -122,7 +135,7 @@ LevelLoader = {
 
     lookupSprite : function(spriteName)
     {
-	return Level.sprites[spriteName];
+	return Level.spawnableSprites[spriteName];
     },
 
     loadBounds : function(boundsData)

@@ -41,43 +41,18 @@ function begin()
     context.font = "bold 20px sans-serif";
     context.fillText("loading ...", canvas.width/2, canvas.height/2);
     LevelLoader.load(level, initialize);
-    /*    loadBackground();
-    if(background.image.width) {
-	console.log("Background already loaded");
-	initializeLevel();
-    }
-    else {
-	console.log("Background not loaded yet");
-	background.image.onload = initializeLevel;
-	}*/
-}
-
-function loadBackground()
-{
-    console.log("Loading background");
-    background = new Sprite();
-    background.setImg(level.background);
-    background.scale = 1;
-    background.place(0, 0);
 }
 
 function initialize()
 {  
     Game.hudElements = createHudElements();
     Game.addSprite(Level.background);
+    Game.addSprites(Level.staticSprites);
     createBalloon();
     Game.addSprites([balloon, boy]);
     setBehaviours();
     SideScroll.enableWrap();
     createTriggers();
-    /*    SideScroll.levelBounds = new BoundingBox(level.bounds[0], level.bounds[1], level.bounds[2], level.bounds[3]);
-    SideScroll.enableWrap();
-
-    createSprites();
-
-    spawnZones = createSpawnZones();
-
-    SideScroll.scrollPoint = balloon.pos[0].add(new Point(-300, 0));*/
     Game.run();
 }
 
@@ -105,7 +80,7 @@ function createBalloon()
     balloon = new Sprite();
     balloon.setImg("assets/balloon.png");
     balloon.scale = 0.5;
-    balloon.place(0, 1900);
+    balloon.place(Level.startPoint[0], Level.startPoint[1]);
     balloon.dangerHeight = -3000/2;
     balloon.deathHeight = -4000/2;
     balloon.normalImage = createImage("assets/balloon.png");
@@ -121,39 +96,6 @@ function createBalloon()
     boy.setImg("assets/boy.png");
     boy.scale=0.5;
 }
-
-function createSprites() 
-{
-    balloon = new Sprite();
-    balloon.setImg("assets/balloon.png");
-    balloon.scale = 0.5;
-    balloon.place(0, 1900);
-    balloon.dangerHeight = -3000/2;
-    balloon.deathHeight = -4000/2;
-    balloon.normalImage = createImage("assets/balloon.png");
-    balloon.dangerImage = createImage("assets/balloon-danger2.png");
-    balloon.kablouieImage = createImage("assets/balloon-kablouie.png");
-    balloon.blowUpImage = createImage("assets/balloon-blown.png");
-
-    betterBalloon = new Sprite();
-    betterBalloon.setImg("assets/better-balloon.png");
-    betterBalloon.scale=0.5;
-
-    boy = new Sprite();
-    boy.setImg("assets/boy.png");
-    boy.scale=0.5;
-
-    pig = makeFlatFlyer(new Point(500, 100), "pig.gif");
-    carpetman = makeFlatFlyer(new Point(500, 100), "carpetman.png");
-    penguin = makeFlatFlyer(new Point(500, 100), "penguin.png");;
-    superhero = makeFlatFlyer(new Point(500, 100), "superhero.png");;
-    bear = makeFlatFlyer(new Point(500, 100), "bear.png");
-
-    Game.sprites.push(background);
-    createStaticObjects();
-    Game.sprites.push(balloon);
-    Game.sprites.push(boy);
-};
 
 function createStaticObjects()
 {
@@ -182,8 +124,7 @@ function addStaticItem(image, position, rotation)
 
 function createTriggers()
 {
-    bbox = Level.balloonStand;//new BoundingBox(-1300, -1050, 400, 300);
-    console.log(bbox);
+    bbox = Level.balloonStand;
     trigger = new Trigger(balloon, bbox, girlSpeak, hoverBalloon, girlShutup);
     Game.triggers.push(trigger);
 }

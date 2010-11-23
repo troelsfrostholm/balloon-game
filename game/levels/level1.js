@@ -21,6 +21,7 @@ level = {
 	    image : "assets/trees/monkey.png",
 	    velocity : [3, -2],
 	    acceleration : [0, 0.2],
+	    spin : 0.1,
 	    weight : 30
 	},
 

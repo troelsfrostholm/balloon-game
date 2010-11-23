@@ -209,25 +209,37 @@ function TextElement(text, pos)
 function draw()
 {
     clear();
-    for(var i in sprites) {
-	sideScrollTransform();
-	sprites[i].draw();
+	
+    for (var i in sprites)
+	{
+		sideScrollTransform();
+		sprites[i].draw();
     }
-    for(var i in hudElements) {
-	ctx.setTransform(1, 0, 0, 1, 0, 0);
-	hudElements[i].draw();
+	
+	var slider = hudElements[4];
+	slider.place(((canvas.width - (slider.image.width / 2)) - 45) , ((canvas.height / 2) + 20) + (425 / (levelBounds.height / balloon.pos[0].y)));	
+		
+    for (var i in hudElements)
+	{
+		ctx.setTransform(1, 0, 0, 1, 0, 0);
+		hudElements[i].draw();
     }
-    if(debugMode) {
-	for(var i in sprites) {
-	    sprites[i].getBoundingBox().debugDraw(ctx);
-	}
-	for(i in spawnZones) {
-	    spawnZones[i].boundingBox.debugDraw(ctx);
-	}
-	for(i in triggers) {
-	    triggers[i].bbox.debugDraw(ctx);
-	}
-	levelBounds.debugDraw(ctx);
+
+    if(debugMode)
+	{
+		for(var i in sprites)
+		{
+			sprites[i].getBoundingBox().debugDraw(ctx);
+		}
+		for(i in spawnZones)
+		{
+			spawnZones[i].boundingBox.debugDraw(ctx);
+		}
+		for(i in triggers)
+		{
+			triggers[i].bbox.debugDraw(ctx);
+		}
+		levelBounds.debugDraw(ctx);
     }
 }
 
@@ -265,13 +277,15 @@ function step()
 {
     //Because resources are not locked (threading) we have to make sure
     //the contents of our game objects are what we think they are
-    for(var i in sprites) {
-	if(classof(sprites[i]) == "Sprite")
-	    sprites[i].step();
+    for(var i in sprites)
+	{
+		if(classof(sprites[i]) == "Sprite")
+			sprites[i].step();
     }
-    for(i in behaviours) {
-	if(typeof(behaviours[i]) == "function")
-	   behaviours[i]();
+    for(i in behaviours)
+	{
+		if(typeof(behaviours[i]) == "function")
+			behaviours[i]();
     }
 }
 

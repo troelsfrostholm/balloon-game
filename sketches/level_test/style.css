@@ -1,0 +1,21 @@
+#canvas
+{
+	cursor: none;
+}
+
+#pause-button {
+    position: absolute;
+    top:20px;
+    left:50px;
+    width:30px;
+    height:30px;
+    cursor:pointer;
+    border:1px solid black;
+}
+
+#credits {
+    font-size: xx-small;
+    font-weight: bold;
+    text-decoration: italic;
+    line-height:0em;
+}

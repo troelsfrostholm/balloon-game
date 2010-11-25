@@ -12,9 +12,7 @@ var carpetman;
 var penguin;
 var superhero;
 var bear;
-
 var spawnZones;
-
 var scoreElement;
 var pauseButton;
 var soundButton;
@@ -26,23 +24,36 @@ var downpos = null;
 var buoyancy = -0.3;
 var sideScrollSpeed = 0.05;
 var squaredMaxItemDistance = 1000*1000;
+var score = 0;
+var soundOn = true;
+var spawnFrequency = 0.1;
 
+//cursor vars for rotating cursor
 var vectorXaxis = new Point(-1,0);
 var vectorYaxis = new Point(1,1);
 var cursorInWorld = new Point();
 var cursorToBalloon = new Point();
-
-var score = 0;
-
 var cursor;
 
-var soundOn = true;
-
+// World parameters
 var girlPosition = new Point(-1000, -927);
+var impassableObject = new Sprite();
+
+
 
 var poorDialogue = ["02", "04", "06"].map(createDialogueSprite);
 var richDialogue = ["25", "29"].map(createDialogueSprite);
 var activeDialogue = null;
+
+function createImpassableObject()
+{
+    impassableObject.image.src = "assets/rock.png";
+//	var p = new Point(0,0);
+    impassableObject.place(1,0);
+    impassableObject.angle[0] = 0;
+	impassableObject.behave(impassable);
+    sprites.push(impassableObject);
+}
 
 function begin()
 {
@@ -107,9 +118,10 @@ function createHudElements()
 
 function createSprites() 
 {
+
     balloon = new Sprite();
     balloon.setImg("assets/balloon.png");
-    balloon.scale = 0.5;
+    balloon.scale = 1;
     balloon.place(0, 1900);
     balloon.dangerHeight = -3000/2;
     balloon.deathHeight = -4000/2;
@@ -120,11 +132,11 @@ function createSprites()
 
     betterBalloon = new Sprite();
     betterBalloon.setImg("assets/better-balloon.png");
-    betterBalloon.scale=0.5;
+    betterBalloon.scale = 1;
 
     boy = new Sprite();
     boy.setImg("assets/boy.png");
-    boy.scale=0.5;
+    boy.scale = 1;
 
     pig = makeFlatFlyer(new Point(500, 100), "pig.gif");
     carpetman = makeFlatFlyer(new Point(500, 100), "carpetman.png");
@@ -132,10 +144,14 @@ function createSprites()
     superhero = makeFlatFlyer(new Point(500, 100), "superhero.png");;
     bear = makeFlatFlyer(new Point(500, 100), "bear.png");
 
+
     sprites.push(background);
     createStaticObjects();
     sprites.push(balloon);
     sprites.push(boy);
+
+	createImpassableObject();
+
 };
 
 function createStaticObjects()
@@ -245,11 +261,11 @@ function makeFlatFlyer(image, speed)
 {
     flyer = new Sprite();
     flyer.setImg("assets/"+image);
-    flyer.scale = 0.5;
+    flyer.scale = 1;
     flyer.place(0, 0);
     flyer.move(speed.x, speed.y);
     flyer.weight = 20;
-    flyer.behave(bouncy);
+//    flyer.behave(bouncy);
     flyer.behave(collisionTest);
     flyer.behave(dieWhenFarAway);
 
@@ -260,7 +276,7 @@ function makeStillItem(image_file)
 {
     item = new Sprite();
     item.setImg("assets/"+image_file);
-    item.scale = 0.5;
+    item.scale = 1;
     item.place(0, 0);
     item.move(0, 0);
     item.weight = 20;
@@ -314,11 +330,11 @@ function createSpawnZones()
     //    forestItems = ...;
     //    circusItems = ...;
     //    airItems = ....;
-    zones.push(new SpawnZone(hillBounds, hillItems, 1.2));
-    zones.push(new SpawnZone(forestBounds, forestItems, 1.2));
+    zones.push(new SpawnZone(hillBounds, hillItems, spawnFrequency));
+    zones.push(new SpawnZone(forestBounds, forestItems, spawnFrequency));
     //    			     [pig, carpetman, penguin, superhero,bear],
-    zones.push(new SpawnZone(circusBounds, circusItems, 1.2));
-    zones.push(new SpawnZone(skyBounds, skyItems, 1.2));
+    zones.push(new SpawnZone(circusBounds, circusItems, spawnFrequency));
+    zones.push(new SpawnZone(skyBounds, skyItems, spawnFrequency));
     return zones;
 };
 
@@ -349,8 +365,8 @@ function SpawnZone(bbox, objects, spawnsPerSecond)
 
 function setBehaviours()
 {
-    //sprite behaviours
-    balloon.behave(bouncy);
+    // sprite behaviours
+    // balloon.behave(bouncy);
     balloon.behave(resisting);
     balloon.behave(buoyant);
     balloon.behave(heightVulnerable);

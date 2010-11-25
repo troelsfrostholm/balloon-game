@@ -13,15 +13,18 @@ function Sprite()
 	{
 	    this.angle = euler(this.angle)
 	    this.pos = euler(this.pos)
-	    for(i in this.behaviours) {
-		//A sprite's behaviours may be removed during the 
-		//game. If this happens while in this loop, 
-		//this.behaviours[i] may point to an element that has been
-		//removed. So we only execute it, if it is a function
-		//This is in stead of proper thread safety and locking
-		if(typeof(this.behaviours[i])=="function")
-		    this.behaviours[i](this);
-	    }
+	    for(i in this.behaviours)
+		{
+			//A sprite's behaviours may be removed during the 
+			//game. If this happens while in this loop, 
+			//this.behaviours[i] may point to an element that has been
+			//removed. So we only execute it, if it is a function
+			//This is in stead of proper thread safety and locking
+			if(typeof(this.behaviours[i])=="function")
+			{
+				this.behaviours[i](this);
+			}
+		}
 	}
 
     this.getBoundingBox = function()

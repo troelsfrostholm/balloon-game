@@ -5,7 +5,7 @@ var sprites = Array();
 var hudElements = Array();
 var behaviours = Array();
 var triggers = Array();
-var debugMode = false;
+var debugMode = true;
 var scrollPoint = new Point(0, 0);
 var paused = false;
 

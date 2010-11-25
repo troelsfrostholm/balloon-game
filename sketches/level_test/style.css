@@ -1,6 +1,6 @@
 #canvas
 {
-	cursor: none;
+    cursor: url("assets/dot.png");
 }
 
 #pause-button {

@@ -1,3 +1,15 @@
+// test
+
+var balloonTop = null;
+var balloonBottom = null;
+var balloonLeft = null;
+var balloonRight = null;
+
+var objectTop = null;
+var objectBottom = null;
+var objectLeft = null;
+var objectRight = null;
+
 //level properties
 var levelBounds;
 
@@ -374,7 +386,7 @@ function setBehaviours()
     betterBalloon.behave(buoyant);
     betterBalloon.behave(resisting);
 
-    boy.behave(createFollowBehaviour(balloon, new Point(0, 60)));
+    boy.behave(createFollowBehaviour(balloon, new Point(0, 120)));
     
     //global behaviours
     mouseisdown = blowAtBalloon;

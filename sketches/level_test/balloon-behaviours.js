@@ -1,23 +1,26 @@
+
 function impassable(obj)
 {
+		balloonLeft = balloon.pos[0].x - balloon.image.width/2;
+		balloonRight = balloon.pos[0].x + balloon.image.width/2;
+		objectLeft = obj.pos[0].x - obj.image.width/2;
+		objectRight = obj.pos[0].x + obj.image.width/2;
+
 	// if balloon collides with object
 	if (obj.getBoundingBox().collidesWith(balloon.getBoundingBox()))
 	{
-		// balloon BELOW object
-		if ( (balloon.pos[0].y) > (obj.pos[0].y + obj.image.height/2) )
+		if (balloonRight - balloon.pos[1].x < objectLeft)
 		{
-			balloon.pos[1].y *= -0.95;
+			balloon.pos[1].x *= -1;
 		}
-		// balloon RIGHT of object
-		else if ( balloon.pos[0].x > (obj.pos[0].x + obj.image.width/2) )
+		else if (balloonLeft  + balloon.pos[1].x > objectRight)
 		{
-			balloon.pos[1].x *= -0.95;
+			balloon.pos[1].x *= -1;
 		}
-		// balloon LEFT of object
-		else if ( balloon.pos[0].x < (obj.pos[0].x - obj.image.width/2) )
+		else
 		{
-			balloon.pos[1].x *= -0.95;
-		}
+			balloon.pos[1].y *= -1;
+		}	
 	}
 }
 

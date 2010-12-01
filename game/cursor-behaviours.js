@@ -18,6 +18,4 @@ Behaviours.rotateToFaceBalloon = function (obj)
 
 	// Place sprite at mouse coordinates
 	obj.place(mousepos.x,mousepos.y);
-
 };
-

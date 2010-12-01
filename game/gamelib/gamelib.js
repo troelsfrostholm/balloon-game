@@ -37,26 +37,8 @@ Game = {
 	for(var i in Game.hudElements)
 	    {
 		Game.ctx.setTransform(1, 0, 0, 1, 0, 0);
-		
-		// Is there a better way of placing the altitude slider?
-		if (i == 4)
-		    {
-			Game.hudElements[i].place(
-						  ( (canvas.width - (Game.hudElements[i].image.width / 2) ) - 45)
-						  ,
-						  ( (canvas.height / 2) + (425 / (level.bounds[3] / balloon.pos[0].y) ) ) );	
-		    }
-		
-		// Is there a better way of .step'ing the cursor sprite?
-			if (i == 5)
-			    {
-				Game.hudElements[i].step();
-			    }
-		
-		
 		Game.hudElements[i].draw();
-	    }
-	
+	    }	
 	if(Game.debugMode)
 	    {
 		for(var i in Game.sprites)
@@ -112,6 +94,13 @@ Game = {
     {
 	//Because resources are not locked (threading) we have to make sure
 	//the contents of our game objects are what we think they are
+	for(var i in Game.hudElements) {
+	    if(classof(Game.hudElements[i]) == "Sprite") {
+		if(typeof(Game.hudElements[i].step) == "function") {
+		    Game.hudElements[i].step();
+		}
+	    }
+	}
 	for(var i in Game.sprites) {
 	    if(classof(Game.sprites[i]) == "Sprite")
 		Game.sprites[i].step();

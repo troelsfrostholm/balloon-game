@@ -4,11 +4,6 @@ var background;
 var balloon;
 var betterBalloon;
 var boy;
-var pig;
-var carpetman;
-var penguin;
-var superhero;
-var bear;
 
 var spawnZones;
 
@@ -60,6 +55,8 @@ function initialize()
     setBehaviours();
     SideScroll.enableWrap();
     createTriggers();
+    onResize();
+    window.onresize = onResize;
     Game.run();
 }
 
@@ -73,9 +70,6 @@ function createHudElements()
     altitudemeter.setImg("assets/interface/HUD_element_altitudemeter.png");
 
     canvas = document.getElementById("canvas");
-    menu.place(100, 50);
-    score.place(canvas.width - 100, canvas.height - 50);
-    altitudemeter.place(canvas.width - 60, 300);
 
     var altitudeslider = new Sprite();
     altitudeslider.image.src = ("assets/altitude_slider.png");
@@ -88,15 +82,22 @@ function createHudElements()
 
     soundButton = new Sprite();
     soundButton.image.src = "assets/interface/sound-on-button.png";
-    soundButton.place(100, 33);
     soundButton.onclick = toggleSound;
 
     pauseButton = new Sprite();
     pauseButton.image.src = "assets/interface/pause-button.png";
-    pauseButton.place(50, 33);
     pauseButton.onclick = togglePause;
     
-    return [score, menu, altitudemeter, pauseButton, altitudeslider, cursor, scoreElement, soundButton];
+    return {  
+	score: score, 
+	    menu: menu, 
+	    altitudemeter: altitudemeter,
+	    pauseButton: pauseButton, 
+	    altitudeslider: altitudeslider, 
+	    cursor: cursor, 
+	    scoreElement: scoreElement, 
+	    soundButton: soundButton
+	    };
 }
 
 function createBalloon()
@@ -217,12 +218,11 @@ function setBehaviours()
 
     boy.behave(createFollowBehaviour(balloon, new Point(0, 60)));
 	
-//	Game.hudElements[5].behaviours.push(Behaviours.rotateToFaceBalloon);
-
     //global behaviours
     mouseisdown = blowAtBalloon;
     Game.behaviours.push(sideScrollAfterBalloon);
     Game.behaviours.push(spawnObjectsAtRandomTimes);
+    Game.behaviours.push(Behaviours.placeAltitudeSlider);
 
 }
 
@@ -279,8 +279,8 @@ function spawnObjectsAtRandomTimes() {
 function togglePause()
 {
     Game.paused = !Game.paused;
-    if(Game.paused) pauseButton.setImg("assets/play-button.png");
-    if(!Game.paused) pauseButton.setImg("assets/pause-button.png");
+    if(Game.paused) pauseButton.setImg("assets/interface/play-button.png");
+    if(!Game.paused) pauseButton.setImg("assets/interface/pause-button.png");
 }
 
 function toggleSound()
@@ -289,10 +289,27 @@ function toggleSound()
     soundElm = document.getElementById("audio");
     if(soundOn) {
 	soundElm.play();
-	soundButton.setImg("assets/sound-on-button.png");
+	soundButton.setImg("assets/interface/sound-on-button.png");
     }
     if(!soundOn) {
 	soundElm.pause();
-	soundButton.setImg("assets/sound-off-button.png");
+	soundButton.setImg("assets/interface/sound-off-button.png");
     }
+}
+
+//When resizing window, place hud elements according to window dimensions
+function onResize()
+{
+    canvas.height = document.documentElement.clientHeight-40;
+    canvas.width = document.documentElement.clientWidth-20;
+
+    Game.hudElements.score.place(canvas.width - 130, canvas.height - 80);
+    Game.hudElements.scoreElement.pos.x = canvas.width-130;
+    Game.hudElements.scoreElement.pos.y = canvas.height-75;
+    Game.hudElements.menu.place(100, 50);
+    Game.hudElements.pauseButton.place(50, 50);
+    Game.hudElements.soundButton.place(100, 50);
+    Game.hudElements.altitudemeter.place(canvas.width - 50, canvas.height/2);
+    Game.hudElements.altitudemeter.scale = canvas.height/1000;
+    
 }

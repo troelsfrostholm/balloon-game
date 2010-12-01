@@ -21,7 +21,7 @@ function BoundingBox(x, y, width, height)
 		if (	( point.x > this.x ) &&
 				( point.x < (this.x + this.width) ) &&
 				( point.y > this.y ) &&
-				( point.y < (this.y + this.width) )
+				( point.y < (this.y + this.height) )
 			)
 		{
 			return true;
@@ -29,9 +29,8 @@ function BoundingBox(x, y, width, height)
 		else
 		{
 			return false;
-		}	
-		
-	}
+        }			
+    }
 
     this.debugDraw = function(canvas)
 	{

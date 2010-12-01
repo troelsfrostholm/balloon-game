@@ -1,5 +1,6 @@
 function Sprite()
 {
+    this.animation = new Animation(Array());
     this.image = new Image();
     this.image.src = "assets/missing.gif"
     this.angle = [0, 0, 0];

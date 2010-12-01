@@ -5,7 +5,7 @@ var sprites = Array();
 var hudElements = Array();
 var behaviours = Array();
 var triggers = Array();
-var debugMode = false;
+var debugMode = true;
 var scrollPoint = new Point(0, 0);
 var paused = false;
 
@@ -79,7 +79,8 @@ function Sprite()
 	{
 	    this.angle = euler(this.angle)
 	    this.pos = euler(this.pos)
-	    for(i in this.behaviours) {
+	    for(i in this.behaviours)
+		{
 		//A sprite's behaviours may be removed during the 
 		//game. If this happens while in this loop, 
 		//this.behaviours[i] may point to an element that has been

@@ -1,6 +1,32 @@
-function bouncy(obj) 
+
+function impassable(obj)
 {
-    /*    p = obj.pos[0];
+		balloonLeft = balloon.pos[0].x - balloon.image.width/2;
+		balloonRight = balloon.pos[0].x + balloon.image.width/2;
+		objectLeft = obj.pos[0].x - obj.image.width/2;
+		objectRight = obj.pos[0].x + obj.image.width/2;
+
+	// if balloon collides with object
+	if (obj.getBoundingBox().collidesWith(balloon.getBoundingBox()))
+	{
+		if (balloonRight - balloon.pos[1].x < objectLeft)
+		{
+			balloon.pos[1].x *= -1;
+		}
+		else if (balloonLeft  + balloon.pos[1].x > objectRight)
+		{
+			balloon.pos[1].x *= -1;
+		}
+		else
+		{
+			balloon.pos[1].y *= -1;
+		}	
+	}
+}
+
+function bouncy(obj)
+{
+    p = obj.pos[0];
     dp = obj.pos[1];
     halfwidth = obj.image.width/2*obj.scale;
     halfheight = obj.image.height/2*obj.scale;
@@ -8,7 +34,7 @@ function bouncy(obj)
     if(p.x<halfwidth && dp.x<0) dp.x=-dp.x;
     if(p.y<halfheight && dp.y<0) dp.y=-dp.y;
     if(p.x>canvas.width-halfwidth && dp.x>0) dp.x=-dp.x;
-    if(p.y>canvas.height-halfheight && dp.y>0) dp.y=-dp.y;*/
+    if(p.y>canvas.height-halfheight && dp.y>0) dp.y=-dp.y;
 };
 
 function wrapping()

@@ -15,6 +15,13 @@ var spawnZones;
 var scoreElement;
 var pauseButton;
 var soundButton;
+var cursor;
+
+//vars for rotating cursor
+var vectorXaxis = new Point(-1,0);
+var vectorYaxis = new Point(1,1);
+var cursorInWorld = new Point();
+var cursorToBalloon = new Point();
 
 //game parameters
 var windpower = -100;
@@ -62,23 +69,34 @@ function createHudElements()
     menu.setImg("assets/interface/HUD_element_menu.png");
     var score = new Sprite();
     score.setImg("assets/interface/HUD_element_score.png");
+    var altitudemeter = new Sprite();
+    altitudemeter.setImg("assets/interface/HUD_element_altitudemeter.png");
 
     canvas = document.getElementById("canvas");
     menu.place(100, 50);
     score.place(canvas.width - 100, canvas.height - 50);
-    Game.hudElements.push(menu);
-    Game.hudElements.push(score);
+    altitudemeter.place(canvas.width - 60, 300);
 
+    var altitudeslider = new Sprite();
+    altitudeslider.image.src = ("assets/altitude_slider.png");
+    
+    var cursor = new Sprite();
+    cursor.image.src=("assets/cursor.png");
+    cursor.behave(Behaviours.rotateToFaceBalloon);
+    
     scoreElement = new TextElement("0", new Point(720, 558));
+
     soundButton = new Sprite();
     soundButton.image.src = "assets/interface/sound-on-button.png";
     soundButton.place(100, 33);
     soundButton.onclick = toggleSound;
+
     pauseButton = new Sprite();
     pauseButton.image.src = "assets/interface/pause-button.png";
     pauseButton.place(50, 33);
     pauseButton.onclick = togglePause;
-    return [score, menu, scoreElement, soundButton, pauseButton];
+    
+    return [score, menu, altitudemeter, pauseButton, altitudeslider, cursor, scoreElement, soundButton];
 }
 
 function createBalloon()
@@ -198,11 +216,14 @@ function setBehaviours()
     betterBalloon.behave(Behaviours.resisting);
 
     boy.behave(createFollowBehaviour(balloon, new Point(0, 60)));
-    
+	
+//	Game.hudElements[5].behaviours.push(Behaviours.rotateToFaceBalloon);
+
     //global behaviours
     mouseisdown = blowAtBalloon;
     Game.behaviours.push(sideScrollAfterBalloon);
     Game.behaviours.push(spawnObjectsAtRandomTimes);
+
 }
 
 function distToBalloon(point)

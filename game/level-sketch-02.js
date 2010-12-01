@@ -58,21 +58,27 @@ function initialize()
 
 function createHudElements()
 {
-    hud = new Sprite();
-    hud.image.src = "assets/hud-02.png";
+    var menu = new Sprite();
+    menu.setImg("assets/interface/HUD_element_menu.png");
+    var score = new Sprite();
+    score.setImg("assets/interface/HUD_element_score.png");
+
     canvas = document.getElementById("canvas");
-    hud.place(canvas.width/2, canvas.height/2);
-    Game.hudElements.push(hud);
+    menu.place(100, 50);
+    score.place(canvas.width - 100, canvas.height - 50);
+    Game.hudElements.push(menu);
+    Game.hudElements.push(score);
+
     scoreElement = new TextElement("0", new Point(720, 558));
     soundButton = new Sprite();
-    soundButton.image.src = "assets/sound-on-button.png";
+    soundButton.image.src = "assets/interface/sound-on-button.png";
     soundButton.place(100, 33);
     soundButton.onclick = toggleSound;
     pauseButton = new Sprite();
-    pauseButton.image.src = "assets/pause-button.png";
+    pauseButton.image.src = "assets/interface/pause-button.png";
     pauseButton.place(50, 33);
     pauseButton.onclick = togglePause;
-    return [hud, scoreElement, soundButton, pauseButton];
+    return [score, menu, scoreElement, soundButton, pauseButton];
 }
 
 function createBalloon()

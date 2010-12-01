@@ -27,7 +27,6 @@ Game = {
 
     draw : function()
     {
-	Game.clear();
 	for(var i in Game.sprites) {
 	    SideScroll.transform();
 	    Game.sprites[i].draw();

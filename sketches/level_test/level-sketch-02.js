@@ -1,14 +1,25 @@
 // test
-
 var balloonTop = null;
 var balloonBottom = null;
 var balloonLeft = null;
 var balloonRight = null;
-
 var objectTop = null;
 var objectBottom = null;
 var objectLeft = null;
 var objectRight = null;
+var corners = null;
+
+// Main Menu
+var menuBackground;
+var menuStartNewGame;
+var menuResume;
+var menuResumeGreyedOut;
+var menuCredits;
+var menuInstructions;
+var menuCloud;
+var menuTitle;
+var menuLoaded = false;
+var menu = false;
 
 //level properties
 var levelBounds;
@@ -49,9 +60,6 @@ var cursor;
 
 // World parameters
 var girlPosition = new Point(-1000, -927);
-var impassableObject = new Sprite();
-
-
 
 var poorDialogue = ["02", "04", "06"].map(createDialogueSprite);
 var richDialogue = ["25", "29"].map(createDialogueSprite);
@@ -59,12 +67,27 @@ var activeDialogue = null;
 
 function createImpassableObject()
 {
+    var impassableObject = new Sprite();
     impassableObject.image.src = "assets/rock.png";
-//	var p = new Point(0,0);
     impassableObject.place(1,0);
     impassableObject.angle[0] = 0;
 	impassableObject.behave(impassable);
+    
+    var rock2 = new Sprite();
+    rock2.image.src = "assets/rock02.png";
+    rock2.place(250,188);
+    rock2.angle[0] = 0;
+    rock2.behave(impassable);
+    
+    var rock3 = new Sprite();
+    rock3.image.src = "assets/rock03.png";
+    rock3.place(-330,60);
+    rock3.angle[0] = 0;
+    rock3.behave(impassable);
+
     sprites.push(impassableObject);
+    sprites.push(rock2);
+    sprites.push(rock3);
 }
 
 function begin()
@@ -73,15 +96,57 @@ function begin()
     context = canvas.getContext("2d");
     context.font = "bold 20px sans-serif";
     context.fillText("loading ...", canvas.width/2, canvas.height/2);
-    loadBackground();
-    if(background.image.width) {
-	console.log("Background already loaded");
-	initializeLevel();
+	if (menu == true)
+	{
+		mainMenu();
+	}
+	else
+	{
+		loadBackground();
+		if(background.image.width)
+		{
+			console.log("Background already loaded");
+			initializeLevel();
+		}
+		else
+		{
+			console.log("Background not loaded yet");
+			background.image.onload = initializeLevel;
+		}
+	}
+}
+
+function mainMenu()
+{
+	if (menuLoaded == false)
+	{
+		console.log("loading menu...");
+		menuBackground = new Sprite();
+		menuBackground.setImg("assets/menu/menu-background.jpg");
+		menuBackground.scale = 1;
+		menuBackground.place(0, 0);	
+		/*
+		menuStartNewGame;
+		menuResume;
+		menuResumeGreyedOut;
+		menuCredits;
+		menuInstructions;
+		menuCloud;
+		menuTitle;
+		menuLoaded;
+		*/
+		menuLoaded = true;
+	}
+	
+    canvas = document.getElementById("canvas");
+    if (canvas.getContext)
+	{
+		ctx = canvas.getContext("2d");
     }
-    else {
-	console.log("Background not loaded yet");
-	background.image.onload = initializeLevel;
-    }
+
+	menuBackground.draw;
+	// menu = false;
+	// animate();
 }
 
 function loadBackground()

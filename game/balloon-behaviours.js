@@ -28,7 +28,7 @@ Behaviours.heightVulnerable = function(obj) {
 	obj.scale=0.75;
 	setTimeout(function () {
 		obj.image = obj.blowUpImage;
-		obj.behaviours = [falling];
+		obj.behaviours = [Behaviours.falling];
 		obj.scale=0.5;
 	    }, 500);
     }
@@ -40,3 +40,8 @@ Behaviours.ancorAt = function(point)
 	obj.pos[1] = obj.pos[1].add(point.sub(obj.pos[0]).mult(0.001));
     }
 };
+
+Behaviours.falling = function(obj)
+{
+    obj.acc(0, 0.5);
+}

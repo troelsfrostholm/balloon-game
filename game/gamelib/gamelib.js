@@ -1,5 +1,4 @@
 Behaviours = {};
-
 Game = {
 
     framerate : 60,
@@ -28,55 +27,26 @@ Game = {
 
     draw : function()
     {
-		Game.clear();
-
-		for(var i in Game.sprites)
-		{
-			SideScroll.transform();
-			Game.sprites[i].draw();
-		}
-
-		for(var i in Game.hudElements)
-		{
-			Game.ctx.setTransform(1, 0, 0, 1, 0, 0);
-
-			// Is there a better way of placing the altitude slider?
-			if (i == 4)
-			{
-				Game.hudElements[i].place(
-				( (canvas.width - (Game.hudElements[i].image.width / 2) ) - 45)
-				,
-				( (canvas.height / 2) + (425 / (level.bounds[3] / balloon.pos[0].y) ) ) );	
-			}
-
-			// Is there a better way of .step'ing the cursor sprite?
-			if (i == 5)
-			{
-				Game.hudElements[i].step();
-			}
-			
-			
-			Game.hudElements[i].draw();
-		}
-	
-		if(Game.debugMode)
-		{
-			for(var i in Game.sprites)
-			{
-				Game.sprites[i].getBoundingBox().debugDraw(Game.ctx);
-			}
-
-			for(i in Game.spawnZones)
-			{
-				Game.spawnZones[i].boundingBox.debugDraw(Game.ctx);
-			}
-
-			for(i in Game.triggers)
-			{
-				Game.triggers[i].bbox.debugDraw(Game.ctx);
-			}
-			Game.levelBounds.debugDraw(Game.ctx);
-		}
+	for(var i in Game.sprites) {
+	    SideScroll.transform();
+	    Game.sprites[i].draw();
+	}
+	for(var i in Game.hudElements) {
+	    Game.ctx.setTransform(1, 0, 0, 1, 0, 0);
+	    Game.hudElements[i].draw();
+	}
+	if(Game.debugMode) {
+	    for(var i in Game.sprites) {
+		Game.sprites[i].getBoundingBox().debugDraw(Game.ctx);
+	}
+	    for(i in Game.spawnZones) {
+		Game.spawnZones[i].boundingBox.debugDraw(Game.ctx);
+	    }
+	    for(i in Game.triggers) {
+		Game.triggers[i].bbox.debugDraw(Game.ctx);
+	    }
+	    Game.levelBounds.debugDraw(Game.ctx);
+	}
     },
 
     clear : function()

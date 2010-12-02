@@ -16,6 +16,10 @@ Behaviours.rotateToFaceBalloon = function (obj)
 		obj.angle[0] = cursorToBalloon.angle2(vectorXaxis) + Math.PI;
 	}
 
+};
+
+Behaviours.followMouse = function(obj)
+{
 	// Place sprite at mouse coordinates
 	obj.place(mousepos.x,mousepos.y);
 };

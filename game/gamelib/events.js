@@ -1,3 +1,4 @@
+var Events = {};
 var mousepos = new Point();
 
 function mouseclick(point) {}
@@ -44,6 +45,7 @@ function passClickToHudElements(evt)
     cp = clickPoint(evt);
     bb = new BoundingBox(cp.x, cp.y, 1, 1);
     for(var i in Game.hudElements) {
+	if(!Game.hudElements[i]) continue;
 	if(typeof(Game.hudElements[i].onclick) == "function") {
 	    if(Game.hudElements[i].getBoundingBox().collidesWith(bb))
 		Game.hudElements[i].onclick();

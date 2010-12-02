@@ -38,11 +38,17 @@ var activeDialogue = null;
 
 function begin()
 {
-    canvas = document.getElementById("canvas");
+    /*    canvas = document.getElementById("canvas");
     context = canvas.getContext("2d");
     context.font = "bold 20px sans-serif";
-    context.fillText("loading ...", canvas.width/2, canvas.height/2);
-    LevelLoader.load(level, initialize);
+    context.fillText("loading ...", canvas.width/2, canvas.height/2);*/
+    var loading = new TextElement("loading level ...", new Point(canvas.width/2, canvas.height/2));
+
+    Game.behaviours = [];
+    Game.hudElements = { loading: loading };
+    Game.sprites = [];
+    Game.clear();
+    setTimeout(function () { LevelLoader.load(level, initialize); }, 100);
 }
 
 function initialize()
@@ -77,6 +83,7 @@ function createHudElements()
     var cursor = new Sprite();
     cursor.image.src=("assets/cursor.png");
     cursor.behave(Behaviours.rotateToFaceBalloon);
+    cursor.behave(Behaviours.followMouse);
     
     scoreElement = new TextElement("0", new Point(720, 558));
 

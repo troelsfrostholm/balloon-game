@@ -10,6 +10,13 @@ function Animation(frameArray)
     this.looping = false;
     this.currentFrame = 0;
     this.playing = false;
+    this.startTime = new Date().getTime();
+    this.frameTimes = [];
+    var d = 0;
+    for(var i in this.frames) {
+	this.frameTimes.push(d);
+	d+= this.frames[i].duration;
+    }
 }
 
 Animation.prototype.play = function()
@@ -25,13 +32,27 @@ Animation.prototype.stop = function()
 
 Animation.prototype.getCurrentImage = function()
 {
-    return this.frames[currentFrame];
+    return this.frames[this.currentFrame].image;
 }
 
 Animation.prototype.playFrames = function()
 {
     if(!this.playing) return;
-    if(!looping && currentFrame >= frames.length) return;
-    currentFrame = (currentFrame + 1) % frames.length;
-    setTimeout(this.playFrames, frames[currentFrame].duration);
+    if(this.frames.length <= 1) return;
+    if(!this.looping && this.currentFrame >= this.frames.length) return;
+    this.currentFrame = (this.currentFrame + 1) % this.frames.length;
+    //    setTimeout(this.playFrames, this.frames[this.currentFrame].duration);
+};
+
+Animation.prototype.step = function(gametime)
+{
+    var now = new Date().getTime();
+    var playTime = (now - this.startTime) % this.frameTimes[this.frameTimes.length-1];
+    for(var i=0; i<this.frameTimes.length; i++) {
+	if(playTime < this.frameTimes[i]) {
+	    this.currentFrame = i;
+	    break;
+	}
+    }
+    //    this.currentFrame = Math.floor(gametime/60) % this.frames.length;    
 }

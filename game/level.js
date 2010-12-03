@@ -103,7 +103,10 @@ LevelLoader = {
     loadSprite : function(spriteData)
     {
 	sprite = new Sprite();
-	if(spriteData.image) sprite.image = Level.images[spriteData.image];
+	if(spriteData.image) {
+	    sprite.image = Level.images[spriteData.image];
+	    sprite.animation = new Animation([new Frame(sprite.image, 0)]);
+	}
 	if(spriteData.position) sprite.place(spriteData.position[0], spriteData.position[1]);
 	if(spriteData.velocity) sprite.move(spriteData.velocity[0], spriteData.velocity[1]);
 	if(spriteData.acceleration) sprite.acc(spriteData.acceleration[0], spriteData.acceleration[1]);

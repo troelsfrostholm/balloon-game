@@ -36,6 +36,8 @@ var poorDialogue = ["02", "04", "06"].map(createDialogueSprite);
 var richDialogue = ["25", "29"].map(createDialogueSprite);
 var activeDialogue = null;
 
+var stashedLevel = undefined;
+
 function begin()
 {
     /*    canvas = document.getElementById("canvas");
@@ -63,7 +65,7 @@ function initialize()
     createTriggers();
     onResize();
     window.onresize = onResize;
-    Game.run();
+    bindMouseEvents();
 }
 
 function createHudElements()
@@ -94,6 +96,10 @@ function createHudElements()
     pauseButton = new Sprite();
     pauseButton.image.src = "assets/interface/pause-button.png";
     pauseButton.onclick = togglePause;
+
+    quitButton = new Sprite();
+    quitButton.image.src = "assets/interface/exit.png";
+    quitButton.onclick = quit;
     
     return {  
 	score: score, 
@@ -103,7 +109,8 @@ function createHudElements()
 	    altitudeslider: altitudeslider, 
 	    cursor: cursor, 
 	    scoreElement: scoreElement, 
-	    soundButton: soundButton
+	    soundButton: soundButton,
+	    quitButton: quitButton
 	    };
 }
 
@@ -314,8 +321,46 @@ function onResize()
     Game.hudElements.scoreElement.pos.x = canvas.width-130;
     Game.hudElements.scoreElement.pos.y = canvas.height-75;
     Game.hudElements.menu.place(100, 50);
-    Game.hudElements.pauseButton.place(50, 50);
-    Game.hudElements.soundButton.place(100, 50);
+    Game.hudElements.quitButton.place(60, 50);
+    Game.hudElements.pauseButton.place(100, 50);
+    Game.hudElements.soundButton.place(140, 50);
     Game.hudElements.altitudemeter.place(canvas.width - 50, canvas.height/2);
     Game.hudElements.altitudemeter.scale = canvas.height/1000;  
+}
+
+function quit()
+{
+    stashLevel();
+    Game.behaviours = {};
+    Game.sprites = [];
+    Game.hudElements = {};
+    mainMenu();
+}
+
+function resume()
+{
+    Game = stashedLevel;
+}
+
+function stashLevel()
+{
+    stashedLevel = deepcopy(Game);
+}
+
+function deepcopy(object, visited)
+{
+    if(typeof(object)!="object")
+	return object;
+
+    if(visited == undefined) {
+	visited = [];
+    }
+    copy = {}
+    for(var i in object) {
+	if(visited.indexOf(object[i])<0) {
+	    visited.push(object[i]);
+	    copy[i] = deepcopy(object[i], visited);
+	}
+    }
+    return copy;
 }

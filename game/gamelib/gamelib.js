@@ -22,7 +22,6 @@ Game = {
 	    Game.ctx = canvas.getContext("2d");
 	    Game.animate();
 	    setInterval(Game.animate, Game.waitTime());
-	    
 	}
     },
 

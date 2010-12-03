@@ -46,9 +46,13 @@ function mainMenu()
     Game.hudElements = sprites;
     Game.hudElements.cloud.spin(0.01);
     Game.hudElements.cursor.behave(Behaviours.followMouse);
-    Game.run();
-    resizeMainMenu();
+    if(stashedLevel) {
+	Game.hudElements.resume.setImg("assets/main_menu/resume-active.png");
+	Game.hudElements.resume.onclick = resume;
+    }
     window.onresize = resizeMainMenu;
+    resizeMainMenu();
+    Game.run();
 }
 
 //returs hud elements as sprites

@@ -17,6 +17,7 @@ function Animation(frameArray)
 	this.frameTimes.push(d);
 	d+= this.frames[i].duration;
     }
+    this.frameTimes.push(d);
 }
 
 Animation.prototype.play = function()
@@ -35,24 +36,24 @@ Animation.prototype.getCurrentImage = function()
     return this.frames[this.currentFrame].image;
 }
 
-Animation.prototype.playFrames = function()
-{
-    if(!this.playing) return;
-    if(this.frames.length <= 1) return;
-    if(!this.looping && this.currentFrame >= this.frames.length) return;
-    this.currentFrame = (this.currentFrame + 1) % this.frames.length;
-    //    setTimeout(this.playFrames, this.frames[this.currentFrame].duration);
-};
-
 Animation.prototype.step = function(gametime)
 {
+    if(!this.playing) return;
     var now = new Date().getTime();
-    var playTime = (now - this.startTime) % this.frameTimes[this.frameTimes.length-1];
-    for(var i=0; i<this.frameTimes.length; i++) {
-	if(playTime < this.frameTimes[i]) {
+    var animationTime = now - this.startTime;
+    var animationDuration = this.frameTimes[this.frameTimes.length-1];
+    if(animationTime > animationDuration && this.looping == false) {
+	this.stop();
+	this.onEnd();
+	return;
+    }
+    var playTime = animationTime % animationDuration;
+    for(var i=0; i<this.frameTimes.length-1; i++) {
+	if(playTime < this.frameTimes[i+1]) {
 	    this.currentFrame = i;
 	    break;
 	}
     }
-    //    this.currentFrame = Math.floor(gametime/60) % this.frames.length;    
-}
+};
+
+Animation.prototype.onEnd = function() {};

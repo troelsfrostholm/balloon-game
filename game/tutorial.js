@@ -1,3 +1,113 @@
+//imgNames : [filename, duration, skip forward to frame, skip back to frame] 
+var imgNames = [
+		"tutorial10001.jpg", 10000, 10, 10,
+		"tutorial10002.jpg", 100, 10, 0,
+		"tutorial10003.jpg", 100, 0, 0,
+		"tutorial10004.jpg", 100, 0, 0,
+		"tutorial10005.jpg", 100, 0, 0,
+		"tutorial10006.jpg", 100, 0, 0,
+		"tutorial10007.jpg", 100, 0, 0,
+		"tutorial12001.jpg", 100, 0, 0,
+		"tutorial12002.jpg", 100, 0, 0,
+		"tutorial12003.jpg", 100, 0, 0,
+		"tutorial12004.jpg", 100, 0, 0,
+		"tutorial12005.jpg", 100, 0, 0,
+		"tutorial12006.jpg", 100, 0, 0,
+		"tutorial12007.jpg", 100, 0, 0,
+		"tutorial12008.jpg", 100, 0, 0,
+		"tutorial12009.jpg", 100, 0, 0,
+		"tutorial20001.jpg", 100, 0, 0,
+		"tutorial20002.jpg", 100, 0, 0,
+		"tutorial20003.jpg", 100, 0, 0,
+"tutorial20004.jpg", 100, 0, 0,
+"tutorial20005.jpg", 100, 0, 0,
+"tutorial20006.jpg", 100, 0, 0,
+"tutorial20007.jpg", 100, 0, 0,
+"tutorial21001.jpg", 100, 0, 0,
+"tutorial21002.jpg", 100, 0, 0,
+"tutorial21003.jpg", 100, 0, 0,
+"tutorial21004.jpg", 100, 0, 0,
+"tutorial21005.jpg", 100, 0, 0,
+"tutorial21006.jpg", 100, 0, 0,
+"tutorial21007.jpg", 100, 0, 0,
+"tutorial21008.jpg", 100, 0, 0,
+"tutorial21009.jpg", 100, 0, 0,
+"tutorial21010.jpg", 100, 0, 0,
+"tutorial21011.jpg", 100, 0, 0,
+"tutorial21012.jpg", 100, 0, 0,
+"tutorial21013.jpg", 100, 0, 0,
+"tutorial21014.jpg", 100, 0, 0,
+"tutorial21015.jpg", 100, 0, 0,
+"tutorial21016.jpg", 100, 0, 0,
+"tutorial21017.jpg", 100, 0, 0,
+"tutorial30001.jpg", 100, 0, 0,
+"tutorial30002.jpg", 100, 0, 0,
+"tutorial30003.jpg", 100, 0, 0,
+"tutorial30004.jpg", 100, 0, 0,
+"tutorial30005.jpg", 100, 0, 0,
+"tutorial30006.jpg", 100, 0, 0,
+"tutorial30007.jpg", 100, 0, 0,
+"tutorial30008.jpg", 100, 0, 0,
+"tutorial30009.jpg", 100, 0, 0,
+"tutorial30010.jpg", 100, 0, 0,
+"tutorial30011.jpg", 100, 0, 0,
+"tutorial30012.jpg", 100, 0, 0,
+"tutorial30013.jpg", 100, 0, 0,
+"tutorial30014.jpg", 100, 0, 0,
+"tutorial30015.jpg", 100, 0, 0,
+"tutorial31001.jpg", 100, 0, 0,
+"tutorial31002.jpg", 100, 0, 0,
+"tutorial31003.jpg", 100, 0, 0,
+"tutorial31004.jpg", 100, 0, 0,
+"tutorial31005.jpg", 100, 0, 0,
+"tutorial31006.jpg", 100, 0, 0,
+"tutorial40001.jpg", 100, 0, 0,
+"tutorial40002.jpg", 100, 0, 0,
+"tutorial40003.jpg", 100, 0, 0,
+"tutorial40004.jpg", 100, 0, 0,
+"tutorial40005.jpg", 100, 0, 0,
+"tutorial40006.jpg", 100, 0, 0,
+"tutorial40007.jpg", 100, 0, 0,
+"tutorial40008.jpg", 100, 0, 0,
+"tutorial40009.jpg", 100, 0, 0,
+"tutorial40010.jpg", 100, 0, 0,
+"tutorial40011.jpg", 100, 0, 0,
+"tutorial40012.jpg", 100, 0, 0,
+"tutorial40013.jpg", 100, 0, 0,
+"tutorial40014.jpg", 100, 0, 0,
+"tutorial40015.jpg", 100, 0, 0,
+"tutorial40016.jpg", 100, 0, 0,
+"tutorial40017.jpg", 100, 0, 0,
+"tutorial40018.jpg", 100, 0, 0,
+"tutorial40019.jpg", 100, 0, 0,
+"tutorial40020.jpg", 100, 0, 0,
+"tutorial40021.jpg", 100, 0, 0,
+"tutorial40022.jpg", 100, 0, 0,
+"tutorial40023.jpg", 100, 0, 0,
+"tutorial40024.jpg", 100, 0, 0,
+		"tutorial50001.jpg", 1000, 0, 0
+];
+
+var Tutorial = {}
+Tutorial.skipTo=[];
+Tutorial.skipBackTo=[];
+
+Tutorial.forward = function()
+{
+    var animation = Game.sprites[0].animation;
+    var to = Tutorial.skipTo[animation.currentFrame];
+    var time = new Date().getTime()-animation.frameTimes[to];
+    animation.startTime = time;
+};
+
+Tutorial.back = function()
+{
+    var animation = Game.sprites[0].animation;
+    var to = Tutorial.skipBackTo[animation.currentFrame];
+    var time = new Date().getTime()-animation.frameTimes[to];
+    animation.startTime = time;
+}
+
 tutorial = function()
 {
     Game.behaviours = {};
@@ -5,14 +115,21 @@ tutorial = function()
     Game.hudElements = {};
     frames = [];
     var imgName = "assets/tutorial/tutorial1000";
+    var path = "assets/tutorial/";
+
     var imgExtention = ".jpg";
-    var numFrames = 4;
+    var numFrames = 86;
     var frame;
     var img;
     var duration = 1000;
-    for(var i=0; i<numFrames; i++) {
+
+    for(var i=0; i<imgNames.length/4; i++) {
 	img = new Image();
-	img.src = imgName+(i+1)+imgExtention;
+	//img.src = imgName+(i+1)+imgExtention;
+        img.src = path+imgNames[i*4];
+	duration = imgNames[i*4+1];
+	Tutorial.skipTo[i] = imgNames[i*4+2];
+	Tutorial.skipBackTo[i] = imgNames[i*4+3];
 	frame = new Frame(img, duration);
 	frames.push(frame);
     }
@@ -20,7 +137,27 @@ tutorial = function()
     var s = new Sprite();
     s.place(canvas.width/2, canvas.height/2);
     s.setAnimation(new Animation(frames));
+    s.animation.onEnd = mainMenu;
+
+    var forwardButton = new Sprite();
+    forwardButton.setImg("assets/tutorial/tutorial-forward.png");
+    forwardButton.onclick = Tutorial.forward;
+    forwardButton.place(canvas.width*0.9, canvas.height*0.5);
+
+    var backButton = new Sprite();
+    backButton.setImg("assets/tutorial/tutorial-back.png");
+    backButton.onclick = Tutorial.back;
+    backButton.place(canvas.width*0.1, canvas.height*0.5);
+
+    var cursor = new Sprite();
+    cursor.setImg("assets/interface/cursor-click.png");
+    
     Game.clear();
     Game.sprites.push(s);
+    Game.hudElements.forwardButton = forwardButton;
+    Game.hudElements.backButton = backButton;
+    Game.hudElements.cursor = cursor;
+    Game.hudElements.cursor.behave(Behaviours.followMouse);
+
     s.animation.play();
 }

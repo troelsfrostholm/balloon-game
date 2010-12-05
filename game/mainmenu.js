@@ -30,7 +30,7 @@ var mainmenu = {
 	position : [300, 200]
     },
     cursor : {
-	image : "assets/cursor.png",
+	image : "assets/interface/cursor-click.png",
 	position : [400, 400]
     }
 };

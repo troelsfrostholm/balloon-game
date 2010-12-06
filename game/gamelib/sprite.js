@@ -54,14 +54,22 @@ Sprite.prototype.draw = function()
     Game.ctx.translate(this.pos[0].x, this.pos[0].y);
     Game.ctx.scale(this.scale, this.scale);
     Game.ctx.rotate(this.angle[0]);
-    Game.ctx.drawImage(this.image, (-this.image.width)/2.0, -this.image.height/2.0);
+    //    Game.ctx.drawImage(this.image, (-this.image.width)/2.0, -this.image.height/2.0);
+    var img = this.animation.getCurrentImage();
+    Game.ctx.drawImage(img, (-img.width)/2.0, -img.height/2.0);
 };
 
 Sprite.prototype.setImg = function(image)
 {
     this.image = new Image();
     this.image.src = image;
+    this.animation = new Animation([new Frame(this.image,0)]);
 };
+
+Sprite.prototype.setAnimation = function(animation)
+{
+    this.animation = animation;
+}
 
 Sprite.prototype.require_two_nums = function(a, b, func)
 {

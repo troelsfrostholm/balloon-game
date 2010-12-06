@@ -40,10 +40,6 @@ var stashedLevel = undefined;
 
 function begin()
 {
-    /*    canvas = document.getElementById("canvas");
-    context = canvas.getContext("2d");
-    context.font = "bold 20px sans-serif";
-    context.fillText("loading ...", canvas.width/2, canvas.height/2);*/
     var loading = new TextElement("loading level ...", new Point(canvas.width/2, canvas.height/2));
 
     Game.behaviours = [];
@@ -66,6 +62,7 @@ function initialize()
     onResize();
     window.onresize = onResize;
     bindMouseEvents();
+    score = 0;
 }
 
 function createHudElements()
@@ -80,26 +77,26 @@ function createHudElements()
     canvas = document.getElementById("canvas");
 
     var altitudeslider = new Sprite();
-    altitudeslider.image.src = ("assets/altitude_slider.png");
+    altitudeslider.setImg("assets/altitude_slider.png");
     
     var cursor = new Sprite();
-    cursor.image.src=("assets/cursor.png");
+    cursor.setImg("assets/cursor.png");
     cursor.behave(Behaviours.rotateToFaceBalloon);
     cursor.behave(Behaviours.followMouse);
     
     scoreElement = new TextElement("0", new Point(720, 558));
 
     soundButton = new Sprite();
-    soundButton.image.src = "assets/interface/sound-on-button.png";
+    soundButton.setImg("assets/interface/sound-on-button.png");
     soundButton.onclick = toggleSound;
 
     pauseButton = new Sprite();
-    pauseButton.image.src = "assets/interface/pause-button.png";
+    pauseButton.setImg("assets/interface/pause-button.png");
     pauseButton.onclick = togglePause;
 
     quitButton = new Sprite();
-    quitButton.image.src = "assets/interface/exit.png";
-    quitButton.onclick = quit;
+    quitButton.setImg("assets/interface/exit.png");
+    quitButton.onclick = quitToMenu;
     
     return {  
 	score: score, 
@@ -108,7 +105,6 @@ function createHudElements()
 	    pauseButton: pauseButton, 
 	    altitudeslider: altitudeslider, 
 	    cursor: cursor, 
-	    scoreElement: scoreElement, 
 	    soundButton: soundButton,
 	    quitButton: quitButton
 	    };
@@ -118,7 +114,7 @@ function createBalloon()
 {
     balloon = new Sprite();
     balloon.setImg("assets/balloon.png");
-    balloon.scale = 0.5;
+    balloon.scale = 1;
     balloon.place(Level.startPoint[0], Level.startPoint[1]);
     balloon.dangerHeight = -3000/2;
     balloon.deathHeight = -4000/2;
@@ -129,11 +125,11 @@ function createBalloon()
 
     betterBalloon = new Sprite();
     betterBalloon.setImg("assets/better-balloon.png");
-    betterBalloon.scale=0.5;
+    betterBalloon.scale=1;
 
     boy = new Sprite();
     boy.setImg("assets/boy.png");
-    boy.scale=0.5;
+    boy.scale=1;
 }
 
 function createTriggers()
@@ -175,7 +171,7 @@ function playWinSequence()
     followNewBalloon = function(obj) {
 	obj.pos[0] = betterBalloon.pos[0].add(new Point(0, 100));
     }
-    boy.behaviours = [createFollowBehaviour(betterBalloon, new Point(0, 60))];
+    boy.behaviours = [createFollowBehaviour(betterBalloon, new Point(0, 120))];
 }
 
 function girlShutup()
@@ -206,10 +202,8 @@ function unsetDialogue()
 function createDialogueSprite(dialogueNumber)
 {
     position = girlPosition;
-    img = new Image();
-    img.src = "assets/dialogue/"+dialogueNumber+".png";
     dialogueSprite = new Sprite();
-    dialogueSprite.image = img;
+    dialogueSprite.setImg("assets/dialogue/"+dialogueNumber+".png");
     dialogueSprite.pos[0] = position;
     return dialogueSprite;
 }
@@ -230,7 +224,7 @@ function setBehaviours()
     betterBalloon.behave(Behaviours.buoyant);
     betterBalloon.behave(Behaviours.resisting);
 
-    boy.behave(createFollowBehaviour(balloon, new Point(0, 60)));
+    boy.behave(createFollowBehaviour(balloon, new Point(0, 120)));
 	
     //global behaviours
     mouseisdown = blowAtBalloon;
@@ -318,8 +312,8 @@ function onResize()
     canvas.width = document.documentElement.clientWidth-20;
 
     Game.hudElements.score.place(canvas.width - 130, canvas.height - 80);
-    Game.hudElements.scoreElement.pos.x = canvas.width-130;
-    Game.hudElements.scoreElement.pos.y = canvas.height-75;
+    //    Game.hudElements.scoreElement.pos.x = canvas.width-130;
+    //    Game.hudElements.scoreElement.pos.y = canvas.height-75;
     Game.hudElements.menu.place(100, 50);
     Game.hudElements.quitButton.place(60, 50);
     Game.hudElements.pauseButton.place(100, 50);
@@ -328,7 +322,7 @@ function onResize()
     Game.hudElements.altitudemeter.scale = canvas.height/1000;  
 }
 
-function quit()
+function quitToMenu()
 {
     stashLevel();
     Game.behaviours = {};
@@ -339,28 +333,17 @@ function quit()
 
 function resume()
 {
-    Game = stashedLevel;
+    Game.triggers = stashedLevel.triggers;
+    Game.sprites = stashedLevel.sprites;
+    Game.hudElements = stashedLevel.hudElements;
+    Game.behaviours = stashedLevel.behaviours;
 }
 
 function stashLevel()
 {
-    stashedLevel = deepcopy(Game);
-}
-
-function deepcopy(object, visited)
-{
-    if(typeof(object)!="object")
-	return object;
-
-    if(visited == undefined) {
-	visited = [];
-    }
-    copy = {}
-    for(var i in object) {
-	if(visited.indexOf(object[i])<0) {
-	    visited.push(object[i]);
-	    copy[i] = deepcopy(object[i], visited);
-	}
-    }
-    return copy;
+    stashedLevel = {};
+    stashedLevel.triggers = arrayCopy(Game.triggers);
+    stashedLevel.sprites = arrayCopy(Game.sprites);
+    stashedLevel.hudElements = shallowCopy(Game.hudElements);
+    stashedLevel.behaviours = shallowCopy(Game.behaviours);
 }

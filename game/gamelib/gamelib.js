@@ -22,6 +22,7 @@ Game = {
 	    Game.ctx = canvas.getContext("2d");
 	    Game.animate();
 	    setInterval(Game.animate, Game.waitTime());
+	    setInterval(Game.displayFramerate, 2000);
 	}
     },
 
@@ -102,7 +103,10 @@ Game = {
 	}
 	for(var i in Game.sprites) {
 	    if(classof(Game.sprites[i]) == "Sprite")
+		{
 		Game.sprites[i].step();
+		Game.sprites[i].animation.step(Game.frame);
+		}
 	}
 	for(i in Game.behaviours) {
 	    if(typeof(Game.behaviours[i]) == "function")
@@ -153,6 +157,11 @@ Game = {
 		var f2 = Game.frame;
 		callback(1000.0*(f2 - f1)/(t2 - t1));
 	    }, 1000 );
+    },
+
+    displayFramerate : function()
+    {
+	Game.measureFramerate(function (fps) { document.title = "Fps : "+fps; });
     }
 
 }

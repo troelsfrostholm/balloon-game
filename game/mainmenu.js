@@ -18,7 +18,8 @@ var mainmenu = {
     },
     instructions : {
 	image : "assets/main_menu/instructions.png",
-	position : [800, 480]
+	position : [800, 480],
+	onclick : "tutorial"
     },
     resume : {
 	image : "assets/main_menu/resume-inactive.png",
@@ -26,17 +27,20 @@ var mainmenu = {
     },
     title : {
 	image : "assets/main_menu/title.png",
-	position : [300, 200]
+	position : [270, 300]
     },
     cursor : {
-	image : "assets/cursor.png",
+	image : "assets/interface/cursor-click.png",
 	position : [400, 400]
     }
 };
 
 var Events = {
     newgame : function() {
-	begin();
+	intro();
+    },
+    tutorial : function() {
+	tutorial();
     }
 }
 
@@ -65,7 +69,7 @@ function loadHudElements(hudJson)
 function loadHudElement(element)
 {
     var elm = new Sprite();
-    elm.image.src = element.image;
+    elm.setImg(element.image);
     elm.pos[0] = new Point(element.position[0], element.position[1]);
     var onclick = loadEvent(element.onclick);
     if(onclick) elm.onclick = onclick;

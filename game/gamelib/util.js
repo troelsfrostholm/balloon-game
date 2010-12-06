@@ -8,17 +8,6 @@ function require_input(input, type, message)
     return true;
 }
 
-/*function prototype_classof(object)
-{
-    var getType = Object.prototype.toString;
-    prototypeString =  getType.apply(object);
-    classname = prototypeString.match(/\[object ([a-zA-Z]*)\]/)[1];
-    return classname;
-    }*/
-
-/* Returns the class name of the argument or undefined if
-   it's not a valid JavaScript object.
-*/
 function classof(obj) {
     if(typeof(obj) != "object") return typeof(obj);
     if (obj && obj.constructor && obj.constructor.toString) {
@@ -30,30 +19,6 @@ function classof(obj) {
     }
     return undefined;
 };
-
-
-var loadedYet = false;
-
-function loadScript(filename)
-{
-    var head = document.getElementsByTagName('head')[0];
-    var fileref=document.createElement('script');
-    fileref.setAttribute("type","text/javascript");
-    fileref.setAttribute("src", filename);
-
-    //    var loadedYet = false;
-    fileref.onload = function () {
-	alert("loaded!");
-	loadedYet = true;
-	console.log(loadedYet);
-    }
-    head.appendChild(fileref);
-    //    while(!loadedYet) {
-	for(i = 0; i< 10000000; i++) {}
-	console.log(loadedYet);
-	//blocking for script to load the evil `I hate my cpu` way
-	//    }
-}
 
 function createImage(filename)
 {
@@ -69,3 +34,40 @@ function mapObject(func, obj) {
     } 
     return copy; 
 };
+
+function arrayCopy(src)
+{
+    var dest = [];
+    for(var i in src) {
+	dest[i] = src[i];
+    }
+    return dest;
+}
+
+function shallowCopy(obj)
+{
+    var dest = {};
+    for(var i in obj) {
+	dest[i] = obj[i];
+    }
+    return dest;
+}
+
+function deepCopy(object, visited)
+{
+    if(typeof(object)!="object")
+	return object;
+
+    if(visited == undefined) {
+	visited = [];
+    }
+    copy = {}
+    for(var i in object) {
+	console.log(i);
+	if(visited.indexOf(object[i])<0) {
+	    visited.push(object[i]);
+	    copy[i] = deepcopy(object[i], visited);
+	}
+    }
+    return copy;
+}

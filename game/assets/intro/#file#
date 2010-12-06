@@ -1,5 +1,3 @@
-//imgNames : [filename, duration, skip forward to frame, skip back to frame] 
-var imgNames = [
 "scene 10001.jpg", 300,
 "scene 10002.jpg", 300,
 "scene 20001.jpg", 300,
@@ -73,47 +71,4 @@ var imgNames = [
 "scene 80013.jpg", 300,
 "scene 80014.jpg", 300,
 "scene 80015.jpg", 300,
-"scene 80016.jpg", 300];
-
-var Tutorial = {}
-
-intro = function()
-{
-    Game.behaviours = {};
-    Game.sprites = [];
-    Game.hudElements = {};
-    frames = [];
-    var path = "assets/intro/";
-    var numFrames = 86;
-    var frame;
-    var img;
-    var duration = 1000;
-
-    for(var i=0; i<imgNames.length/2; i++) {
-	img = new Image();
-        img.src = path+imgNames[i*2];
-	duration = imgNames[i*2+1];
-	frame = new Frame(img, duration);
-	frames.push(frame);
-    }
-
-    var s = new Sprite();
-    s.place(canvas.width/2, canvas.height/2);
-    s.setAnimation(new Animation(frames));
-    s.animation.onEnd = begin;
-
-    var cursor = new Sprite();
-    cursor.setImg("assets/interface/cursor-click.png");
-    
-    Game.clear();
-    Game.sprites.push(s);
-    Game.hudElements.cursor = cursor;
-    Game.hudElements.cursor.behave(Behaviours.followMouse);
-    setTimeout("mouseclick = startGame", 200);
-
-    s.animation.play();
-};
-
-function startGame(point) {
-    begin();
-};
+"scene 80016.jpg", 300

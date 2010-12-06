@@ -171,7 +171,7 @@ function playWinSequence()
     followNewBalloon = function(obj) {
 	obj.pos[0] = betterBalloon.pos[0].add(new Point(0, 100));
     }
-    boy.behaviours = [createFollowBehaviour(betterBalloon, new Point(0, 60))];
+    boy.behaviours = [createFollowBehaviour(betterBalloon, new Point(0, 120))];
 }
 
 function girlShutup()
@@ -224,7 +224,7 @@ function setBehaviours()
     betterBalloon.behave(Behaviours.buoyant);
     betterBalloon.behave(Behaviours.resisting);
 
-    boy.behave(createFollowBehaviour(balloon, new Point(0, 60)));
+    boy.behave(createFollowBehaviour(balloon, new Point(0, 120)));
 	
     //global behaviours
     mouseisdown = blowAtBalloon;

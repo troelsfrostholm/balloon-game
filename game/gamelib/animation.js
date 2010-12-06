@@ -23,7 +23,6 @@ function Animation(frameArray)
 Animation.prototype.play = function()
 {
     this.playing = true;
-    this.playFrames();
 }
 
 Animation.prototype.stop = function()

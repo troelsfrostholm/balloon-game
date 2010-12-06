@@ -67,27 +67,48 @@ var activeDialogue = null;
 
 function createImpassableObject()
 {
-    var impassableObject = new Sprite();
-    impassableObject.image.src = "assets/rock.png";
-    impassableObject.place(1,0);
-    impassableObject.angle[0] = 0;
-	impassableObject.behave(impassable);
+    var circus01 = new Sprite();
+    circus01.image.src = "assets/blocks/circus-island-box01.png";
+    circus01.place(-110,-397);
+    circus01.angle[0] = 0;
+	circus01.behave(impassable);
     
-    var rock2 = new Sprite();
-    rock2.image.src = "assets/rock02.png";
-    rock2.place(250,188);
-    rock2.angle[0] = 0;
-    rock2.behave(impassable);
+    var circus02 = new Sprite();
+    circus02.image.src = "assets/blocks/circus-island-box02.png";
+    circus02.place(14,-372);
+    circus02.angle[0] = 0;
+    circus02.behave(impassable);
     
-    var rock3 = new Sprite();
-    rock3.image.src = "assets/rock03.png";
-    rock3.place(-330,60);
-    rock3.angle[0] = 0;
-    rock3.behave(impassable);
+    var circus03 = new Sprite();
+    circus03.image.src = "assets/blocks/circus-island-box03.png";
+    circus03.place(197,-338);
+    circus03.angle[0] = 0;
+    circus03.behave(impassable);
 
-    sprites.push(impassableObject);
-    sprites.push(rock2);
-    sprites.push(rock3);
+    var circus04 = new Sprite();
+    circus04.image.src = "assets/blocks/circus-island-box04.png";
+    circus04.place(382,-378);
+    circus04.angle[0] = 0;
+	circus04.behave(impassable);
+
+    var circus05 = new Sprite();
+    circus05.image.src = "assets/blocks/circus-island-box05.png";
+    circus05.place(507,-403);
+    circus05.angle[0] = 0;
+	circus05.behave(impassable);
+
+    var circus06 = new Sprite();
+    circus06.image.src = "assets/blocks/circus-island-platform.png";
+    circus06.place(210,-435);
+    circus06.angle[0] = 0;
+	circus06.behave(impassable);
+
+    sprites.push(circus01);
+    sprites.push(circus02);
+    sprites.push(circus03);
+    sprites.push(circus04);
+    sprites.push(circus05);
+    sprites.push(circus06);
 }
 
 function begin()
@@ -96,57 +117,17 @@ function begin()
     context = canvas.getContext("2d");
     context.font = "bold 20px sans-serif";
     context.fillText("loading ...", canvas.width/2, canvas.height/2);
-	if (menu == true)
-	{
-		mainMenu();
-	}
-	else
-	{
-		loadBackground();
-		if(background.image.width)
-		{
-			console.log("Background already loaded");
-			initializeLevel();
-		}
-		else
-		{
-			console.log("Background not loaded yet");
-			background.image.onload = initializeLevel;
-		}
-	}
-}
-
-function mainMenu()
-{
-	if (menuLoaded == false)
-	{
-		console.log("loading menu...");
-		menuBackground = new Sprite();
-		menuBackground.setImg("assets/menu/menu-background.jpg");
-		menuBackground.scale = 1;
-		menuBackground.place(0, 0);	
-		/*
-		menuStartNewGame;
-		menuResume;
-		menuResumeGreyedOut;
-		menuCredits;
-		menuInstructions;
-		menuCloud;
-		menuTitle;
-		menuLoaded;
-		*/
-		menuLoaded = true;
-	}
-	
-    canvas = document.getElementById("canvas");
-    if (canvas.getContext)
-	{
-		ctx = canvas.getContext("2d");
+    loadBackground();
+    if(background.image.width)
+    {
+        console.log("Background already loaded");
+        initializeLevel();
     }
-
-	menuBackground.draw;
-	// menu = false;
-	// animate();
+    else
+    {
+        console.log("Background not loaded yet");
+        background.image.onload = initializeLevel;
+    }
 }
 
 function loadBackground()
@@ -199,7 +180,7 @@ function createSprites()
     balloon = new Sprite();
     balloon.setImg("assets/balloon.png");
     balloon.scale = 1;
-    balloon.place(0, 1900);
+    balloon.place(0, 1000);
     balloon.dangerHeight = -3000/2;
     balloon.deathHeight = -4000/2;
     balloon.normalImage = createImage("assets/balloon.png");
@@ -220,12 +201,38 @@ function createSprites()
     penguin = makeFlatFlyer(new Point(500, 100), "penguin.png");;
     superhero = makeFlatFlyer(new Point(500, 100), "superhero.png");;
     bear = makeFlatFlyer(new Point(500, 100), "bear.png");
+    
+    var cloud01 = new Sprite();
+    cloud01.setImg("assets/cloud00.png");
+    cloud01.scale = 1;
+    cloud01.place(0,0);
+    cloud01.move(-1, 0);
+    cloud01.behave(wind);
+    cloud01.behave(verticalPatrolling);
 
+    var cloud02 = new Sprite();
+    cloud02.setImg("assets/cloud00.png");
+    cloud02.scale = 1;
+    cloud02.place(0,500);
+    cloud02.move(1, 0);
+    cloud02.behave(wind);
+    cloud02.behave(verticalPatrolling);
+
+    var cloud03 = new Sprite();
+    cloud03.setImg("assets/cloud00.png");
+    cloud03.scale = 1;
+    cloud03.place(0,-1000);
+    cloud03.move(-0.7, 0);
+    cloud03.behave(wind);
+    cloud03.behave(verticalPatrolling);
 
     sprites.push(background);
     createStaticObjects();
     sprites.push(balloon);
     sprites.push(boy);
+    sprites.push(cloud01);
+    sprites.push(cloud02);
+    sprites.push(cloud03);
 
 	createImpassableObject();
 
@@ -458,7 +465,7 @@ function setBehaviours()
     behaviours.push(sideScrollAfterBalloon);
     behaviours.push(spawnObjectsAtRandomTimes);
     behaviours.push(wrapping);
-	behaviours.push(cursorBehaviour);
+    behaviours.push(cursorBehaviour);
 }
 
 function distToBalloon(point)
@@ -552,5 +559,29 @@ function toggleSound()
     if(!soundOn) {
 	soundElm.pause();
 	soundButton.setImg("assets/sound-off-button.png");
+    }
+}
+
+
+function wind(obj)
+{
+    if (Math.abs(obj.pos[0].x - balloon.pos[0].x) + Math.abs(obj.pos[0].y - balloon.pos[0].y) < 400)
+    {
+        blowHardAtBalloon(obj.pos[0]);
+    }
+}
+
+function blowHardAtBalloon(point)
+{
+    balloon.pos[2] = balloon.pos[2].add(pushForce(point));
+    balloon.pos[2].x *= 1.5;
+    balloon.pos[2].y *= 1.5;
+}
+
+function verticalPatrolling(obj)
+{
+    if (obj.pos[0].x > 1400 || obj.pos[0].x < -1400)
+    {
+        obj.pos[1].x *= -1;
     }
 }

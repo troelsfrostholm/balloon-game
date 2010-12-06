@@ -40,7 +40,19 @@ function BoundingBox(x, y, width, height)
 		overlaps_on_y_axis = (dy > 0 && dy <= this.height) ||
 							 (dy <=0 && -dy <= bbox.height)
 							 
-		return overlaps_on_y_axis && overlaps_on_x_axis;
+		if (overlaps_on_y_axis && overlaps_on_x_axis == true)
+        {
+            var x = Math.max(this.x,bbox.x);
+            var y = Math.max(this.y,bbox.y);
+            var w = Math.abs(Math.min(this.x + this.width,bbox.x + bbox.width) - x );
+            var h = Math.abs(Math.min(this.y+this.height,bbox.y+bbox.height) - y );
+            
+            return ( new BoundingBox(x,y,w,h) );
+        }
+        else
+        {
+            return false;
+        }
 	}
 
 	this.collidesWithPoint = function(point)
@@ -310,15 +322,19 @@ function KeyCheck()
         break;
 
       case 37:
+        balloon.pos[2].x -= 2;
         break;
 
       case 38:
+        balloon.pos[2].y -= 2;
         break;
 
       case 39:
+        balloon.pos[2].x += 2;
         break;
 
       case 40:
+        balloon.pos[2].y += 2;
         break;
    }
 

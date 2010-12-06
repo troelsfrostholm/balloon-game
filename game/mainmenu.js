@@ -27,7 +27,7 @@ var mainmenu = {
     },
     title : {
 	image : "assets/main_menu/title.png",
-	position : [300, 200]
+	position : [270, 300]
     },
     cursor : {
 	image : "assets/interface/cursor-click.png",
@@ -37,7 +37,7 @@ var mainmenu = {
 
 var Events = {
     newgame : function() {
-	begin();
+	intro();
     },
     tutorial : function() {
 	tutorial();

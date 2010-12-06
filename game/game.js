@@ -105,7 +105,6 @@ function createHudElements()
 	    pauseButton: pauseButton, 
 	    altitudeslider: altitudeslider, 
 	    cursor: cursor, 
-	    scoreElement: scoreElement, 
 	    soundButton: soundButton,
 	    quitButton: quitButton
 	    };
@@ -115,7 +114,7 @@ function createBalloon()
 {
     balloon = new Sprite();
     balloon.setImg("assets/balloon.png");
-    balloon.scale = 0.5;
+    balloon.scale = 1;
     balloon.place(Level.startPoint[0], Level.startPoint[1]);
     balloon.dangerHeight = -3000/2;
     balloon.deathHeight = -4000/2;
@@ -126,11 +125,11 @@ function createBalloon()
 
     betterBalloon = new Sprite();
     betterBalloon.setImg("assets/better-balloon.png");
-    betterBalloon.scale=0.5;
+    betterBalloon.scale=1;
 
     boy = new Sprite();
     boy.setImg("assets/boy.png");
-    boy.scale=0.5;
+    boy.scale=1;
 }
 
 function createTriggers()
@@ -203,10 +202,8 @@ function unsetDialogue()
 function createDialogueSprite(dialogueNumber)
 {
     position = girlPosition;
-    img = new Image();
-    img.src = "assets/dialogue/"+dialogueNumber+".png";
     dialogueSprite = new Sprite();
-    dialogueSprite.image = img;
+    dialogueSprite.setImg("assets/dialogue/"+dialogueNumber+".png");
     dialogueSprite.pos[0] = position;
     return dialogueSprite;
 }
@@ -233,7 +230,7 @@ function setBehaviours()
     mouseisdown = blowAtBalloon;
     Game.behaviours.push(sideScrollAfterBalloon);
     Game.behaviours.push(spawnObjectsAtRandomTimes);
-    //    Game.behaviours.push(Behaviours.placeAltitudeSlider);
+    Game.behaviours.push(Behaviours.placeAltitudeSlider);
 
 }
 
@@ -315,8 +312,8 @@ function onResize()
     canvas.width = document.documentElement.clientWidth-20;
 
     Game.hudElements.score.place(canvas.width - 130, canvas.height - 80);
-    Game.hudElements.scoreElement.pos.x = canvas.width-130;
-    Game.hudElements.scoreElement.pos.y = canvas.height-75;
+    //    Game.hudElements.scoreElement.pos.x = canvas.width-130;
+    //    Game.hudElements.scoreElement.pos.y = canvas.height-75;
     Game.hudElements.menu.place(100, 50);
     Game.hudElements.quitButton.place(60, 50);
     Game.hudElements.pauseButton.place(100, 50);

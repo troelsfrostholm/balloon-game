@@ -192,32 +192,13 @@ var Tutorial = {}
 Tutorial.skipTo=[];
 Tutorial.skipBackTo=[];
 
-Tutorial.forward = function()
-{
-    var animation = Game.sprites[0].animation;
-    var to = Tutorial.skipTo[animation.currentFrame];
-    var time = new Date().getTime()-animation.frameTimes[to];
-    animation.startTime = time;
-};
-
-Tutorial.back = function()
-{
-    var animation = Game.sprites[0].animation;
-    var to = Tutorial.skipBackTo[animation.currentFrame];
-    var time = new Date().getTime()-animation.frameTimes[to];
-    animation.startTime = time;
-}
-
-tutorial = function()
+intro = function()
 {
     Game.behaviours = {};
     Game.sprites = [];
     Game.hudElements = {};
     frames = [];
-    var imgName = "assets/tutorial/tutorial1000";
-    var path = "assets/tutorial/";
-
-    var imgExtention = ".jpg";
+    var path = "assets/intro/";
     var numFrames = 86;
     var frame;
     var img;
@@ -236,9 +217,9 @@ tutorial = function()
     var s = new Sprite();
     s.place(canvas.width/2, canvas.height/2);
     s.setAnimation(new Animation(frames));
-    s.animation.onEnd = mainMenu;
+    s.animation.onEnd = begin;
 
-    var forwardButton = new Sprite();
+    /*    var forwardButton = new Sprite();
     forwardButton.setImg("assets/tutorial/tutorial-forward.png");
     forwardButton.onclick = Tutorial.forward;
     forwardButton.place(canvas.width*0.9, canvas.height*0.5);
@@ -246,7 +227,7 @@ tutorial = function()
     var backButton = new Sprite();
     backButton.setImg("assets/tutorial/tutorial-back.png");
     backButton.onclick = Tutorial.back;
-    backButton.place(canvas.width*0.1, canvas.height*0.5);
+    backButton.place(canvas.width*0.1, canvas.height*0.5);*/
 
     var cursor = new Sprite();
     cursor.setImg("assets/interface/cursor-click.png");
@@ -257,6 +238,11 @@ tutorial = function()
     Game.hudElements.backButton = backButton;
     Game.hudElements.cursor = cursor;
     Game.hudElements.cursor.behave(Behaviours.followMouse);
+    Game.onmouseup = startGame;
 
     s.animation.play();
-}
+};
+
+function startGame(event) {
+    begin();
+};

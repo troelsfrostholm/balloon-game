@@ -17,7 +17,7 @@ Behaviours.dieWhenFarAway = function(obj)
     }
 }
 
-function impassableToBalloon(obj)
+Behaviours.impassableToBalloon = function(obj)
 {
 	// Only do something if there is a collision.
 	if (obj.getBoundingBox().collidesWith( balloon.getBoundingBox() ))
@@ -130,4 +130,9 @@ function impassableToBalloon(obj)
             }
         }		
 	}
+}
+
+Behaviours.hover = function(obj)
+{
+    obj.pos[0].y -= 1.5 * Math.sin((new Date().getTime() ) / 1000)
 }

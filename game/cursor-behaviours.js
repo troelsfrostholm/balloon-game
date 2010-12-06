@@ -21,5 +21,5 @@ Behaviours.rotateToFaceBalloon = function (obj)
 Behaviours.followMouse = function(obj)
 {
 	// Place sprite at mouse coordinates
-	obj.place(mousepos.x,mousepos.y);
+	obj.place(mousepos.x + 5,mousepos.y + obj.image.height/2 - 10);
 };

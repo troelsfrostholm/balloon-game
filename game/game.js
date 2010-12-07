@@ -26,7 +26,7 @@ var translationFromSpriteCenterToBalloonCenter;
 var windpower = -100;
 var resistance = 0.9;
 var downpos = null;
-var buoyancy = -0.3;
+var buoyancy = -0.15;
 var sideScrollSpeed = 0.05;
 var squaredMaxItemDistance = 1000*1000;
 
@@ -52,7 +52,6 @@ function begin()
     mouseclick = function() {};
     Game.clear();
     setTimeout(function () { LevelLoader.load(level, initialize); }, 100);
-    document.getElementById("circus").volume = 0;
 }
 
 function initialize()
@@ -123,6 +122,7 @@ function createBalloon()
     balloon.scale = 1;
     balloon.place(Level.startPoint[0], Level.startPoint[1]);
     balloon.dangerHeight = -3000/2;
+    balloon.moreDangerHeight = -3500/2;
     balloon.deathHeight = -4000/2;
     balloon.normalImage = createImage("assets/boy/01_balloon.png");
     balloon.dangerImage = createImage("assets/boy/02_balloon.png");
@@ -130,17 +130,17 @@ function createBalloon()
     balloon.kablouieImage = createImage("assets/boy/04_balloon.png");
     balloon.blowUpImage = createImage("assets/boy/05_balloon.png");
 
-    translationFromSpriteCenterToBalloonCenter = balloon.image.height / 2.7;
+    translationFromSpriteCenterToBalloonCenter = 127;
 
     betterBalloon = new Sprite();
     betterBalloon.setImg("assets/boy/02boy-normal01.png");
     betterBalloon.scale=1;
 
     var img1 = new Image();
-    img1.src = "assets/boy/boy-up01.png";
+    img1.src = "assets/boy/boy_up_01.png";
     var img2 = new Image();
-    img2.src = "assets/boy/boy-up02.png";
-    var boyFrames = [new Frame(img1, 8000), new Frame(img2, 300)];
+    img2.src = "assets/boy/boy_up_02.png";
+    var boyFrames = [new Frame(img1, 5000), new Frame(img2, 1000)];
     balloon.animation = new Animation(boyFrames);
     balloon.animation.looping=false;
     balloon.animation.play();

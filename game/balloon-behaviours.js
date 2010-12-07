@@ -19,18 +19,30 @@ Behaviours.dampened = function(obj)
 
 };
 
-Behaviours.heightVulnerable = function(obj) {
+Behaviours.heightVulnerable = function(obj)
+{
     height = obj.pos[0].y;
+    
     obj.image = obj.normalImage;
-    if(height < obj.dangerHeight)  obj.image = obj.dangerImage;
-    if(height < obj.deathHeight)   {
-	obj.image = obj.kablouieImage;
-	obj.scale=0.75;
-	setTimeout(function () {
-		obj.image = obj.blowUpImage;
-		obj.behaviours = [Behaviours.falling];
-		obj.scale=0.5;
-	    }, 500);
+    
+    if (height < obj.dangerHeight)
+    {
+        obj.image = obj.dangerImage;
+    }
+    if (height < obj.moreDangerHeight)
+    {
+        obj.image = obj.moreDangerImage;
+    }
+    else if (height < obj.deathHeight)
+    {
+        obj.image = obj.kablouieImage;
+//        obj.scale=0.75;
+        setTimeout( function ()
+                    {
+                        obj.image = obj.blowUpImage;
+                        obj.behaviours = [Behaviours.falling];
+  //                      obj.scale=0.5;
+                    }, 500);
     }
 };
 

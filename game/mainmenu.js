@@ -9,7 +9,7 @@ var mainmenu = {
     },
     cloud : {
 	image : "assets/main_menu/rotating-cloud.png",
-	position : [850, 600]
+	position : [800, 550]
     },
     newgame : {
 	image : "assets/main_menu/start-new-game.png",
@@ -46,6 +46,7 @@ var Events = {
 
 function mainMenu()
 {
+    document.getElementById("circus").volume = 0;
     var sprites = loadHudElements(mainmenu);
     Game.hudElements = sprites;
     Game.hudElements.cloud.spin(0.01);

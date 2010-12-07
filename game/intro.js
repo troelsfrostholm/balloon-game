@@ -1,5 +1,7 @@
+var Intro = {}
+
 //imgNames : [filename, duration, skip forward to frame, skip back to frame] 
-var imgNames = [
+Intro.imgNames = [
 "scene 10001.jpg", 300,
 "scene 10002.jpg", 300,
 "scene 20001.jpg", 300,
@@ -75,10 +77,9 @@ var imgNames = [
 "scene 80015.jpg", 300,
 "scene 80016.jpg", 300];
 
-var Tutorial = {}
-
 intro = function()
 {
+    var imgNames = Intro.imgNames;
     Game.behaviours = {};
     Game.sprites = [];
     Game.hudElements = {};

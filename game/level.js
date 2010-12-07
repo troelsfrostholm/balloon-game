@@ -84,14 +84,20 @@ LevelLoader = {
 	var sprites = leveldata.spawnableSprites;
 	for(var i in sprites) {
 	    temp[sprites[i].image] = sprites[i].image;
+	    if(sprites[i].animation && sprites[i].animation.frames) {
+		for(var j=0; j<sprites[i].animation.frames.length; j++) {
+		    temp[sprites[i].animation.frames[j][0]] = sprites[i].animation.frames[j][0];
+		}
+	    }
 	}
+
 	var moresprites = leveldata.staticSprites;
 	for(var i in moresprites) {
 	    temp[moresprites[i].image] = moresprites[i].image;
 	}
 	for(i in temp) {
 	    images.push(temp[i]);
-	}	
+	}
 	return images
     },
 
@@ -107,6 +113,13 @@ LevelLoader = {
 	    sprite.image = Level.images[spriteData.image];
 	    sprite.animation = new Animation([new Frame(sprite.image, 0)]);
 	}
+	if(spriteData.animation && spriteData.animation.frames) {
+	    var frames = spriteData.animation.frames.map(LevelLoader.loadFrame);
+	    sprite.animation = new Animation(frames);
+	    sprite.animation.looping = spriteData.animation.looping;
+	    sprite.animation.playing = true;
+	}
+
 	if(spriteData.position) sprite.place(spriteData.position[0], spriteData.position[1]);
 	if(spriteData.velocity) sprite.move(spriteData.velocity[0], spriteData.velocity[1]);
 	if(spriteData.acceleration) sprite.acc(spriteData.acceleration[0], spriteData.acceleration[1]);
@@ -152,6 +165,11 @@ LevelLoader = {
 	background.scale = 1;
 	background.place(0, 0);
 	return background;
+    },
+
+    loadFrame : function(frameData)
+    {
+	return new Frame(Level.images[frameData[0]], frameData[1]);
     }
 
 };

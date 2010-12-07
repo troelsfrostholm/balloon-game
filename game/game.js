@@ -45,6 +45,7 @@ function begin()
     Game.behaviours = [];
     Game.hudElements = { loading: loading };
     Game.sprites = [];
+    mouseclick = function() {};
     Game.clear();
     setTimeout(function () { LevelLoader.load(level, initialize); }, 100);
 }
@@ -128,7 +129,19 @@ function createBalloon()
     betterBalloon.scale=1;
 
     boy = new Sprite();
-    boy.setImg("assets/boy.png");
+    var img1 = new Image();
+    img1.src = "assets/boy/boy-up01.png";
+    var img2 = new Image();
+    img2.src = "assets/boy/boy-up02.png";
+    var boyFrames = [new Frame(img1, 5000), new Frame(img2, 300)];
+    boy.animation = new Animation(boyFrames);
+    boy.animation.looping=false;
+    boy.animation.play();
+    boy.animation.onEnd = function() {
+	boy.setImg("assets/boy.png");
+	balloon.behave(Behaviours.buoyant);
+    }
+
     boy.scale=1;
 }
 
@@ -231,9 +244,17 @@ function pickAtRandom(array)
 
 function setBehaviours()
 {
+    setBalloonBehaviours();
+    Game.behaviours.push(sideScrollAfterBalloon);
+    Game.behaviours.push(spawnObjectsAtRandomTimes);
+    Game.behaviours.push(Behaviours.placeAltitudeSlider);
+
+}
+
+function setBalloonBehaviours()
+{
     //sprite behaviours
     balloon.behave(Behaviours.resisting);
-    balloon.behave(Behaviours.buoyant);
     balloon.behave(Behaviours.heightVulnerable);
 
     betterBalloon.behave(Behaviours.buoyant);
@@ -243,10 +264,6 @@ function setBehaviours()
 	
     //global behaviours
     mouseisdown = blowAtBalloon;
-    Game.behaviours.push(sideScrollAfterBalloon);
-    Game.behaviours.push(spawnObjectsAtRandomTimes);
-    Game.behaviours.push(Behaviours.placeAltitudeSlider);
-
 }
 
 function distToBalloon(point)

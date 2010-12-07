@@ -37,7 +37,12 @@ function bindMouseEvents()
 	return false;
     }
 
-    Game.behaviours.push(function() { if(downpos) mouseisdown(downpos); });
+    Game.behaviours.push(   function()
+                            {
+                                if(downpos)
+                                    mouseisdown(downpos);
+                            }
+                        );
 };
 
 function passClickToHudElements(evt)

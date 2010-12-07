@@ -1,9 +1,9 @@
 //level properties
+
 //Sprites
 var background;
 var balloon;
 var betterBalloon;
-var boy;
 
 var spawnZones;
 
@@ -17,6 +17,10 @@ var vectorXaxis = new Point(-1,0);
 var vectorYaxis = new Point(1,1);
 var cursorInWorld = new Point();
 var cursorToBalloon = new Point();
+
+// var to compensate for center shifted from balloon to boy+balloon sprite
+var translationFromSpriteCenterToBalloonCenter;
+
 
 //game parameters
 var windpower = -100;
@@ -48,6 +52,7 @@ function begin()
     mouseclick = function() {};
     Game.clear();
     setTimeout(function () { LevelLoader.load(level, initialize); }, 100);
+    document.getElementById("circus").volume = 0;
 }
 
 function initialize()
@@ -56,7 +61,7 @@ function initialize()
     Game.addSprite(Level.background);
     Game.addSprites(Level.staticSprites);
     createBalloon();
-    Game.addSprites([balloon, boy]);
+    Game.addSprite(balloon);
     setBehaviours();
     SideScroll.enableWrap();
     createTriggers();
@@ -83,7 +88,7 @@ function createHudElements()
     var cursor = new Sprite();
     cursor.setImg("assets/cursor.png");
     cursor.behave(Behaviours.rotateToFaceBalloon);
-    cursor.behave(Behaviours.followMouse);
+    cursor.behave(Behaviours.followMouseCenter);
     
     scoreElement = new TextElement("0", new Point(720, 558));
 
@@ -99,7 +104,7 @@ function createHudElements()
     quitButton.setImg("assets/interface/exit.png");
     quitButton.onclick = quitToMenu;
     
-    return {  
+    return{  
 	score: score, 
 	    menu: menu, 
 	    altitudemeter: altitudemeter,
@@ -114,35 +119,37 @@ function createHudElements()
 function createBalloon()
 {
     balloon = new Sprite();
-    balloon.setImg("assets/balloon.png");
+    balloon.setImg("assets/boy/01_balloon.png");
     balloon.scale = 1;
     balloon.place(Level.startPoint[0], Level.startPoint[1]);
     balloon.dangerHeight = -3000/2;
     balloon.deathHeight = -4000/2;
-    balloon.normalImage = createImage("assets/balloon.png");
-    balloon.dangerImage = createImage("assets/balloon-danger2.png");
-    balloon.kablouieImage = createImage("assets/balloon-kablouie.png");
-    balloon.blowUpImage = createImage("assets/balloon-blown.png");
+    balloon.normalImage = createImage("assets/boy/01_balloon.png");
+    balloon.dangerImage = createImage("assets/boy/02_balloon.png");
+    balloon.moreDangerImage = createImage("assets/boy/03_balloon.png");
+    balloon.kablouieImage = createImage("assets/boy/04_balloon.png");
+    balloon.blowUpImage = createImage("assets/boy/05_balloon.png");
+
+    translationFromSpriteCenterToBalloonCenter = balloon.image.height / 2.7;
 
     betterBalloon = new Sprite();
-    betterBalloon.setImg("assets/better-balloon.png");
+    betterBalloon.setImg("assets/boy/02boy-normal01.png");
     betterBalloon.scale=1;
 
-    boy = new Sprite();
     var img1 = new Image();
     img1.src = "assets/boy/boy-up01.png";
     var img2 = new Image();
     img2.src = "assets/boy/boy-up02.png";
-    var boyFrames = [new Frame(img1, 5000), new Frame(img2, 300)];
-    boy.animation = new Animation(boyFrames);
-    boy.animation.looping=false;
-    boy.animation.play();
-    boy.animation.onEnd = function() {
-	boy.setImg("assets/boy.png");
-	balloon.behave(Behaviours.buoyant);
-    }
+    var boyFrames = [new Frame(img1, 8000), new Frame(img2, 300)];
+    balloon.animation = new Animation(boyFrames);
+    balloon.animation.looping=false;
+    balloon.animation.play();
 
-    boy.scale=1;
+    balloon.animation.onEnd = function()
+    {
+        balloon.setImg("assets/boy/01_balloon.png");
+        balloon.behave(Behaviours.buoyant);
+    }
 }
 
 function createTriggers()
@@ -158,12 +165,13 @@ function createTriggers()
 
 function fadeToCrazyAssMusic()
 {
-    var center = new Point(386,-964);
+    var center = new Point(200 , -700);
     var distance = Math.sqrt( center.squaredDistance(balloon.pos[0]) );
-    if (distance < 800)
+    var radius = 600;
+    if (distance < radius)
     {
-        document.getElementById("circusMusic").volume = distance / 800;
-        document.getElementById("audio").volume = 1 - (distance / 800);
+        document.getElementById("circus").volume = 1 - (distance / radius);
+        document.getElementById("audio").volume = (distance / radius);
     }
 }
 
@@ -196,10 +204,14 @@ function playWinSequence()
     betterBalloon.pos = balloon.pos;
     Game.removeSprite(balloon);
     Game.sprites.push(betterBalloon);
-    followNewBalloon = function(obj) {
-	obj.pos[0] = betterBalloon.pos[0].add(new Point(0, 100));
+
+/*    followNewBalloon = function(obj)
+    {
+        obj.pos[0] = betterBalloon.pos[0].add(new Point(0, 100));
     }
+    
     boy.behaviours = [createFollowBehaviour(betterBalloon, new Point(0, 120))];
+*/
 }
 
 function girlShutup()
@@ -260,26 +272,26 @@ function setBalloonBehaviours()
     betterBalloon.behave(Behaviours.buoyant);
     betterBalloon.behave(Behaviours.resisting);
 
-    boy.behave(createFollowBehaviour(balloon, new Point(0, 120)));
-	
     //global behaviours
     mouseisdown = blowAtBalloon;
 }
 
 function distToBalloon(point)
 {
-    return point.sub(balloon.pos[0]);
+    return point.sub(new Point(balloon.pos[0].x , balloon.pos[0].y - translationFromSpriteCenterToBalloonCenter ) );
 }
 
-function pushForce(point) { 
+function pushForce(point)
+{ 
     d = distToBalloon(point); 
     d2 = d.dot(d); 
     pushforce = d.mult(windpower/d2);
     return new Point(pushforce.x, pushforce.y*0.2);
 }
 
-function blowAtBalloon(point) {
-    balloon.pos[1] = balloon.pos[1].add(pushForce(point));
+function blowAtBalloon(point)
+{
+    balloon.pos[1] = balloon.pos[1].add( pushForce(point) );
 }
 
 function createFollowBehaviour(object, offset) {

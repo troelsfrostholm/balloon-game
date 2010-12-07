@@ -104,8 +104,8 @@ Game = {
 	for(var i in Game.sprites) {
 	    if(classof(Game.sprites[i]) == "Sprite")
 		{
-		Game.sprites[i].step();
 		Game.sprites[i].animation.step(Game.frame);
+		Game.sprites[i].step();
 		}
 	}
 	for(i in Game.behaviours) {

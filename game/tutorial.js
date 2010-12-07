@@ -1,5 +1,7 @@
+var Tutorial = {}
+
 //imgNames : [filename, duration, skip forward to frame, skip back to frame] 
-var imgNames = [
+Tutorial.imgNames = [
 	"tutorial10001.jpg", 2500, 21, 0,
 	"tutorial10002.jpg", 200, 21, 0,
 	"tutorial10003.jpg", 200, 21, 0,
@@ -188,13 +190,17 @@ var imgNames = [
 		"tutorial50001.jpg", 3000, 0, 183,
 ];
 
-var Tutorial = {}
+
 Tutorial.skipTo=[];
 Tutorial.skipBackTo=[];
 
 Tutorial.forward = function()
 {
     var animation = Game.sprites[0].animation;
+    if(animation.currentFrame == animation.frames.length-1) {
+	mainMenu();
+	return;
+    }
     var to = Tutorial.skipTo[animation.currentFrame];
     var time = new Date().getTime()-animation.frameTimes[to];
     animation.startTime = time;
@@ -210,6 +216,7 @@ Tutorial.back = function()
 
 tutorial = function()
 {
+    var imgNames = Tutorial.imgNames;
     Game.behaviours = {};
     Game.sprites = [];
     Game.hudElements = {};

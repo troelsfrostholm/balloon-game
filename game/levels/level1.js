@@ -19,6 +19,11 @@ level = {
     spawnableSprites : {
 	monkey : {
 	    image : "assets/trees/monkey.png",
+	    animation : {
+		frames : [["assets/trees/monkey.png", 100], 
+			  ["assets/sky/flying_pig.png", 200] ],
+		looping : true
+	    },
 	    velocity : [3, -2],
 	    acceleration : [0, 0.2],
 	    spin : 0.1,

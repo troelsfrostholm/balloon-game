@@ -135,8 +135,23 @@ function createBalloon()
 function createTriggers()
 {
     bbox = Level.balloonStand;
+//  bboxCircus = new BoundingBox(-414, -1464, 1600 , 1000);
     trigger = new Trigger(balloon, bbox, girlSpeak, hoverBalloon, girlShutup);
+//  circusMusic = new Trigger(balloon , bboxCircus , undefined, fadeToCrazyAssMusic , undefined);
     Game.triggers.push(trigger);
+//  Game.triggers.push(circusMusic);
+    Game.behaviours.push(fadeToCrazyAssMusic);
+}
+
+function fadeToCrazyAssMusic()
+{
+    var center = new Point(386,-964);
+    var distance = Math.sqrt( center.squaredDistance(balloon.pos[0]) );
+    if (distance < 800)
+    {
+        document.getElementById("circusMusic").volume = distance / 800;
+        document.getElementById("audio").volume = 1 - (distance / 800);
+    }
 }
 
 function girlSpeak()

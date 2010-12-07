@@ -565,8 +565,10 @@ function toggleSound()
 
 function wind(obj)
 {
-    if (Math.abs(obj.pos[0].x - balloon.pos[0].x) + Math.abs(obj.pos[0].y - balloon.pos[0].y) < 400)
+    var distance = Math.abs(obj.pos[0].x - balloon.pos[0].x) + Math.abs(obj.pos[0].y - balloon.pos[0].y);
+    if (distance < 400)
     {
+        document.getElementById("audio").volume = distance / 400;
         blowHardAtBalloon(obj.pos[0]);
     }
 }

@@ -135,4 +135,6 @@ Behaviours.impassableToBalloon = function(obj)
 Behaviours.hover = function(obj)
 {
     obj.pos[0].y -= 1.5 * Math.sin((new Date().getTime() ) / 1000)
+    document.getElementById("audio").volume -= 0.001;
+
 }

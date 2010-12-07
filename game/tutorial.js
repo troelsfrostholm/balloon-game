@@ -196,7 +196,7 @@ Tutorial.skipBackTo=[];
 
 Tutorial.forward = function()
 {
-    var animation = Game.sprites[0].animation;
+    var animation = Game.hudElements.tutorial.animation;
     if(animation.currentFrame == animation.frames.length-1) {
 	mainMenu();
 	return;
@@ -208,11 +208,17 @@ Tutorial.forward = function()
 
 Tutorial.back = function()
 {
-    var animation = Game.sprites[0].animation;
+    var animation = Game.hudElements.tutorial.animation;
     var to = Tutorial.skipBackTo[animation.currentFrame];
     var time = new Date().getTime()-animation.frameTimes[to];
     animation.startTime = time;
+};
+
+Tutorial.quit = function()
+{
+    mainMenu();
 }
+
 
 tutorial = function()
 {
@@ -255,13 +261,19 @@ tutorial = function()
     backButton.onclick = Tutorial.back;
     backButton.place(canvas.width*0.1, canvas.height*0.5);
 
+    var quitButton = new Sprite();
+    quitButton.setImg("assets/tutorial/tutorial-quit.png");
+    quitButton.onclick = Tutorial.quit;
+    quitButton.place(canvas.width*0.05, canvas.height*0.05);
+
     var cursor = new Sprite();
     cursor.setImg("assets/interface/cursor-click.png");
     
     Game.clear();
-    Game.sprites.push(s);
+    Game.hudElements.tutorial = s;
     Game.hudElements.forwardButton = forwardButton;
     Game.hudElements.backButton = backButton;
+    Game.hudElements.quitButton = quitButton;
     Game.hudElements.cursor = cursor;
     Game.hudElements.cursor.behave(Behaviours.followMouse);
 

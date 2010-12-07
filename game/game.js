@@ -40,6 +40,12 @@ var stashedLevel = undefined;
 
 function begin()
 {
+    Game.run();
+    mainMenu();
+}
+
+function startFirstLevel()
+{
     var loading = new TextElement("loading level ...", new Point(canvas.width/2, canvas.height/2));
 
     Game.behaviours = [];
@@ -342,7 +348,7 @@ function onResize()
 function quitToMenu()
 {
     stashLevel();
-    Game.behaviours = {};
+    Game.behaviours = [];
     Game.sprites = [];
     Game.hudElements = {};
     mainMenu();

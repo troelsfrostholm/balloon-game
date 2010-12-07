@@ -56,7 +56,6 @@ function mainMenu()
     }
     window.onresize = resizeMainMenu;
     resizeMainMenu();
-    Game.run();
 }
 
 //returs hud elements as sprites
@@ -96,6 +95,4 @@ function resizeMainMenu()
     canvas.height = document.documentElement.clientHeight-40;
     canvas.width = document.documentElement.clientWidth-20;
     Game.hudElements.background.place(canvas.width/2, canvas.height/2);
-
-    Game.sprites
 }

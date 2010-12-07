@@ -1,6 +1,6 @@
 SideScroll = {
 
-    scrollPoint : new Point(0, 0),
+    scrollPoint : new Point(0,0),
     levelBounds : new BoundingBox(),
 
     transform : function()
@@ -8,13 +8,13 @@ SideScroll = {
 	Game.ctx.setTransform(1, 0, 0, 1, -SideScroll.scrollPoint.x, -SideScroll.scrollPoint.y);
     },
 
-    followSprite : function(sprite) {
-	screenCenter = new Point(SideScroll.scrollPoint.x + Game.canvas.width/2, 
-				 SideScroll.scrollPoint.y + Game.canvas.height/2);
-	SideScroll.scrollPoint = SideScroll.scrollPoint.add(sprite.pos[0].sub(screenCenter).mult(sideScrollSpeed));
-	if(SideScroll.scrollPoint.y<Level.bounds.y) 
+    followSprite : function(sprite)
+    {
+        screenCenter = new Point( SideScroll.scrollPoint.x + Game.canvas.width/2, SideScroll.scrollPoint.y + Game.canvas.height/2 + translationFromSpriteCenterToBalloonCenter);
+        SideScroll.scrollPoint = SideScroll.scrollPoint.add(sprite.pos[0].sub(screenCenter).mult(sideScrollSpeed));
+        if(SideScroll.scrollPoint.y<Level.bounds.y) 
 	    SideScroll.scrollPoint.y=Level.bounds.y;
-	if(SideScroll.scrollPoint.y+canvas.height>Level.bounds.y+Level.bounds.height) 
+        if(SideScroll.scrollPoint.y+canvas.height>Level.bounds.y+Level.bounds.height) 
 	    SideScroll.scrollPoint.y=Level.bounds.y+
 		Level.bounds.height-
 		Game.canvas.height;

@@ -49,6 +49,7 @@ function mainMenu()
     var sprites = loadHudElements(mainmenu);
     Game.hudElements = sprites;
     Game.hudElements.cloud.spin(0.01);
+    Game.hudElements.cloud.behave(Behaviours.hover);
     Game.hudElements.cursor.behave(Behaviours.followMouse);
     if(stashedLevel) {
 	Game.hudElements.resume.setImg("assets/main_menu/resume-active.png");

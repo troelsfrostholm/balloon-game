@@ -14,11 +14,13 @@ function runGame() {
     bindMouseEvents();
 };
 
-function initdraw() {
+function initdraw()
+{
     canvas = document.getElementById("canvas");
-    if (canvas.getContext) {
-	ctx = canvas.getContext("2d");
-	animate();
+    if (canvas.getContext)
+	{
+		ctx = canvas.getContext("2d");
+		animate();
     }
 }
 
@@ -29,19 +31,51 @@ function BoundingBox(x, y, width, height)
     this.width=width;
     this.height=height;
 
-    this.collidesWith = function(bbox) {
-	dx = bbox.x - this.x;
-	dy = bbox.y - this.y;
-	overlaps_on_x_axis = (dx > 0 && dx <= this.width) ||
-	                     (dx <=0 && -dx <= bbox.width)
-	overlaps_on_y_axis = (dy > 0 && dy <= this.height) ||
-	                     (dy <=0 && -dy <= bbox.height)
-	return overlaps_on_x_axis && overlaps_on_y_axis;
-    }
+    this.collidesWith = function(bbox)
+	{
+		dx = bbox.x - this.x;
+		dy = bbox.y - this.y;
+		overlaps_on_x_axis = (dx > 0 && dx <= this.width) ||
+							 (dx <=0 && -dx <= bbox.width)
+		overlaps_on_y_axis = (dy > 0 && dy <= this.height) ||
+							 (dy <=0 && -dy <= bbox.height)
+							 
+		if (overlaps_on_y_axis && overlaps_on_x_axis == true)
+        {
+            var x = Math.max(this.x,bbox.x);
+            var y = Math.max(this.y,bbox.y);
+            var w = Math.abs(Math.min(this.x + this.width,bbox.x + bbox.width) - x );
+            var h = Math.abs(Math.min(this.y+this.height,bbox.y+bbox.height) - y );
+            
+            return ( new BoundingBox(x,y,w,h) );
+        }
+        else
+        {
+            return false;
+        }
+	}
 
-    this.debugDraw = function(canvas) {
-	sideScrollTransform();
-	canvas.strokeRect(this.x, this.y, this.width, this.height);
+	this.collidesWithPoint = function(point)
+	{
+		if (	( point.x > this.x ) &&
+				( point.x < (this.x + this.width) ) &&
+				( point.y > this.y ) &&
+				( point.y < (this.y + this.height) )
+			)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}	
+		
+	}
+
+    this.debugDraw = function(canvas)
+	{
+		sideScrollTransform();
+		canvas.strokeRect(this.x, this.y, this.width, this.height);
     }
 }
 
@@ -252,13 +286,58 @@ function clear()
 
 function animate()
 {
-    if(!paused) {
-	step();
-	evalTriggers();
+    if(!paused)
+	{
+		step();
+		evalTriggers();
     }
+
+    document.onkeydown = KeyCheck;       
+
     draw();
 
     setTimeout(animate, waitTime());
+}
+
+function KeyCheck()
+{
+
+   var KeyID = event.keyCode;
+
+   switch(KeyID)
+   {
+
+      case 16: // SHIFT
+        buoyancy -= .1;
+        break; 
+
+      case 17:  // CTRL
+        buoyancy += .1;
+        break;
+
+      case 18:
+        break;
+
+      case 19:
+        break;
+
+      case 37:
+        balloon.pos[2].x -= 2;
+        break;
+
+      case 38:
+        balloon.pos[2].y -= 2;
+        break;
+
+      case 39:
+        balloon.pos[2].x += 2;
+        break;
+
+      case 40:
+        balloon.pos[2].y += 2;
+        break;
+   }
+
 }
 
 function evalTriggers()

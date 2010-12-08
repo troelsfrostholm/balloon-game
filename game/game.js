@@ -136,7 +136,7 @@ function createBalloon()
     balloon.kablouieImage = createImage("assets/boy/04_balloon.png");
     balloon.blowUpImage = createImage("assets/boy/05_balloon.png");
 
-    translationFromSpriteCenterToBalloonCenter = balloon.image.height / 2.7;
+    translationFromSpriteCenterToBalloonCenter = 127;
 
     betterBalloon = new Sprite();
     betterBalloon.setImg("assets/boy/02boy-normal01.png");

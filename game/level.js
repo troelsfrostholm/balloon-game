@@ -30,10 +30,9 @@ LevelLoader = {
 	Level.staticSprites = this.loadSprites(leveldata.staticSprites);
 	Level.spawnableSprites = this.loadSprites(leveldata.spawnableSprites);
 	Level.spawnZones = this.loadSpawnZones(leveldata.spawnZones);
-	Level.balloonStand = new BoundingBox(leveldata.balloonStand[0],
-					     leveldata.balloonStand[1],
-					     leveldata.balloonStand[2],
-					     leveldata.balloonStand[3]);
+	Level.triggers = this.loadTriggers(leveldata.triggers);
+	Level.panHeight = leveldata.panHeight;
+	Level.parameters = this.loadParameters(leveldata.parameters);
 	continuation(Level);
     },
     
@@ -173,3 +172,36 @@ LevelLoader = {
     }
 
 };
+
+LevelLoader.loadTriggers = function(triggerData)
+{
+    var triggers = {};
+    var bbox, enter, inside, leave, bounds, object;
+    for(var i in triggerData) {
+	bounds = triggerData[i].bounds;
+	bbox = new BoundingBox(bounds[0], bounds[1], bounds[2], bounds[3]);
+	enter = LevelLoader.extractFunction(triggerData[i].onEnter);
+	inside = LevelLoader.extractFunction(triggerData[i].onInside);
+	leave = LevelLoader.extractFunction(triggerData[i].onLeave);
+	object = LevelLoader.extractFunction(triggerData[i].object);
+	triggers[i] = new Trigger(object, bbox, enter, inside, leave);
+    }
+    return triggers;
+};
+
+//Looks up the function object from a text string
+//Eks. extractFunction("Game.sprites") == window.Game.sprites
+LevelLoader.extractFunction = function(string)
+{
+    var obj = window;
+    var tokenized = string.split(".");
+    for(var i in tokenized) {
+	obj = obj[tokenized[i]];
+    }
+    return obj;
+};
+
+LevelLoader.loadParameters = function(parameterData)
+{
+    return shallowCopy(parameterData);
+}

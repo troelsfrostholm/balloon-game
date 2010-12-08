@@ -57,6 +57,7 @@ function startFirstLevel()
     Game.sprites = [];
     mouseclick = function() {};
     Game.clear();
+    createBalloon();
     setTimeout(function () { LevelLoader.load(level, initialize); }, 100);
     document.getElementById("circus").volume = 0;
 }
@@ -66,8 +67,9 @@ function initialize()
     Game.hudElements = createHudElements();
     Game.addSprite(Level.background);
     Game.addSprites(Level.staticSprites);
-    createBalloon();
     Game.addSprite(balloon);
+    balloon.place(Level.startPoint[0], Level.startPoint[1]);
+
     setBehaviours();
     SideScroll.enableWrap();
     createTriggers();
@@ -75,6 +77,7 @@ function initialize()
     window.onresize = onResize;
     bindMouseEvents();
     score = 0;
+    Level.Scripts.initialize();
 }
 
 function createHudElements()
@@ -127,7 +130,6 @@ function createBalloon()
     balloon = new Sprite();
     balloon.setImg("assets/boy/01_balloon.png");
     balloon.scale = 1;
-    balloon.place(Level.startPoint[0], Level.startPoint[1]);
     balloon.dangerHeight = -3000/2;
     balloon.deathHeight = -4000/2;
     balloon.normalImage = createImage("assets/boy/01_balloon.png");
@@ -160,24 +162,10 @@ function createBalloon()
 
 function createTriggers()
 {
-    bbox = Level.balloonStand;
-//  bboxCircus = new BoundingBox(-414, -1464, 1600 , 1000);
-    trigger = new Trigger(balloon, bbox, girlSpeak, hoverBalloon, girlShutup);
-//  circusMusic = new Trigger(balloon , bboxCircus , undefined, fadeToCrazyAssMusic , undefined);
-    Game.triggers.push(trigger);
-//  Game.triggers.push(circusMusic);
-    Game.behaviours.push(fadeToCrazyAssMusic);
-}
-
-function fadeToCrazyAssMusic()
-{
-    var center = new Point(200 , -700);
-    var distance = Math.sqrt( center.squaredDistance(balloon.pos[0]) );
-    var radius = 600;
-    if (distance < radius)
-    {
-        document.getElementById("circus").volume = 1 - (distance / radius);
-        document.getElementById("audio").volume = (distance / radius);
+    //    bbox = Level.balloonStand;
+    //    trigger = new Trigger(balloon, bbox, girlSpeak, hoverBalloon, girlShutup);
+    for(var i in Level.triggers) {
+	Game.triggers.push(Level.triggers[i]);
     }
 }
 
@@ -210,14 +198,6 @@ function playWinSequence()
     betterBalloon.pos = balloon.pos;
     Game.removeSprite(balloon);
     Game.sprites.push(betterBalloon);
-
-/*    followNewBalloon = function(obj)
-    {
-        obj.pos[0] = betterBalloon.pos[0].add(new Point(0, 100));
-    }
-    
-    boy.behaviours = [createFollowBehaviour(betterBalloon, new Point(0, 120))];
-*/
 }
 
 function girlShutup()

@@ -57,7 +57,7 @@ Game = {
 		    {
 			Game.triggers[i].bbox.debugDraw(Game.ctx);
 		    }
-		Game.levelBounds.debugDraw(Game.ctx);
+		Level.bounds.debugDraw(Game.ctx);
 	    }
     },
 
@@ -75,8 +75,6 @@ Game = {
 	}
 	Game.draw();
 	Game.frame++;
-
-	//setTimeout(Game.animate, Game.waitTime());
     },
 
     evalTriggers : function()
@@ -138,6 +136,17 @@ Game = {
 	itAintMe = function(elm, index, arr) { return (elm != sprite) };
 	Game.sprites = Game.sprites.filter(itAintMe);
 	delete sprite;
+    },
+
+    addBehaviour : function(behaviour)
+    {
+	Game.behaviours.push(behaviour);
+    },
+
+    removeBehaviour : function(behaviour)
+    {
+	itAintMe = function(elm, index, arr) { return (elm != behaviour) };
+	Game.behaviours = Game.behaviours.filter(itAintMe);
     },
 
     translateEverything : function(byPoint)

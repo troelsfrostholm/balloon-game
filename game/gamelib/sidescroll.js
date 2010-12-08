@@ -10,8 +10,13 @@ SideScroll = {
 
     followSprite : function(sprite)
     {
-        screenCenter = new Point( SideScroll.scrollPoint.x + Game.canvas.width/2, SideScroll.scrollPoint.y + Game.canvas.height/2 + translationFromSpriteCenterToBalloonCenter);
-        SideScroll.scrollPoint = SideScroll.scrollPoint.add(sprite.pos[0].sub(screenCenter).mult(sideScrollSpeed));
+	this.followPoint(sprite.pos[0]);
+    },
+
+    followPoint : function(point)
+    {
+	screenCenter = new Point( SideScroll.scrollPoint.x + Game.canvas.width/2, SideScroll.scrollPoint.y + Game.canvas.height/2 + translationFromSpriteCenterToBalloonCenter);
+        SideScroll.scrollPoint = SideScroll.scrollPoint.add(point.sub(screenCenter).mult(sideScrollSpeed));
         if(SideScroll.scrollPoint.y<Level.bounds.y) 
 	    SideScroll.scrollPoint.y=Level.bounds.y;
         if(SideScroll.scrollPoint.y+canvas.height>Level.bounds.y+Level.bounds.height) 

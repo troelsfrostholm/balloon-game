@@ -2,7 +2,20 @@ level = {
     background : "assets/background.jpg",
     bounds : [-1500, -2100, 3000, 4200],
     startPoint : [0, 1300],
-    balloonStand : [-1300, -1050, 400, 300],
+
+    parameters : {
+	panHeight : -150
+    },	
+
+    triggers : {
+	girl : {
+	    object : "balloon",
+	    bounds : [-1300, -1050, 400, 300],
+	    onEnter : "girlSpeak",
+	    onInside : "hoverBalloon",
+	    onLeave : "girlShutup"
+	}
+    },
 
     staticSprites : {
 	arrow1 : {

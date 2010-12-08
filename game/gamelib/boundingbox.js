@@ -47,7 +47,7 @@ function BoundingBox(x, y, width, height)
 
     this.debugDraw = function(canvas)
 	{
-		sideScrollTransform();
+	    SideScroll.transform();
 		canvas.strokeRect(this.x, this.y, this.width, this.height);
     }
 }

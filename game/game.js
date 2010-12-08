@@ -63,10 +63,8 @@ function initialize()
     Game.addSprite(balloon);
     setBehaviours();
     SideScroll.enableWrap();
-    createTriggers();
     onResize();
     window.onresize = onResize;
-    bindMouseEvents();
     score = 0;
 }
 
@@ -118,38 +116,95 @@ function createHudElements()
 function createBalloon()
 {
     balloon = new Sprite();
-    balloon.setImg("assets/boy/01_balloon.png");
     balloon.scale = 1;
     balloon.place(Level.startPoint[0], Level.startPoint[1]);
-    balloon.dangerHeight = -3000/2;
-    balloon.moreDangerHeight = -3500/2;
-    balloon.deathHeight = -4000/2;
-    balloon.normalImage = createImage("assets/boy/01_balloon.png");
-    balloon.dangerImage = createImage("assets/boy/02_balloon.png");
-    balloon.moreDangerImage = createImage("assets/boy/03_balloon.png");
-    balloon.kablouieImage = createImage("assets/boy/04_balloon.png");
-    balloon.blowUpImage = createImage("assets/boy/05_balloon.png");
+    balloon.dangerHeight01 = -1500;
+    balloon.dangerHeight02 = -1650;
+    balloon.dangerHeight03 = -1850;
+    balloon.deathHeight = -1996;
 
     translationFromSpriteCenterToBalloonCenter = 127;
 
     betterBalloon = new Sprite();
     betterBalloon.setImg("assets/boy/02boy-normal01.png");
     betterBalloon.scale=1;
+    
+    // Normal balloon
+    var normalImg = new Image();
+    normalImg.src = "assets/boy/01_.png";
+    var normalFrames = [new Frame(normalImg,1000)];
+    balloon.normalAnimation = new Animation(normalFrames);
+    balloon.normalAnimation.looping = true;
+
+    // Gefahrstufe 01
+    var danger01 = new Image();
+    danger01.src = "assets/boy/01_.png";
+    var danger02 = new Image();
+    danger02.src = "assets/boy/01_warning.png";
+    var danger01Frames = [new Frame(danger01, 500), new Frame(danger02,500)];
+    balloon.dangerAnimation01 = new Animation(danger01Frames);
+    balloon.dangerAnimation01.looping = true;
+    balloon.dangerAnimation01.play();
+    
+    // Gefahrstufe 02
+    var dangerImg01 = new Image();
+    dangerImg01.src = "assets/boy/02_.png";
+    var dangerImg02 = new Image();
+    dangerImg02.src = "assets/boy/02_warning.png";
+    var dangerFrames = [new Frame(dangerImg01, 500), new Frame(dangerImg02,500)];
+    balloon.dangerAnimation02 = new Animation(dangerFrames);
+    balloon.dangerAnimation02.looping = true;
+    balloon.dangerAnimation02.play();
+    
+    // Gefahrstufe 03
+    var moreDangerImg01 = new Image();
+    moreDangerImg01.src = "assets/boy/03_.png";
+    var moreDangerImg02 = new Image();
+    moreDangerImg02.src = "assets/boy/03_warning.png";
+    var moreDangerFrames = [new Frame(moreDangerImg01, 500), new Frame(moreDangerImg02,500)];
+    balloon.dangerAnimation03 = new Animation(moreDangerFrames);
+    balloon.dangerAnimation03.looping = true;
+    balloon.dangerAnimation03.play();
+    
+    // Boom!
+    var boom = new Image();
+    boom.src = "assets/boy/04_balloon.png";
+    var boomFrames = [new Frame(boom, 1000)];
+    balloon.boomAnimation = new Animation(boomFrames);
+    balloon.boomAnimation.looping = false;
+    balloon.boomAnimation.onEnd = function()
+    {
+        balloon.behaviours = [Behaviours.falling];        
+        balloon.animation = balloon.burstAnimation;
+    }
+    
+    // Burst balloon
+    var burst = new Image();
+    burst.src = "assets/boy/05_balloon.png";
+    var burstFrames = [new Frame(burst, 500)];
+    balloon.burstAnimation = new Animation(burstFrames);
+    balloon.burstAnimation.looping = false;
 
     var img1 = new Image();
     img1.src = "assets/boy/boy_up_01.png";
     var img2 = new Image();
     img2.src = "assets/boy/boy_up_02.png";
-    var boyFrames = [new Frame(img1, 5000), new Frame(img2, 1000)];
-    balloon.animation = new Animation(boyFrames);
-    balloon.animation.looping=false;
-    balloon.animation.play();
+    var boyFrames = [new Frame(img1, 5000), new Frame(img2, 666)];
+    balloon.startAnimation = new Animation(boyFrames);
+    balloon.startAnimation.looping=false;
+    balloon.startAnimation.play();
 
-    balloon.animation.onEnd = function()
+    balloon.startAnimation.onEnd = function()
     {
-        balloon.setImg("assets/boy/01_balloon.png");
+        balloon.animation = balloon.normalAnimation;
         balloon.behave(Behaviours.buoyant);
-    }
+        setBalloonBehaviours();
+        bindMouseEvents();
+        createTriggers();
+   }
+
+    balloon.animation = balloon.startAnimation;
+    
 }
 
 function createTriggers()
@@ -256,7 +311,6 @@ function pickAtRandom(array)
 
 function setBehaviours()
 {
-    setBalloonBehaviours();
     Game.behaviours.push(sideScrollAfterBalloon);
     Game.behaviours.push(spawnObjectsAtRandomTimes);
     Game.behaviours.push(Behaviours.placeAltitudeSlider);

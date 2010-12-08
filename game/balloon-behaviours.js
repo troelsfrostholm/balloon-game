@@ -23,26 +23,24 @@ Behaviours.heightVulnerable = function(obj)
 {
     height = obj.pos[0].y;
     
-    obj.image = obj.normalImage;
+    obj.animation = obj.normalAnimation;
     
-    if (height < obj.dangerHeight)
+    if (height < obj.dangerHeight01)
     {
-        obj.image = obj.dangerImage;
+        obj.animation = obj.dangerAnimation01;
     }
-    if (height < obj.moreDangerHeight)
+    if (height < obj.dangerHeight02)
     {
-        obj.image = obj.moreDangerImage;
+        obj.animation = obj.dangerAnimation02;
     }
-    else if (height < obj.deathHeight)
+    if (height < obj.dangerHeight03)
     {
-        obj.image = obj.kablouieImage;
-//        obj.scale=0.75;
-        setTimeout( function ()
-                    {
-                        obj.image = obj.blowUpImage;
-                        obj.behaviours = [Behaviours.falling];
-  //                      obj.scale=0.5;
-                    }, 500);
+        obj.animation = obj.dangerAnimation03;
+    }
+    if (height < obj.deathHeight)
+    {
+        obj.animation = obj.boomAnimation;
+        obj.boomAnimation.play();
     }
 };
 

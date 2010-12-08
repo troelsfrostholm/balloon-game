@@ -179,7 +179,7 @@ function girlSpeak()
     dialogue = pickAtRandom(dialogueLines);
     //say it. Play the win sequence if the player has enough
     //points to buy a better balloon
-    if(win) {	
+    if(win) {
 	setDialogue(pickAtRandom(richDialogue));
 	balloon.behave(Behaviours.ancorAt(girlPosition));
 	setTimeout(playWinSequence, 5000);
@@ -212,6 +212,7 @@ function hoverBalloon()
 
 function setDialogue(dialogue)
 {
+    dialogue.animation.play();
     Game.sprites.push(dialogue);
     activeDialogue = dialogue;
 }

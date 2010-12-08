@@ -22,8 +22,10 @@ level = {
 	intro : {
 	    image : "assets/dialogue/01.png",
 	    animation : {
-		frames : [["assets/dialogue/01.png", 1000]],
-		looping : false
+		frames : [["assets/dialogue/01.png", 2000],
+			  ["assets/dialogue/02.png", 1000]],
+		looping : false,
+		playing : true
 		},
 	    position : [-1000, -927]
 	},

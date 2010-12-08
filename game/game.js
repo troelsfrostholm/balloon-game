@@ -60,6 +60,7 @@ function startFirstLevel()
     createBalloon();
     setTimeout(function () { LevelLoader.load(level, initialize); }, 100);
     document.getElementById("circus").volume = 0;
+    document.getElementById("circus").play();
 }
 
 function initialize()

@@ -128,6 +128,7 @@ intro = function()
     window.onresize = function() { };
 
     s.animation.play();
+    document.getElementById("audio").play();
 };
 
 function startGame(point) {

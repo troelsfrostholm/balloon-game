@@ -7,12 +7,12 @@ Level.Scripts = {
 		Game.addBehaviour(Level.Scripts.sideScrollAfterGirl);
 		Game.addBehaviour(hoverBalloon);
 		setDialogue(Level.dialogue.intro);
-		setTimeout(function() {
+		Level.dialogue.intro.animation.onEnd = function() {
 			Game.removeBehaviour(Level.Scripts.sideScrollAfterGirl);
 			Game.removeBehaviour(hoverBalloon);
 			Game.addBehaviour(sideScrollAfterBalloon);
 			unsetDialogue();
-		    }, 10000);
+		};
 		Game.removeBehaviour(Level.Scripts.panToGirlWhenAboveHeight);
 	    }
 	}, 
@@ -25,14 +25,25 @@ Level.Scripts = {
 	    if(Level.parameters.inventory.indexOf("pony") == -1) {
 		if(!Level.parameters.hasMetGirl) {
 		    setDialogue(Level.dialogue.meetGirlFirstTime);
-		    Level.parameters.hasMetGirl = true;
+		    Level.dialogue.meetGirlFirstTime.animation.onEnd = function() {
+			Level.parameters.hasMetGirl = true;
+			unsetDialogue();
+		    }
 		}
 		else {
 		    setDialogue(Level.dialogue.meetGirlAgain);
+		    Level.dialogue.meetGirlAgain.animation.stop();
+		    Level.dialogue.meetGirlAgain.animation.currentFrame = Math.floor(Math.random()*Level.dialogue.meetGirlAgain.animation.frames.length)
 		}
 	    }
-	    else {
+	    else if(!Level.parameters.won) {
 		setDialogue(Level.dialogue.giveGirlPony);
+		Level.dialogue.giveGirlPony.animation.onEnd = function() {
+		    balloon.setImg("assets/boy/02boy-normal01.png");
+		    Level.parameters.won = true;
+		    unsetDialogue();
+		}
+
 	    }
 	},
 	fadeToCrazyAssMusic : function()

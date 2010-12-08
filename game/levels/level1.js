@@ -6,7 +6,7 @@ level = {
     parameters : {
 	panHeight : -150,
 	inventory : []
-    },	
+    },
 
     triggers : {
 	girl : {
@@ -22,36 +22,70 @@ level = {
 	intro : {
 	    image : "assets/dialogue/01.png",
 	    animation : {
-		frames : [["assets/dialogue/01.png", 2000],
-			  ["assets/dialogue/02.png", 1000]],
+		frames : [["assets/level1/dialogue/01meeting/01.png", 2000],
+			  ["assets/level1/dialogue/01meeting/02.png", 2000]],
 		looping : false,
 		playing : true
 		},
-	    position : [-1000, -927]
+	    position : [-990, -977],
 	},
 	meetGirlFirstTime : {
 	    image : "assets/dialogue/02.png",
 	    animation : {
-		frames : [["assets/dialogue/02.png", 1000]],
+		frames : [["assets/level1/dialogue/01meeting/03.png", 2000],
+				["assets/level1/dialogue/01meeting/04.png", 2000],
+				["assets/level1/dialogue/01meeting/05.png", 2000],
+				["assets/level1/dialogue/01meeting/06.png", 2000],
+				["assets/level1/dialogue/01meeting/07.png", 2000],
+				["assets/level1/dialogue/01meeting/08.png", 2000],
+				["assets/level1/dialogue/01meeting/09.png", 2000],
+				["assets/level1/dialogue/01meeting/10.png", 2000],
+				["assets/level1/dialogue/01meeting/11.png", 2000],
+				["assets/level1/dialogue/01meeting/12.png", 4000],
+				["assets/level1/dialogue/01meeting/13.png", 2000],
+				["assets/level1/dialogue/01meeting/14.png", 4000],
+				["assets/level1/dialogue/01meeting/15.png", 4000],
+				["assets/level1/dialogue/01meeting/16.png", 2000],
+				["assets/level1/dialogue/01meeting/17.png", 2000],
+				["assets/level1/dialogue/01meeting/18.png", 4000],
+				["assets/level1/dialogue/01meeting/19.png", 4000],
+				["assets/level1/dialogue/01meeting/20.png", 2000],
+				["assets/level1/dialogue/01meeting/21.png", 2000],
+				["assets/level1/dialogue/01meeting/22.png", 3000]],
 		looping : false
 		},
-	    position : [-1000, -927]
+	    position : [-990, -977],
 	},
 	meetGirlAgain : {
 	    image : "assets/dialogue/03.png",
 	    animation : {
-		frames : [["assets/dialogue/03.png", 1000]],
+		frames : [["assets/level1/dialogue/02returnnopony/01.png", 2000],
+				["assets/level1/dialogue/02returnnopony/02.png", 2000],
+				["assets/level1/dialogue/02returnnopony/03.png", 2000],
+				["assets/level1/dialogue/02returnnopony/04.png", 2000],
+				["assets/level1/dialogue/02returnnopony/05.png", 2000],
+				["assets/level1/dialogue/02returnnopony/06.png", 4000],
+				["assets/level1/dialogue/02returnnopony/07.png", 2000],
+				["assets/level1/dialogue/02returnnopony/08.png", 2000],
+				["assets/level1/dialogue/02returnnopony/09.png", 2000]],
 		looping : false
 		},
-	    position : [-1000, -927]
+	    position : [-990, -977],
 	},
 	giveGirlPony : {
 	    image : "assets/dialogue/04.png",
 	    animation : {
-		frames : [["assets/dialogue/04.png", 1000]],
+		frames : [["assets/level1/dialogue/03returnwithpony/01.png", 2000],
+				["assets/level1/dialogue/03returnwithpony/02.png", 2000],
+				["assets/level1/dialogue/03returnwithpony/03.png", 2000],
+				["assets/level1/dialogue/03returnwithpony/04.png", 2000],
+				["assets/level1/dialogue/03returnwithpony/05.png", 2000],
+				["assets/level1/dialogue/03returnwithpony/06.png", 2000],
+				["assets/level1/dialogue/03returnwithpony/07.png", 4000],
+				["assets/level1/dialogue/03returnwithpony/08.png", 2000]],
 		looping : false
 		},
-	    position : [-1000, -927]
+	    position : [-990, -977],
 	},
     },
 
@@ -287,6 +321,61 @@ level = {
 	    position : [1350, 1675],
 	    behaviours : ["ponyPickup", "collisionTest"]
 	},
+	circus_island_box_01 : {
+	    image : "assets/level1/static/circus_island_box_01.png",
+	    position : [-103, -397],
+	    behaviours : ["impassableToBalloon"]
+	},
+	circus_island_box_02 : {
+	    image : "assets/level1/static/circus_island_box_02.png",
+	    position : [18, -372],
+	    behaviours : ["impassableToBalloon"]
+	},
+	circus_island_box_03 : {
+	    image : "assets/level1/static/circus_island_box_03.png",
+	    position : [202, -337],
+	    behaviours : ["impassableToBalloon"]
+	},
+	circus_island_box_04 : {
+	    image : "assets/level1/static/circus_island_box_04.png",
+	    position : [387, -378],
+	    behaviours : ["impassableToBalloon"]
+	},
+	circus_island_box_05 : {
+	    image : "assets/level1/static/circus_island_box_05.png",
+	    position : [513, -403],
+	    behaviours : ["impassableToBalloon"]
+	},
+	ferris_whee_island_box_01 : {
+	    image : "assets/level1/static/ferris_whee_island_box_01.png",
+	    position : [721, -709],
+	    behaviours : ["impassableToBalloon"]
+	},
+	ferris_whee_island_box_02 : {
+	    image : "assets/level1/static/ferris_whee_island_box_02.png",
+	    position : [971, -730],
+	    behaviours : ["impassableToBalloon"]
+	},
+	ferris_whee_island_box_03 : {
+	    image : "assets/level1/static/ferris_whee_island_box_03.png",
+	    position : [1190, -749],
+	    behaviours : ["impassableToBalloon"]
+	},
+	girl_island_box_01 : {
+	    image : "assets/level1/static/girl_island_box_01.png",
+	    position : [-1173, -734],
+	    behaviours : ["impassableToBalloon"]
+	},
+	girl_island_box_02 : {
+	    image : "assets/level1/static/girl_island_box_02.png",
+	    position : [-1100, -720],
+	    behaviours : ["impassableToBalloon"]
+	},
+	girl_island_box_03 : {
+	    image : "assets/level1/static/girl_island_box_03.png",
+	    position : [-1031, -737],
+	    behaviours : ["impassableToBalloon"]
+	},
     },
 	
 	spawnableSprites : {
@@ -300,7 +389,7 @@ level = {
 	    },
 	    velocity : [1, 0],
 	    acceleration : [0.005, 0],
-	    weight : 30
+	    weight : 35
 	},
 	biker_bear : {
 	    image : "assets/level1/animated/biker_bear/biker_bear01.png",
@@ -325,7 +414,7 @@ level = {
 	    },
 	    velocity : [-1, 0],
 	    acceleration : [-0.005, 0],
-	    weight : 25
+	    weight : 35
 	},
 	penguin : {
 	    image : "assets/level1/animated/penguin/penguin01.png",
@@ -337,7 +426,7 @@ level = {
 	    },
 	    velocity : [2, 0],
 	    acceleration : [0.005, 0],
-	    weight : 30
+	    weight : 35
 	},
 	swan : {
 	    image : "assets/level1/animated/swan/swan01.png",
@@ -348,60 +437,60 @@ level = {
 		looping : true
 	    },
 	    velocity : [1.5, 0],
-	    weight : 30
+	    weight : 35
 	},
 	monkey : {
 	    image : "assets/level1/spawnable/monkey.png",
 	    velocity : [0, -2],
 	    acceleration : [0, 0.2],
 	    spin : 0.1,
-	    weight : 25
+	    weight : 30
 	},
 	flying_squirrel : {
 	    image : "assets/level1/spawnable/flying_squirrel.png",
 	    velocity : [-1, 0],
 	    acceleration : [-0.01, 0],
-	    weight : 25
+	    weight : 35
 	},
 	floss_cloud1 : {
 	    image : "assets/level1/spawnable/floss_cloud1.png", 
 	    velocity : [-1, 0],
-	    weight : 10
+	    weight : 20
 	},
 	floss_cloud2 : {
 	    image : "assets/level1/spawnable/floss_cloud2.png", 
 	    velocity : [-1, 0],
-	    weight : 10
+	    weight : 20
 	},
 	floss_cloud3 : {
 	    image : "assets/level1/spawnable/floss_cloud3.png", 
 	    velocity : [-1, 0],
-	    weight : 10
+	    weight : 20
 	},
 	hotair_balloon1 : {
 		image : "assets/level1/spawnable/hotair_balloon1.png",
 		velocity : [0.5, 0],
-		weight : 30
+		weight : 40
 	},
 	hotair_balloon2 : {
 		image : "assets/level1/spawnable/hotair_balloon2.png",
 		velocity : [1, 0],
-		weight : 30
+		weight : 40
 	},
 	hotair_balloon3 : {
 		image : "assets/level1/spawnable/hotair_balloon3.png",
 		velocity : [-0.5, 0],
-		weight : 30
+		weight : 40
 	},
 	hotair_balloon4 : {
 		image : "assets/level1/spawnable/hotair_balloon4.png",
 		velocity : [-1, 0],
-		weight : 30
+		weight : 40
 	},
 	barbecue_chicken : {
 	    image : "assets/level1/spawnable/barbecue_chicken.png",
 	    velocity : [1, 0],
-	    weight : 25
+	    weight : 35
 	},
 	canon_king : {
 	    image : "assets/level1/spawnable/canon_king.png",
@@ -414,25 +503,40 @@ level = {
 	    image : "assets/level1/spawnable/magic_carpet_man.png",
 	    velocity : [-1, 0],
 	    acceleration : [-0.01, 0],
-	    weight : 30
+	    weight : 35
 	},
 	music : {
 	    image : "assets/level1/spawnable/music.png",
 	    velocity : [0.5, -0.5],
-	    weight : 20
+	    weight : 30
     },
 	},
 
    spawnZones : {
-	forest : {
-	    bounds : [-1500, -183, 3000, 1616],
+	forest_left : {
+	    bounds : [-1500, 145, 1600, 2245],
 	    items : ["monkey", "flying_squirrel", "bat", "flying_duck", "penguin", "swan"],
-	    frequency : 1
+	    frequency : 0.5
+	},
+	forest_right : {
+	    bounds : [250, 145, 1250, 2245],
+	    items : ["monkey", "flying_squirrel", "bat", "flying_duck", "penguin", "swan"],
+	    frequency : 2
+	},
+	forest_middle : {
+	    bounds : [-1500, 145, 3000, 1150],
+	    items : ["monkey", "flying_squirrel", "bat", "flying_duck", "penguin", "swan"],
+	    frequency : 0.5
 	},
 	sky : {
-	    bounds : [-1500, -2100, 3000, 2000],
+	    bounds : [-636, -2100, 2136, 2000],
 	    items : ["floss_cloud1", "floss_cloud2", "floss_cloud3", "hotair_balloon1", "hotair_balloon2", "hotair_balloon3", "hotair_balloon4"],
 	    frequency : 0.5
+	},
+	sky_above_girl : {
+	    bounds : [-1500, -2100, 1500, 650],
+	    items : ["floss_cloud1", "floss_cloud2", "floss_cloud3", "hotair_balloon1", "hotair_balloon2", "hotair_balloon3", "hotair_balloon4"],
+	    frequency : 0.8
 	},
 	circus : {
 	    bounds : [-787, -1805, 2110, 1980],

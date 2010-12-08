@@ -79,6 +79,8 @@ Intro.imgNames = [
 
 intro = function()
 {
+    document.getElementById("intro").volume = 1;
+    document.getElementById("intro").play();    
     var imgNames = Intro.imgNames;
     Game.behaviours = {};
     Game.sprites = [];

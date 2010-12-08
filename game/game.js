@@ -29,6 +29,7 @@ var downpos = null;
 var buoyancy = -0.15;
 var sideScrollSpeed = 0.05;
 var squaredMaxItemDistance = 1000*1000;
+var quotes = [];
 
 var score = 0;
 
@@ -60,6 +61,7 @@ function initialize()
     Game.addSprite(Level.background);
     Game.addSprites(Level.staticSprites);
     createBalloon();
+    setQuotes();
     Game.addSprite(balloon);
     setBehaviours();
     SideScroll.enableWrap();
@@ -307,12 +309,34 @@ function pickAtRandom(array)
     return array[index];
 };
 
+function setQuotes()
+{
+    quotes.push("Wenn die Katze aus dem Haus ist tanzen die Mäuser auf dem Tisch (German proverb)");
+    quotes.push("Something a sprechstallmeister would say");
+    quotes.push("Nothing matters more to a child than a place to call home.");
+    quotes.push("It is entirely seemly for a young man killed in battle to lie mangled by the bronze spear. In his death all things appear fair.");
+}
+
+function getQuote()
+{
+    var quote = quotes[Math.floor(Math.random()*quotes.length)];
+    return quote;
+}
+
+function die()
+{
+    Game.behaviours = [];
+    var wisdom = new TextElement(getQuote(), new Point(canvas.width/2, canvas.height/2));
+
+    Game.clear();
+    setTimeout(wisdom.draw(),2000);
+}
+
 function setBehaviours()
 {
     Game.behaviours.push(sideScrollAfterBalloon);
     Game.behaviours.push(spawnObjectsAtRandomTimes);
     Game.behaviours.push(Behaviours.placeAltitudeSlider);
-
 }
 
 function setBalloonBehaviours()

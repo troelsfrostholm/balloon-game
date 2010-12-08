@@ -41,6 +41,7 @@ Behaviours.heightVulnerable = function(obj)
     {
         obj.animation = obj.boomAnimation;
         obj.boomAnimation.play();
+        die();
     }
 };
 

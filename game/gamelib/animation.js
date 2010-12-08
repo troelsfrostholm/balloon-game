@@ -22,6 +22,7 @@ function Animation(frameArray)
 
 Animation.prototype.play = function()
 {
+    this.startTime = new Date().getTime();
     this.playing = true;
 }
 

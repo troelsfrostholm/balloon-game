@@ -45,6 +45,12 @@ var stashedLevel = undefined;
 
 function begin()
 {
+    Game.run();
+    mainMenu();
+}
+
+function startFirstLevel()
+{
     var loading = new TextElement("loading level ...", new Point(canvas.width/2, canvas.height/2));
 
     Game.behaviours = [];
@@ -52,7 +58,9 @@ function begin()
     Game.sprites = [];
     mouseclick = function() {};
     Game.clear();
+    createBalloon();
     setTimeout(function () { LevelLoader.load(level, initialize); }, 100);
+    document.getElementById("circus").play();
 }
 
 function initialize()
@@ -60,14 +68,16 @@ function initialize()
     Game.hudElements = createHudElements();
     Game.addSprite(Level.background);
     Game.addSprites(Level.staticSprites);
-    createBalloon();
     setQuotes();
     Game.addSprite(balloon);
+    balloon.place(Level.startPoint[0], Level.startPoint[1]);
+
     setBehaviours();
     SideScroll.enableWrap();
     onResize();
     window.onresize = onResize;
     score = 0;
+    Level.Scripts.initialize();
 }
 
 function createHudElements()
@@ -119,7 +129,6 @@ function createBalloon()
 {
     balloon = new Sprite();
     balloon.scale = 1;
-    balloon.place(Level.startPoint[0], Level.startPoint[1]);
     balloon.dangerHeight01 = -1500;
     balloon.dangerHeight02 = -1650;
     balloon.dangerHeight03 = -1800;
@@ -209,24 +218,10 @@ function createBalloon()
 
 function createTriggers()
 {
-    bbox = Level.balloonStand;
-//  bboxCircus = new BoundingBox(-414, -1464, 1600 , 1000);
-    trigger = new Trigger(balloon, bbox, girlSpeak, hoverBalloon, girlShutup);
-//  circusMusic = new Trigger(balloon , bboxCircus , undefined, fadeToCrazyAssMusic , undefined);
-    Game.triggers.push(trigger);
-//  Game.triggers.push(circusMusic);
-    Game.behaviours.push(fadeToCrazyAssMusic);
-}
-
-function fadeToCrazyAssMusic()
-{
-    var center = new Point(200 , -700);
-    var distance = Math.sqrt( center.squaredDistance(balloon.pos[0]) );
-    var radius = 600;
-    if (distance < radius)
-    {
-        document.getElementById("circus").volume = 1 - (distance / radius);
-        document.getElementById("audio").volume = (distance / radius);
+    //    bbox = Level.balloonStand;
+    //    trigger = new Trigger(balloon, bbox, girlSpeak, hoverBalloon, girlShutup);
+    for(var i in Level.triggers) {
+	Game.triggers.push(Level.triggers[i]);
     }
 }
 
@@ -240,7 +235,7 @@ function girlSpeak()
     dialogue = pickAtRandom(dialogueLines);
     //say it. Play the win sequence if the player has enough
     //points to buy a better balloon
-    if(win) {	
+    if(win) {
 	setDialogue(pickAtRandom(richDialogue));
 	balloon.behave(Behaviours.ancorAt(girlPosition));
 	setTimeout(playWinSequence, 5000);
@@ -259,14 +254,6 @@ function playWinSequence()
     betterBalloon.pos = balloon.pos;
     Game.removeSprite(balloon);
     Game.sprites.push(betterBalloon);
-
-/*    followNewBalloon = function(obj)
-    {
-        obj.pos[0] = betterBalloon.pos[0].add(new Point(0, 100));
-    }
-    
-    boy.behaviours = [createFollowBehaviour(betterBalloon, new Point(0, 120))];
-*/
 }
 
 function girlShutup()
@@ -281,6 +268,7 @@ function hoverBalloon()
 
 function setDialogue(dialogue)
 {
+    dialogue.animation.play();
     Game.sprites.push(dialogue);
     activeDialogue = dialogue;
 }
@@ -445,7 +433,7 @@ function onResize()
 function quitToMenu()
 {
     stashLevel();
-    Game.behaviours = {};
+    Game.behaviours = [];
     Game.sprites = [];
     Game.hudElements = {};
     mainMenu();

@@ -10,10 +10,12 @@ Game = {
     triggers : Array(),
     debugMode : false,
     paused : false,
+    running : false,
     
     run : function() {
 	Game.initdraw();
 	bindMouseEvents();
+	Game.running = true;
     },
     
     initdraw : function() {
@@ -55,7 +57,7 @@ Game = {
 		    {
 			Game.triggers[i].bbox.debugDraw(Game.ctx);
 		    }
-		Game.levelBounds.debugDraw(Game.ctx);
+		Level.bounds.debugDraw(Game.ctx);
 	    }
     },
 
@@ -73,8 +75,6 @@ Game = {
 	}
 	Game.draw();
 	Game.frame++;
-
-	//setTimeout(Game.animate, Game.waitTime());
     },
 
     evalTriggers : function()
@@ -97,6 +97,7 @@ Game = {
 	for(var i in Game.hudElements) {
 	    if(classof(Game.hudElements[i]) == "Sprite") {
 		if(typeof(Game.hudElements[i].step) == "function") {
+		    Game.hudElements[i].animation.step();
 		    Game.hudElements[i].step();
 		}
 	    }
@@ -134,6 +135,18 @@ Game = {
     {
 	itAintMe = function(elm, index, arr) { return (elm != sprite) };
 	Game.sprites = Game.sprites.filter(itAintMe);
+	delete sprite;
+    },
+
+    addBehaviour : function(behaviour)
+    {
+	Game.behaviours.push(behaviour);
+    },
+
+    removeBehaviour : function(behaviour)
+    {
+	itAintMe = function(elm, index, arr) { return (elm != behaviour) };
+	Game.behaviours = Game.behaviours.filter(itAintMe);
     },
 
     translateEverything : function(byPoint)

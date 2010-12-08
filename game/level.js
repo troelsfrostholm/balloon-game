@@ -133,7 +133,11 @@ LevelLoader = {
 
     loadBehaviour : function(behaviour)
     {
-	return Behaviours[behaviour];
+	if(Behaviours[behaviour] != undefined)
+	    return Behaviours[behaviour];
+
+	if(Level.Scripts[behaviour] != undefined)
+	    return Level.Scripts[behaviour];
     },
 
     loadSpawnZones : function(spawnZoneData)

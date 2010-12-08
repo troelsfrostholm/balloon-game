@@ -4,14 +4,15 @@ level = {
     startPoint : [0, 1300],
 
     parameters : {
-	panHeight : -150
+	panHeight : -150,
+	inventory : []
     },	
 
     triggers : {
 	girl : {
 	    object : "balloon",
 	    bounds : [-1300, -1050, 400, 300],
-	    onEnter : "girlSpeak",
+	    onEnter : "Level.Scripts.meetGirl",
 	    onInside : "hoverBalloon",
 	    onLeave : "girlShutup"
 	}
@@ -20,12 +21,36 @@ level = {
     dialogue : {
 	intro : {
 	    image : "assets/dialogue/01.png",
-	    /*	    animation : {
+	    animation : {
 		frames : [["assets/dialogue/01.png", 1000]],
 		looping : false
-		},*/
+		},
 	    position : [-1000, -927]
-	}
+	},
+	meetGirlFirstTime : {
+	    image : "assets/dialogue/02.png",
+	    animation : {
+		frames : [["assets/dialogue/02.png", 1000]],
+		looping : false
+		},
+	    position : [-1000, -927]
+	},
+	meetGirlAgain : {
+	    image : "assets/dialogue/03.png",
+	    animation : {
+		frames : [["assets/dialogue/03.png", 1000]],
+		looping : false
+		},
+	    position : [-1000, -927]
+	},
+	giveGirlPony : {
+	    image : "assets/dialogue/04.png",
+	    animation : {
+		frames : [["assets/dialogue/04.png", 1000]],
+		looping : false
+		},
+	    position : [-1000, -927]
+	},
     },
 
     staticSprites : {
@@ -258,7 +283,7 @@ level = {
 	pink_pony : {
 	    image : "assets/level1/static/pink_pony.png",
 	    position : [1350, 1675],
-	    behaviours : ["collisionTest"]
+	    behaviours : ["ponyPickup", "collisionTest"]
 	},
     },
 	

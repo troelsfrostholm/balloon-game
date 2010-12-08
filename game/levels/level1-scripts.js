@@ -20,18 +20,20 @@ Level.Scripts = {
 	{
 	    SideScroll.followPoint(girlPosition);
 	},
-	girlSpeak : function(session)
-	{
-	},
 	meetGirl : function()
 	{
-	},
-	panToBalloon : function()
-	{
-	}, 
-	winCondition : function()
-	{
-	    
+	    if(Level.parameters.inventory.indexOf("pony") == -1) {
+		if(!Level.parameters.hasMetGirl) {
+		    setDialogue(Level.dialogue.meetGirlFirstTime);
+		    Level.parameters.hasMetGirl = true;
+		}
+		else {
+		    setDialogue(Level.dialogue.meetGirlAgain);
+		}
+	    }
+	    else {
+		setDialogue(Level.dialogue.giveGirlPony);
+	    }
 	},
 	fadeToCrazyAssMusic : function()
 	{
@@ -44,11 +46,17 @@ Level.Scripts = {
 		    document.getElementById("audio").volume = (distance / radius);
 		}
 	},
+	ponyPickup : function(obj) {
+	  if(balloon.getBoundingBox().collidesWith(obj.getBoundingBox())) {
+	      Level.parameters.inventory.push("pony");
+	      Game.hudElements.pony = obj;
+	      obj.place(canvas.width*0.9, canvas.height*0.9);
+	  }
+    },
 	initialize : function() {
 	Game.behaviours.push(Level.Scripts.fadeToCrazyAssMusic);
 	Game.behaviours.push(Level.Scripts.panToGirlWhenAboveHeight);
-
 	    //	    Game.behaviours.push(panToGirl...);
 	    //	    Game.winCondition = Level.Scrits.winCondition;
-	}
+    }
 }

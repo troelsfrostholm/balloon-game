@@ -6,10 +6,12 @@ Level.Scripts = {
 		Game.removeBehaviour(sideScrollAfterBalloon);
 		Game.addBehaviour(Level.Scripts.sideScrollAfterGirl);
 		Game.addBehaviour(hoverBalloon);
+		setDialogue(Level.dialogue.intro);
 		setTimeout(function() {
 			Game.removeBehaviour(Level.Scripts.sideScrollAfterGirl);
 			Game.removeBehaviour(hoverBalloon);
 			Game.addBehaviour(sideScrollAfterBalloon);
+			unsetDialogue();
 		    }, 10000);
 		Game.removeBehaviour(Level.Scripts.panToGirlWhenAboveHeight);
 	    }

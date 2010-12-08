@@ -29,6 +29,7 @@ LevelLoader = {
 	Level.bounds = this.loadBounds(leveldata.bounds);
 	Level.staticSprites = this.loadSprites(leveldata.staticSprites);
 	Level.spawnableSprites = this.loadSprites(leveldata.spawnableSprites);
+	Level.dialogue = this.loadSprites(leveldata.dialogue);
 	Level.spawnZones = this.loadSpawnZones(leveldata.spawnZones);
 	Level.triggers = this.loadTriggers(leveldata.triggers);
 	Level.panHeight = leveldata.panHeight;
@@ -80,24 +81,26 @@ LevelLoader = {
 	var images = [];
 	var temp = {}
 	temp[leveldata.background] = leveldata.background;
-	var sprites = leveldata.spawnableSprites;
-	for(var i in sprites) {
-	    temp[sprites[i].image] = sprites[i].image;
-	    if(sprites[i].animation && sprites[i].animation.frames) {
-		for(var j=0; j<sprites[i].animation.frames.length; j++) {
-		    temp[sprites[i].animation.frames[j][0]] = sprites[i].animation.frames[j][0];
-		}
-	    }
-	}
+	this.extractImageFilesFromSprites(temp, leveldata.spawnableSprites);
+	this.extractImageFilesFromSprites(temp, leveldata.staticSprites);
+	this.extractImageFilesFromSprites(temp, leveldata.dialogue);
 
-	var moresprites = leveldata.staticSprites;
-	for(var i in moresprites) {
-	    temp[moresprites[i].image] = moresprites[i].image;
-	}
 	for(i in temp) {
 	    images.push(temp[i]);
 	}
 	return images
+    },
+
+    extractImageFilesFromSprites : function(destObj, sprites)
+    {
+	for(var i in sprites) {
+	    destObj[sprites[i].image] = sprites[i].image;
+	    if(sprites[i].animation && sprites[i].animation.frames) {
+		for(var j=0; j<sprites[i].animation.frames.length; j++) {
+		    destObj[sprites[i].animation.frames[j][0]] = sprites[i].animation.frames[j][0];
+		}
+	    }
+	}	
     },
 
     loadSprites : function(spritesData)

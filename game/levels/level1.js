@@ -17,6 +17,17 @@ level = {
 	}
     },
 
+    dialogue : {
+	intro : {
+	    image : "assets/dialogue/01.png",
+	    /*	    animation : {
+		frames : [["assets/dialogue/01.png", 1000]],
+		looping : false
+		},*/
+	    position : [-1000, -927]
+	}
+    },
+
     staticSprites : {
 	arrow1 : {
 	    image : "assets/level1/static/arrow1.png",

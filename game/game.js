@@ -120,15 +120,15 @@ function createBalloon()
     balloon.place(Level.startPoint[0], Level.startPoint[1]);
     balloon.dangerHeight01 = -1500;
     balloon.dangerHeight02 = -1650;
-    balloon.dangerHeight03 = -1850;
-    balloon.deathHeight = -1996;
+    balloon.dangerHeight03 = -1800;
+    balloon.deathHeight = -1900;
 
     translationFromSpriteCenterToBalloonCenter = 127;
 
     betterBalloon = new Sprite();
     betterBalloon.setImg("assets/boy/02boy-normal01.png");
     betterBalloon.scale=1;
-    
+
     // Normal balloon
     var normalImg = new Image();
     normalImg.src = "assets/boy/01_.png";
@@ -165,11 +165,11 @@ function createBalloon()
     balloon.dangerAnimation03 = new Animation(moreDangerFrames);
     balloon.dangerAnimation03.looping = true;
     balloon.dangerAnimation03.play();
-    
-    // Boom!
+
+    // Todesstufe
     var boom = new Image();
     boom.src = "assets/boy/04_balloon.png";
-    var boomFrames = [new Frame(boom, 1000)];
+    var boomFrames = [new Frame(boom, 1000), new Frame(boom, 1000)];
     balloon.boomAnimation = new Animation(boomFrames);
     balloon.boomAnimation.looping = false;
     balloon.boomAnimation.onEnd = function()
@@ -177,8 +177,8 @@ function createBalloon()
         balloon.behaviours = [Behaviours.falling];        
         balloon.animation = balloon.burstAnimation;
     }
-    
-    // Burst balloon
+
+    // Ballonkind, Ballonkind, alles ist vorbei. Ein Tipp: Lass dich den Ballon mit Pressluft auffüllen!
     var burst = new Image();
     burst.src = "assets/boy/05_balloon.png";
     var burstFrames = [new Frame(burst, 500)];
@@ -201,10 +201,8 @@ function createBalloon()
         setBalloonBehaviours();
         bindMouseEvents();
         createTriggers();
-   }
-
-    balloon.animation = balloon.startAnimation;
-    
+    }
+    balloon.animation = balloon.startAnimation;    
 }
 
 function createTriggers()

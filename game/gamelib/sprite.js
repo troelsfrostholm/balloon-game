@@ -30,8 +30,8 @@ function Sprite()
 
     this.getBoundingBox = function()
     {
-	width = this.image.width*this.scale;
-	height = this.image.height*this.scale;
+	width = this.animation.getCurrentImage().width*this.scale;
+	height = this.animation.getCurrentImage().height*this.scale;
 	pos = this.pos[0]
 	return new BoundingBox( pos.x - width/2, 
 				pos.y - height/2, 

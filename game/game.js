@@ -265,7 +265,7 @@ function girlShutup()
 
 function hoverBalloon()
 {
-    balloon.pos[2] = balloon.pos[2].add(new Point(0, 0.3));
+    balloon.pos[2] = balloon.pos[2].add(new Point(0, -buoyancy));
 }
 
 function setDialogue(dialogue)

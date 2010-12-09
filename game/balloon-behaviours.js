@@ -30,6 +30,17 @@ Behaviours.heightVulnerable = function(obj) {
 		obj.behaviours = [Behaviours.falling];
 		Game.removeBehaviour(sideScrollAfterBalloon);
 	    }, 500);
+	setTimeout(function () {
+		Game.addBehaviour(sideScrollAfterBalloon);
+		obj.pos[0] = girlPosition;
+		obj.behaviours = [];
+		obj.setImg(obj.normalImage);
+		obj.behave(Behaviours.resisting);
+		obj.behave(Behaviours.heightVulnerable);
+
+		obj.behave(Behaviours.buoyant);
+		obj.behave(Behaviours.resisting);
+	    }, 3000);
     }
 };
 

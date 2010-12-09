@@ -50,11 +50,11 @@ Level.Scripts = {
 	{
 	    var center = new Point(200 , -700);
 	    var distance = Math.sqrt( center.squaredDistance(balloon.pos[0]) );
-	    var radius = 600;
+	    var radius = 900;
 	    if (distance < radius)
 		{
 		    document.getElementById("circus").volume = 1 - (distance / radius);
-		    document.getElementById("audio").volume = (distance / radius);
+		    document.getElementById("level01").volume = (distance / radius);
 		}
 	},
 	ponyPickup : function(obj) {

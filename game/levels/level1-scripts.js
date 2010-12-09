@@ -7,7 +7,8 @@ Level.Scripts = {
 		Game.addBehaviour(Level.Scripts.sideScrollAfterGirl);
 		Game.addBehaviour(hoverBalloon);
 		setDialogue(Level.dialogue.intro);
-		Level.dialogue.intro.animation.onEnd = function() {
+		Level.dialogue.intro.animation.onEnd = function()
+        {
 			Game.removeBehaviour(Level.Scripts.sideScrollAfterGirl);
 			Game.removeBehaviour(hoverBalloon);
 			Game.addBehaviour(sideScrollAfterBalloon);
@@ -28,6 +29,8 @@ Level.Scripts = {
 		    Level.dialogue.meetGirlFirstTime.animation.onEnd = function() {
 			Level.parameters.hasMetGirl = true;
 			unsetDialogue();
+            document.getElementById("level01_start").pause(); 
+            document.getElementById("level01").play();
 		    }
 		}
 		else {

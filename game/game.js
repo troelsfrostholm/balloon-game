@@ -133,11 +133,11 @@ function createBalloon()
     balloon.scale = 1;
     balloon.dangerHeight = -3000/2;
     balloon.deathHeight = -4000/2;
-    balloon.normalImage = createImage("assets/boy/01_balloon.png");
-    balloon.dangerImage = createImage("assets/boy/02_balloon.png");
-    balloon.moreDangerImage = createImage("assets/boy/03_balloon.png");
-    balloon.kablouieImage = createImage("assets/boy/04_balloon.png");
-    balloon.blowUpImage = createImage("assets/boy/05_balloon.png");
+    balloon.normalImage = "assets/boy/01_balloon.png";
+    balloon.dangerImage = "assets/boy/02_balloon.png";
+    balloon.moreDangerImage = "assets/boy/03_balloon.png";
+    balloon.kablouieImage = "assets/boy/04_balloon.png";
+    balloon.blowUpImage = "assets/boy/05_balloon.png";
 
     translationFromSpriteCenterToBalloonCenter = 127;
 

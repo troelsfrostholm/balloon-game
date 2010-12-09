@@ -21,15 +21,14 @@ Behaviours.dampened = function(obj)
 
 Behaviours.heightVulnerable = function(obj) {
     height = obj.pos[0].y;
-    obj.image = obj.normalImage;
-    if(height < obj.dangerHeight)  obj.image = obj.dangerImage;
+    if(height < obj.dangerHeight + 100) obj.setImg(obj.normalImage);
+    if(height < obj.dangerHeight)  obj.setImg(obj.dangerImage);
     if(height < obj.deathHeight)   {
-	obj.image = obj.kablouieImage;
-	obj.scale=0.75;
+	obj.setImg(obj.kablouieImage);
 	setTimeout(function () {
-		obj.image = obj.blowUpImage;
+		obj.setImg(obj.blowUpImage);
 		obj.behaviours = [Behaviours.falling];
-		obj.scale=0.5;
+		Game.removeBehaviour(sideScrollAfterBalloon);
 	    }, 500);
     }
 };

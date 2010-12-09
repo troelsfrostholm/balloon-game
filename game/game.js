@@ -130,6 +130,7 @@ function createBalloon()
 {
     balloon = new Sprite();
     balloon.scale = 1;
+
     balloon.dangerHeight01 = -1500;
     balloon.dangerHeight02 = -1650;
     balloon.dangerHeight03 = -1800;
@@ -314,11 +315,21 @@ function getQuote()
 
 function die()
 {
-    Game.behaviours = [];
     var wisdom = new TextElement(getQuote(), new Point(canvas.width/2, canvas.height/2));
 
-    Game.clear();
-    setTimeout(wisdom.draw(),2000);
+    Game.hudElements.wisdom = wisdom;
+
+    setTimeout(function () {
+	    Game.addBehaviour(sideScrollAfterBalloon);
+	    balloon.pos[0] = girlPosition;
+	    balloon.behaviours = [];
+	    balloon.setImg(obj.normalImage);
+	    balloon.behave(Behaviours.heightVulnerable);
+	    delete Game.hudElements.wisdom;
+	    
+	    balloon.behave(Behaviours.buoyant);
+	    balloon.behave(Behaviours.resisting);
+	}, 3000);
 }
 
 function setBehaviours()

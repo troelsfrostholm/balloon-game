@@ -60,7 +60,7 @@ Behaviours.impassableToBalloon = function(obj)
                     balloon.pos[0].y = objTopLeft.y - bh;
 
                     if ( balloon.pos[1].y > 0)
-                        balloon.pos[1].y *= -.5;
+                        balloon.pos[1].y *= -.1;
                 }
             }
             // Collission in object's RIGHT half
@@ -81,7 +81,7 @@ Behaviours.impassableToBalloon = function(obj)
                     balloon.pos[0].y = objTopLeft.y - bh;
 
                     if ( balloon.pos[1].y > 0)
-                        balloon.pos[1].y *= -.5;
+                        balloon.pos[1].y *= -.1;
                 }
             }
         }

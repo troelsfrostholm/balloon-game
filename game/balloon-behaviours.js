@@ -19,9 +19,11 @@ Behaviours.dampened = function(obj)
 
 };
 
-Behaviours.heightVulnerable = function(obj) {
+Behaviours.heightVulnerable = function(obj)
+{
     height = obj.pos[0].y;
-    if(height < obj.dangerHeight + 100) obj.setImg(obj.normalImage);
+
+    /*    if(height < obj.dangerHeight + 100) obj.setImg(obj.normalImage);
     if(height < obj.dangerHeight)  obj.setImg(obj.dangerImage);
     if(height < obj.deathHeight)   {
 	obj.setImg(obj.kablouieImage);
@@ -40,7 +42,29 @@ Behaviours.heightVulnerable = function(obj) {
 
 		obj.behave(Behaviours.buoyant);
 		obj.behave(Behaviours.resisting);
-	    }, 3000);
+		}, 3000);*/
+    
+    obj.animation = obj.normalAnimation;
+    
+    if (height < obj.dangerHeight01)
+    {
+        obj.animation = obj.dangerAnimation01;
+    }
+    if (height < obj.dangerHeight02)
+    {
+        obj.animation = obj.dangerAnimation02;
+    }
+    if (height < obj.dangerHeight03)
+    {
+        obj.animation = obj.dangerAnimation03;
+    }
+    if (height < obj.deathHeight)
+    {
+        obj.animation = obj.boomAnimation;
+        obj.boomAnimation.play();
+        obj.boomAnimation.onEnd = die;
+	obj.behaviours = [Behaviours.falling];
+	Game.removeBehaviour(sideScrollAfterBalloon);
     }
 };
 

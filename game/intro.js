@@ -93,6 +93,8 @@ Intro.imgNames = [
 
 intro = function()
 {
+//    document.getElementById("intro").volume = 1;
+  //  document.getElementById("intro").play();    
     var imgNames = Intro.imgNames;
     Game.behaviours = [];
     Game.sprites = [];
@@ -116,6 +118,8 @@ intro = function()
     s.place(canvas.width/2, canvas.height/2);
     s.setAnimation(new Animation(frames));
     s.animation.onEnd = startGame;
+    
+    console.log(s.animation.frameTimes[s.animation.frameTimes.length-1]);
 
     var cursor = new Sprite();
     cursor.setImg("assets/interface/cursor-click.png");
@@ -128,9 +132,11 @@ intro = function()
     window.onresize = function() { };
 
     s.animation.play();
-    document.getElementById("audio").play();
+    document.getElementById("intro").play();
 };
 
-function startGame(point) {
+function startGame(point)
+{
     startFirstLevel();
+    document.getElementById("intro").pause(); 
 };

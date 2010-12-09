@@ -26,9 +26,10 @@ var translationFromSpriteCenterToBalloonCenter;
 var windpower = -100;
 var resistance = 0.9;
 var downpos = null;
-var buoyancy = -0.3;
+var buoyancy = -0.15;
 var sideScrollSpeed = 0.05;
 var squaredMaxItemDistance = 1000*1000;
+var quotes = [];
 
 var score = 0;
 
@@ -59,8 +60,8 @@ function startFirstLevel()
     Game.clear();
     createBalloon();
     setTimeout(function () { LevelLoader.load(level, initialize); }, 100);
-    document.getElementById("circus").volume = 0;
     document.getElementById("circus").play();
+    document.getElementById("level01").play();
 }
 
 function initialize()
@@ -68,15 +69,14 @@ function initialize()
     Game.hudElements = createHudElements();
     Game.addSprite(Level.background);
     Game.addSprites(Level.staticSprites);
+    setQuotes();
     Game.addSprite(balloon);
     balloon.place(Level.startPoint[0], Level.startPoint[1]);
 
     setBehaviours();
     SideScroll.enableWrap();
-    createTriggers();
     onResize();
     window.onresize = onResize;
-    bindMouseEvents();
     score = 0;
     Level.Scripts.initialize();
 }
@@ -129,15 +129,12 @@ function createHudElements()
 function createBalloon()
 {
     balloon = new Sprite();
-    balloon.setImg("assets/boy/01_balloon.png");
     balloon.scale = 1;
-    balloon.dangerHeight = -3000/2;
-    balloon.deathHeight = -4000/2;
-    balloon.normalImage = "assets/boy/01_balloon.png";
-    balloon.dangerImage = "assets/boy/02_balloon.png";
-    balloon.moreDangerImage = "assets/boy/03_balloon.png";
-    balloon.kablouieImage = "assets/boy/04_balloon.png";
-    balloon.blowUpImage = "assets/boy/05_balloon.png";
+
+    balloon.dangerHeight01 = -1500;
+    balloon.dangerHeight02 = -1650;
+    balloon.dangerHeight03 = -1800;
+    balloon.deathHeight = -1900;
 
     translationFromSpriteCenterToBalloonCenter = 127;
 
@@ -145,20 +142,80 @@ function createBalloon()
     betterBalloon.setImg("assets/boy/02boy-normal01.png");
     betterBalloon.scale=1;
 
-    var img1 = new Image();
-    img1.src = "assets/boy/boy-up01.png";
-    var img2 = new Image();
-    img2.src = "assets/boy/boy-up02.png";
-    var boyFrames = [new Frame(img1, 8000), new Frame(img2, 300)];
-    balloon.animation = new Animation(boyFrames);
-    balloon.animation.looping=false;
-    balloon.animation.play();
+    // Normal balloon
+    var normalImg = new Image();
+    normalImg.src = "assets/boy/01_.png";
+    var normalFrames = [new Frame(normalImg,1000)];
+    balloon.normalAnimation = new Animation(normalFrames);
+    balloon.normalAnimation.looping = true;
 
-    balloon.animation.onEnd = function()
+    // Gefahrstufe 01
+    var danger01 = new Image();
+    danger01.src = "assets/boy/01_.png";
+    var danger02 = new Image();
+    danger02.src = "assets/boy/01_warning.png";
+    var danger01Frames = [new Frame(danger01, 500), new Frame(danger02,500)];
+    balloon.dangerAnimation01 = new Animation(danger01Frames);
+    balloon.dangerAnimation01.looping = true;
+    balloon.dangerAnimation01.play();
+    
+    // Gefahrstufe 02
+    var dangerImg01 = new Image();
+    dangerImg01.src = "assets/boy/02_.png";
+    var dangerImg02 = new Image();
+    dangerImg02.src = "assets/boy/02_warning.png";
+    var dangerFrames = [new Frame(dangerImg01, 500), new Frame(dangerImg02,500)];
+    balloon.dangerAnimation02 = new Animation(dangerFrames);
+    balloon.dangerAnimation02.looping = true;
+    balloon.dangerAnimation02.play();
+    
+    // Gefahrstufe 03
+    var moreDangerImg01 = new Image();
+    moreDangerImg01.src = "assets/boy/03_.png";
+    var moreDangerImg02 = new Image();
+    moreDangerImg02.src = "assets/boy/03_warning.png";
+    var moreDangerFrames = [new Frame(moreDangerImg01, 500), new Frame(moreDangerImg02,500)];
+    balloon.dangerAnimation03 = new Animation(moreDangerFrames);
+    balloon.dangerAnimation03.looping = true;
+    balloon.dangerAnimation03.play();
+
+    // Todesstufe
+    var boom = new Image();
+    boom.src = "assets/boy/04_balloon.png";
+    var boomFrames = [new Frame(boom, 1000), new Frame(boom, 1000)];
+    balloon.boomAnimation = new Animation(boomFrames);
+    balloon.boomAnimation.looping = false;
+    balloon.boomAnimation.onEnd = function()
     {
-        balloon.setImg("assets/boy/01_balloon.png");
-        balloon.behave(Behaviours.buoyant);
+        balloon.behaviours = [Behaviours.falling];        
+        balloon.animation = balloon.burstAnimation;
     }
+
+    // Ballonkind, Ballonkind, alles ist vorbei. Ein Tipp: Lass dich den Ballon mit Pressluft auffüllen!
+    var burst = new Image();
+    burst.src = "assets/boy/05_balloon.png";
+    var burstFrames = [new Frame(burst, 500)];
+    balloon.burstAnimation = new Animation(burstFrames);
+    balloon.burstAnimation.looping = false;
+
+    var img1 = new Image();
+    img1.src = "assets/boy/boy_up_01.png";
+    var img2 = new Image();
+    img2.src = "assets/boy/boy_up_02.png";
+    var boyFrames = [new Frame(img1, 5000), new Frame(img2, 666)];
+    balloon.startAnimation = new Animation(boyFrames);
+    balloon.startAnimation.looping=false;
+    balloon.startAnimation.play();
+
+    balloon.startAnimation.onEnd = function()
+    {
+        balloon.animation = balloon.normalAnimation;
+        balloon.behave(Behaviours.buoyant);
+        setBalloonBehaviours();
+        bindMouseEvents();
+        createTriggers();
+    }
+    balloon.animation = balloon.startAnimation;    
 }
 
 function createTriggers()
@@ -242,13 +299,44 @@ function pickAtRandom(array)
     return array[index];
 };
 
+function setQuotes()
+{
+    quotes.push("Wenn die Katze aus dem Haus ist tanzen die Mäuser auf dem Tisch (German proverb)");
+    quotes.push("Something a sprechstallmeister would say");
+    quotes.push("Nothing matters more to a child than a place to call home.");
+    quotes.push("It is entirely seemly for a young man killed in battle to lie mangled by the bronze spear. In his death all things appear fair.");
+}
+
+function getQuote()
+{
+    var quote = quotes[Math.floor(Math.random()*quotes.length)];
+    return quote;
+}
+
+function die()
+{
+    var wisdom = new TextElement(getQuote(), new Point(canvas.width/2, canvas.height/2));
+
+    Game.hudElements.wisdom = wisdom;
+
+    setTimeout(function () {
+	    Game.addBehaviour(sideScrollAfterBalloon);
+	    balloon.pos[0] = girlPosition;
+	    balloon.behaviours = [];
+	    balloon.setImg(obj.normalImage);
+	    balloon.behave(Behaviours.heightVulnerable);
+	    delete Game.hudElements.wisdom;
+	    
+	    balloon.behave(Behaviours.buoyant);
+	    balloon.behave(Behaviours.resisting);
+	}, 3000);
+}
+
 function setBehaviours()
 {
-    setBalloonBehaviours();
     Game.behaviours.push(sideScrollAfterBalloon);
     Game.behaviours.push(spawnObjectsAtRandomTimes);
     Game.behaviours.push(Behaviours.placeAltitudeSlider);
-
 }
 
 function setBalloonBehaviours()

@@ -151,9 +151,12 @@ Game = {
 
     translateEverything : function(byPoint)
     {
-	for(var i in Game.sprites)
+        for(var i in Game.sprites)
 	    {
-		Game.sprites[i].pos[0] = Game.sprites[i].pos[0].add(byPoint);
+            if (!Game.sprites[i].staticSprite)
+            {
+                Game.sprites[i].pos[0] = Game.sprites[i].pos[0].add(byPoint);
+            }
 	    }
     },
 

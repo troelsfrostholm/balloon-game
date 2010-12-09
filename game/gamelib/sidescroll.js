@@ -33,21 +33,29 @@ SideScroll = {
 
     wrapping : function()
     {
-	p = SideScroll.scrollPoint;
-	b = Level.bounds;
-	min = b.x-Game.canvas.width;
-	max = b.x+b.width;
-	t = 0;
-	//	console.log("p.x : " + p.x + ", min : " + min + ", max : " + max);
-	if(p.x<min)  { console.log("left"); t=b.width; }
-	if(p.x>max)  { console.log("right"); t=-b.width; }
-	SideScroll.scrollPoint = SideScroll.scrollPoint.add(new Point(t, 0));
-	Game.translateEverything(new Point(t, 0));
-	Level.background.pos[0] = Level.background.pos[0].add(new Point(-t, 0));
+        p = SideScroll.scrollPoint;
+        b = Level.bounds;
+        min = b.x-Game.canvas.width;
+        max = b.x+b.width;
+        t = 0;
+        //	console.log("p.x : " + p.x + ", min : " + min + ", max : " + max);
+        if(p.x<min)
+        {
+            console.log("left");
+            t = b.width;
+        }
+        if(p.x>max)
+        {
+            console.log("right");
+            t = -b.width;
+        }
+        SideScroll.scrollPoint = SideScroll.scrollPoint.add(new Point(t, 0));
+        Game.translateEverything(new Point(t, 0));
+        Level.background.pos[0] = Level.background.pos[0].add(new Point(-t, 0));
     },
 
     enableWrap : function()
     {
-	Game.behaviours.push(SideScroll.wrapping);
+        Game.behaviours.push(SideScroll.wrapping);
     }
 }

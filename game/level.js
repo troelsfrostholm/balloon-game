@@ -27,7 +27,7 @@ LevelLoader = {
 	Level.startPoint = leveldata.startPoint;
 	Level.background = this.loadBackground(leveldata.background);
 	Level.bounds = this.loadBounds(leveldata.bounds);
-	Level.staticSprites = this.loadSprites(leveldata.staticSprites);
+	Level.staticSprites = this.loadStaticSprites(leveldata.staticSprites);
 	Level.spawnableSprites = this.loadSprites(leveldata.spawnableSprites);
 	Level.dialogue = this.loadSprites(leveldata.dialogue);
 	Level.spawnZones = this.loadSpawnZones(leveldata.spawnZones);
@@ -108,14 +108,50 @@ LevelLoader = {
 	return mapObject(LevelLoader.loadSprite, spritesData);
     },
 
+    loadStaticSprites : function(spritesData)
+    {
+	return mapObject(LevelLoader.loadStaticSprite, spritesData);
+    },
+
     loadSprite : function(spriteData)
     {
 	sprite = new Sprite();
-	if(spriteData.image) {
+	if(spriteData.image)
+    {
 	    sprite.image = Level.images[spriteData.image];
 	    sprite.animation = new Animation([new Frame(sprite.image, 0)]);
 	}
-	if(spriteData.animation && spriteData.animation.frames) {
+	if(spriteData.animation && spriteData.animation.frames)
+    {
+	    var frames = spriteData.animation.frames.map(LevelLoader.loadFrame);
+	    sprite.animation = new Animation(frames);
+	    sprite.animation.looping = spriteData.animation.looping;
+	    sprite.animation.playing = true;
+	}
+
+	if(spriteData.position) sprite.place(spriteData.position[0], spriteData.position[1]);
+	if(spriteData.velocity) sprite.move(spriteData.velocity[0], spriteData.velocity[1]);
+	if(spriteData.acceleration) sprite.acc(spriteData.acceleration[0], spriteData.acceleration[1]);
+	if(spriteData.spin) sprite.spin(spriteData.spin);
+	if(spriteData.behaviours) sprite.behaviours = spriteData.behaviours.map(LevelLoader.loadBehaviour);
+	if(spriteData.weight) sprite.weight = spriteData.weight;
+	return sprite;
+    },
+
+    loadStaticSprite : function(spriteData)
+    {
+    
+	sprite = new Sprite();
+
+    sprite.staticSprite = true;
+    
+	if(spriteData.image)
+    {
+	    sprite.image = Level.images[spriteData.image];
+	    sprite.animation = new Animation([new Frame(sprite.image, 0)]);
+	}
+	if(spriteData.animation && spriteData.animation.frames)
+    {
 	    var frames = spriteData.animation.frames.map(LevelLoader.loadFrame);
 	    sprite.animation = new Animation(frames);
 	    sprite.animation.looping = spriteData.animation.looping;

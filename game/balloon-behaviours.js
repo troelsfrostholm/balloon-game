@@ -43,7 +43,7 @@ Behaviours.heightVulnerable = function(obj)
 		obj.behave(Behaviours.buoyant);
 		obj.behave(Behaviours.resisting);
 		}, 3000);*/
-    
+
     obj.animation = obj.normalAnimation;
     
     if (height < obj.dangerHeight01)

@@ -41,6 +41,7 @@ var poorDialogue = ["02", "04", "06"].map(createDialogueSprite);
 var richDialogue = ["25", "29"].map(createDialogueSprite);
 var activeDialogue = null;
 
+var currentLevel = 0;
 var stashedLevel = undefined;
 
 function begin()
@@ -51,6 +52,11 @@ function begin()
 
 function startFirstLevel()
 {
+    startLevel(levels[0]);
+}
+
+function startLevel(level)
+{
     var loading = new TextElement("loading level ...", new Point(canvas.width/2, canvas.height/2));
 
     Game.behaviours = [];
@@ -60,8 +66,6 @@ function startFirstLevel()
     Game.clear();
     createBalloon();
     setTimeout(function () { LevelLoader.load(level, initialize); }, 100);
-    document.getElementById("circus").play();
-    document.getElementById("level01_start").play();
 }
 
 function initialize()
@@ -466,4 +470,14 @@ function stashLevel()
     stashedLevel.sprites = arrayCopy(Game.sprites);
     stashedLevel.hudElements = shallowCopy(Game.hudElements);
     stashedLevel.behaviours = shallowCopy(Game.behaviours);
+}
+
+function nextLevel()
+{
+    currentLevel++;
+    if(currentLevel >= levels.length) {
+	//end game somehow
+	mainMenu();
+    }
+    startLevel(levels[currentLevel]);
 }

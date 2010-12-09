@@ -1,4 +1,5 @@
-level = {
+var levels = [];
+levels[0] = {
     background : "assets/background.jpg",
     bounds : [-1500, -2100, 3000, 4200],
     startPoint : [0, 1300],
@@ -513,7 +514,7 @@ level = {
 	},
 
    spawnZones : {
-	forest_left : {
+       /*	forest_left : {
 	    bounds : [-1500, 145, 1600, 2245],
 	    items : ["monkey", "flying_squirrel", "bat", "flying_duck", "penguin", "swan"],
 	    frequency : 0.5
@@ -542,6 +543,6 @@ level = {
 	    bounds : [-787, -1805, 2110, 1980],
 	    items : ["barbecue_chicken", "biker_bear", "canon_king", "magic_carpet_man", "music"],
 	    frequency : 0.5
-	}
+	    }*/
     }
 };

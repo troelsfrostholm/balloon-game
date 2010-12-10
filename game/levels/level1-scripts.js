@@ -1,4 +1,4 @@
-Level.Scripts = {
+levels[0].scripts = {
 	panToGirlWhenAboveHeight : function()
 	{
 	    if(balloon.pos[0].y < Level.parameters.panHeight) {
@@ -70,6 +70,8 @@ Level.Scripts = {
 	initialize : function() {
 	Game.behaviours.push(Level.Scripts.fadeToCrazyAssMusic);
 	Game.behaviours.push(Level.Scripts.panToGirlWhenAboveHeight);
+	document.getElementById("circus").play();
+	document.getElementById("level01_start").play();
 	    //	    Game.behaviours.push(panToGirl...);
 	    //	    Game.winCondition = Level.Scrits.winCondition;
     }

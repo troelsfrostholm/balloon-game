@@ -24,6 +24,8 @@ LevelLoader = {
     
     continueLoadingLevel : function(leveldata, continuation)
     {
+	console.log(leveldata);
+	Level.Scripts = leveldata.scripts;
 	Level.startPoint = leveldata.startPoint;
 	Level.background = this.loadBackground(leveldata.background);
 	Level.bounds = this.loadBounds(leveldata.bounds);

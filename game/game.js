@@ -122,7 +122,8 @@ function createHudElements()
 	    altitudeslider: altitudeslider, 
 	    cursor: cursor, 
 	    soundButton: soundButton,
-	    quitButton: quitButton
+	    quitButton: quitButton,
+        scoreElement: scoreElement
 	    };
 }
 

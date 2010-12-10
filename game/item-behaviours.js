@@ -4,9 +4,10 @@ Behaviours.collisionTest = function (obj)
 	obj.behaviours = [createFollowBehaviour(balloon, new Point(20, 110))];
 	obj.scale = 0.25;
 	setTimeout(function () {Game.removeSprite(obj);}, 1500);
-	score+=1;
+	score+=obj.weight;
 	scoreElement.text = score + "";
-	balloon.acc(0, obj.weight);
+//	balloon.acc(0, obj.weight);
+    buoyancy += obj.weight;
     }
 };
 

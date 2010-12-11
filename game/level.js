@@ -27,6 +27,8 @@ LevelLoader = {
 	console.log(leveldata);
 	Level.Scripts = leveldata.scripts;
 	Level.startPoint = leveldata.startPoint;
+    Level.balloonStandPosition = new Point(leveldata.balloonStandPosition[0], 
+                                           leveldata.balloonStandPosition[1]);
 	Level.background = this.loadBackground(leveldata.background);
 	Level.bounds = this.loadBounds(leveldata.bounds);
 	Level.staticSprites = this.loadStaticSprites(leveldata.staticSprites);

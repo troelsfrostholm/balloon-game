@@ -2,7 +2,7 @@ levels[1] = {
     background : "assets/level2/background.jpg",
     bounds : [-1500, -2100, 3000, 4200],
     startPoint : [-426, 1576],
-    balloonStand : [-895, -72, 404, 505],
+    balloonStandPosition : [-630, 100],
 
     staticSprites : {
 	art_noveau_lamp : {

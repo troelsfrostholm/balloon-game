@@ -3,6 +3,7 @@ levels[0] = {
     background : "assets/background.jpg",
     bounds : [-1500, -2100, 3000, 4200],
     startPoint : [0, 1300],
+    balloonStandPosition : [-1000, -927],
 
     parameters : {
 	panHeight : -150,

@@ -93,8 +93,9 @@ Intro.imgNames = [
 
 intro = function()
 {
-//    document.getElementById("intro").volume = 1;
-  //  document.getElementById("intro").play();    
+    canvas.height = document.documentElement.clientHeight-40;
+    canvas.width = document.documentElement.clientWidth-20;
+
     var imgNames = Intro.imgNames;
     Game.behaviours = [];
     Game.sprites = [];

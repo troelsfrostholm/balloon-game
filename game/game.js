@@ -35,8 +35,6 @@ var score = 0;
 
 var soundOn = true;
 
-var girlPosition = new Point(-1000, -927);
-
 var poorDialogue = ["02", "04", "06"].map(createDialogueSprite);
 var richDialogue = ["25", "29"].map(createDialogueSprite);
 var activeDialogue = null;
@@ -231,30 +229,6 @@ function createTriggers()
     }
 }
 
-function girlSpeak()
-{
-    //pick a scenario: Does player have enough points to win?
-    win = score >= 30;
-    //pick a line of dialogue
-    if(win) dialogueLines = richDialogue;
-    else dialogueLines = poorDialogue;
-    dialogue = pickAtRandom(dialogueLines);
-    //say it. Play the win sequence if the player has enough
-    //points to buy a better balloon
-    if(win) {
-	setDialogue(pickAtRandom(richDialogue));
-	balloon.behave(Behaviours.ancorAt(girlPosition));
-	setTimeout(playWinSequence, 5000);
-    }
-    else {
-	setDialogue(poorDialogue[0]);
-	setTimeout(function () { 
-		girlShutup();
-		setDialogue(poorDialogue[1]); }, 2000);
-    }
-    setTimeout(girlShutup, 5000);
-}
-
 function playWinSequence()
 {
     betterBalloon.pos = balloon.pos;
@@ -290,7 +264,7 @@ function unsetDialogue()
 
 function createDialogueSprite(dialogueNumber)
 {
-    position = girlPosition;
+    position = Level.balloonStandPosition;
     dialogueSprite = new Sprite();
     dialogueSprite.setImg("assets/dialogue/"+dialogueNumber+".png");
     dialogueSprite.pos[0] = position;
@@ -325,7 +299,7 @@ function die()
 
     setTimeout(function () {
 	    Game.addBehaviour(sideScrollAfterBalloon);
-	    balloon.pos[0] = girlPosition;
+	    balloon.pos[0] = Level.balloonStandPosition;
 	    balloon.behaviours = [];
 	    balloon.setImg(obj.normalImage);
 	    balloon.behave(Behaviours.heightVulnerable);

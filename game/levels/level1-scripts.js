@@ -19,7 +19,7 @@ levels[0].scripts = {
 	}, 
 	sideScrollAfterGirl : function()
 	{
-	    SideScroll.followPoint(girlPosition);
+	    SideScroll.followPoint(Level.balloonStandPosition);
 	},
 	meetGirl : function()
 	{

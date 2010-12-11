@@ -1,0 +1,24 @@
+<html>
+<head>
+<script type="text/javascript">
+function showpos(evt)
+{
+mouse_x = evt.offsetX;
+mouse_y = evt.offsetY;
+
+world_x = mouse_x - 1500;
+world_y = mouse_y - 2100;
+console.log(world_x + ", " + world_y);
+}
+
+function load()
+{
+document.getElementById("img").onclick = showpos;
+}
+</script>
+</head>
+<body onload = "load()">
+<img id="img" src = "level2.jpg">
+</img>
+</body>
+</html>

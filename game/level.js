@@ -137,6 +137,7 @@ LevelLoader = {
 	if(spriteData.spin) sprite.spin(spriteData.spin);
 	if(spriteData.behaviours) sprite.behaviours = spriteData.behaviours.map(LevelLoader.loadBehaviour);
 	if(spriteData.weight) sprite.weight = spriteData.weight;
+	if(spriteData.lotto) sprite.lotto = spriteData.lotto;
 	return sprite;
     },
 

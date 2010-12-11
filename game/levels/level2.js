@@ -22,14 +22,14 @@ levels[1] = {
 	metLadyFirstTime : {
 	    image : "assets/level2/dialogue/01meeting/01.png",
 	    animation : {
-		frames : [["assets/level2/dialogue/01meeting/01.png", 1000],
-			  ["assets/level2/dialogue/01meeting/02.png",1000],
-			  ["assets/level2/dialogue/01meeting/03.png",1000],
-			  ["assets/level2/dialogue/01meeting/04.png",1000],
-			  ["assets/level2/dialogue/01meeting/05.png",1000],
-			  ["assets/level2/dialogue/01meeting/06.png",1000],
-			  ["assets/level2/dialogue/01meeting/07.png",1000],
-			  ["assets/level2/dialogue/01meeting/08.png", 1000]],
+		frames : [["assets/level2/dialogue/01meeting/01.png", 2000],
+			  ["assets/level2/dialogue/01meeting/02.png",2000],
+			  ["assets/level2/dialogue/01meeting/03.png",2000],
+			  ["assets/level2/dialogue/01meeting/04.png",2000],
+			  ["assets/level2/dialogue/01meeting/05.png",2000],
+			  ["assets/level2/dialogue/01meeting/06.png",2000],
+			  ["assets/level2/dialogue/01meeting/07.png",2000],
+			  ["assets/level2/dialogue/01meeting/08.png", 2000]],
 		looping : false
 	    },
 	    position : [-530, 100]
@@ -37,10 +37,10 @@ levels[1] = {
 	returnNoCat : {
 	    image : "assets/level2/dialogue/02returnnocat/01.png",
 	    animation : {
-		frames : [["assets/level2/dialogue/02returnnocat/01.png", 1000],
-			  ["assets/level2/dialogue/02returnnocat/02.png",1000],
-			  ["assets/level2/dialogue/02returnnocat/03.png",1000],
-			  ["assets/level2/dialogue/02returnnocat/04.png",1000]],
+		frames : [["assets/level2/dialogue/02returnnocat/01.png", 2000],
+			  ["assets/level2/dialogue/02returnnocat/02.png",2000],
+			  ["assets/level2/dialogue/02returnnocat/03.png",2000],
+			  ["assets/level2/dialogue/02returnnocat/04.png",2000]],
 		looping : false
 	    },
 	    position : [-530, 100]
@@ -48,16 +48,16 @@ levels[1] = {
 	returnWithCat : {
 	    image : "assets/level2/dialogue/03returnwithcat/01.png",
 	    animation : {
-		frames : [["assets/level2/dialogue/03returnwithcat/01.png", 1000],
-			  ["assets/level2/dialogue/03returnwithcat/02.png",1000],
-			  ["assets/level2/dialogue/03returnwithcat/03.png",1000],
-			  ["assets/level2/dialogue/03returnwithcat/04.png",1000],
-			  ["assets/level2/dialogue/03returnwithcat/05.png",1000],
-			  ["assets/level2/dialogue/03returnwithcat/06.png",1000],
-			  ["assets/level2/dialogue/03returnwithcat/07.png",1000],
-			  ["assets/level2/dialogue/03returnwithcat/08.png",1000],
-			  ["assets/level2/dialogue/03returnwithcat/09.png",1000],
-			  ["assets/level2/dialogue/03returnwithcat/10.png",1000]],
+		frames : [["assets/level2/dialogue/03returnwithcat/01.png", 2000],
+			  ["assets/level2/dialogue/03returnwithcat/02.png",2000],
+			  ["assets/level2/dialogue/03returnwithcat/03.png",2000],
+			  ["assets/level2/dialogue/03returnwithcat/04.png",2000],
+			  ["assets/level2/dialogue/03returnwithcat/05.png",2000],
+			  ["assets/level2/dialogue/03returnwithcat/06.png",2000],
+			  ["assets/level2/dialogue/03returnwithcat/07.png",2000],
+			  ["assets/level2/dialogue/03returnwithcat/08.png",2000],
+			  ["assets/level2/dialogue/03returnwithcat/09.png",2000],
+			  ["assets/level2/dialogue/03returnwithcat/10.png",2000]],
 		looping : false
 	    },
 	    position : [-530, 100]

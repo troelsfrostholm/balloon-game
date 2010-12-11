@@ -4,30 +4,34 @@ var mainmenu = {
 	    position : [0, 0]
     },
     credits : {
-	    image : "assets/main_menu/credits.png",
-	    position : [850, 70]
+	image : "assets/main_menu/credits.png",
+	position : [190, 600]
     },
     cloud : {
-	    image : "assets/main_menu/rotating-cloud.png",
-	    position : [800, 550]
+	image : "assets/main_menu/rotating-cloud.png",
+	position : [800, 620]
+    },
+    planet : {
+	image : "assets/main_menu/planet.png",
+	position : [810, 100]
     },
     newgame : {
 	image : "assets/main_menu/start-new-game.png",
-	    position : [800, 430],
-	    onclick : "newgame"
+	position : [800, 470],
+	onclick : "newgame"
     },
     instructions : {
 	image : "assets/main_menu/instructions.png",
-	    position : [800, 480],
-	    onclick : "tutorial"
+	position : [800, 520],
+	onclick : "tutorial"
     },
     resume : {
-	    image : "assets/main_menu/resume-inactive.png",
-	    position : [800, 530]
+	image : "assets/main_menu/resume-inactive.png",
+	position : [800, 570]
     },
     title : {
-	    image : "assets/main_menu/title.png",
-	    position : [270, 300]
+	image : "assets/main_menu/title.png",
+	position : [320, 230]
     },
     cursor : {
 	    image : "assets/interface/cursor-click.png",
@@ -55,9 +59,10 @@ function mainMenu()
     Game.hudElements.cloud.spin(0.01);
     Game.hudElements.cloud.behave(Behaviours.hover);
     Game.hudElements.cursor.behave(Behaviours.followMouse);
-    if(stashedLevel) {
-	Game.hudElements.resume.setImg("assets/main_menu/resume-active.png");
-	Game.hudElements.resume.onclick = resume;
+    if(stashedLevel)
+    {
+        Game.hudElements.resume.setImg("assets/main_menu/resume-active.png");
+        Game.hudElements.resume.onclick = resume;
     }
     window.onresize = resizeMainMenu;
     resizeMainMenu();

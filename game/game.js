@@ -102,7 +102,7 @@ function createHudElements()
     cursor.behave(Behaviours.rotateToFaceBalloon);
     cursor.behave(Behaviours.followMouseCenter);
     
-    scoreElement = new TextElement("0", new Point(720, 558));
+//    scoreElement = new TextElement("0", new Point(720, 558));
 
     soundButton = new Sprite();
     soundButton.setImg("assets/interface/sound-on-button.png");
@@ -124,7 +124,7 @@ function createHudElements()
 	    altitudeslider: altitudeslider, 
 	    cursor: cursor, 
 	    soundButton: soundButton,
-	    quitButton: quitButton
+	    quitButton: quitButton,
 	    };
 }
 
@@ -302,11 +302,14 @@ function die()
 	    balloon.pos[0] = Level.balloonStandPosition;
 	    balloon.behaviours = [];
 	    balloon.setImg(obj.normalImage);
-	    balloon.behave(Behaviours.heightVulnerable);
 	    delete Game.hudElements.wisdom;
 	    
+	    balloon.behave(Behaviours.heightVulnerable);
+	    balloon.behave(Behaviours.hasMinimumHeight);
 	    balloon.behave(Behaviours.buoyant);
 	    balloon.behave(Behaviours.resisting);
+        buoyancy = -0.3;
+        
 	}, 3000);
 }
 
@@ -321,6 +324,7 @@ function setBalloonBehaviours()
 {
     //sprite behaviours
     balloon.behave(Behaviours.resisting);
+    balloon.behave(Behaviours.hasMinimumHeight);
     balloon.behave(Behaviours.heightVulnerable);
 
     betterBalloon.behave(Behaviours.buoyant);

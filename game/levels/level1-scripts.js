@@ -3,6 +3,12 @@ levels[0].scripts = {
 	{
 	    if(balloon.pos[0].y < Level.parameters.panHeight) {
 		console.log("Above!!");
+        Level.spawnZones.forest_left.spawnsPerSecond = 0.5;
+        Level.spawnZones.forest_middle.spawnsPerSecond = 0.5;
+        Level.spawnZones.forest_right.spawnsPerSecond = 0.5;
+        Level.spawnZones.sky.spawnsPerSecond = 0.5;
+        Level.spawnZones.sky_above_girl.spawnsPerSecond = 0.5;
+        Level.spawnZones.circus.spawnsPerSecond = 0.5;
 		Game.removeBehaviour(sideScrollAfterBalloon);
 		Game.addBehaviour(Level.Scripts.sideScrollAfterGirl);
 		Game.addBehaviour(hoverBalloon);
@@ -16,7 +22,7 @@ levels[0].scripts = {
 		};
 		Game.removeBehaviour(Level.Scripts.panToGirlWhenAboveHeight);
 	    }
-	}, 
+	},
 	sideScrollAfterGirl : function()
 	{
 	    SideScroll.followPoint(Level.balloonStandPosition);
@@ -61,10 +67,13 @@ levels[0].scripts = {
 		}
 	},
 	ponyPickup : function(obj) {
-	  if(balloon.getBoundingBox().collidesWith(obj.getBoundingBox())) {
+	  if(balloon.getBoundingBox().collidesWith(obj.getBoundingBox()))
+      {
 	      Level.parameters.inventory.push("pony");
 	      Game.hudElements.pony = obj;
+          // The next line fucks up if it is removed. Why?
 	      obj.place(canvas.width*0.9, canvas.height*0.9);
+          console.log("placing pony at" + "(" + canvas.width*0.9 + "," + canvas.height*0.9 + ")");
 	  }
     },
 	initialize : function() {

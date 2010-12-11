@@ -19,6 +19,14 @@ Behaviours.dampened = function(obj)
 
 };
 
+Behaviours.hasMinimumHeight = function(obj)
+{
+    if (obj.pos[0].y > (Level.bounds.height/2 - 300))
+    {
+        buoyancy = -0.3
+    }
+}
+
 Behaviours.heightVulnerable = function(obj)
 {
     height = obj.pos[0].y;

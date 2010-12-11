@@ -87,11 +87,13 @@ ending = function()
     window.onresize = function() { };
 
     s.animation.play();
-//    document.getElementById("intro").play();
+    document.getElementById("ending").play();
+    document.getElementById("level01_start").pause();
+    document.getElementById("level01").pause();
 };
 
 function endGame(point)
 {
     mainMenu();
-//    document.getElementById("intro").pause(); 
+    document.getElementById("ending").pause(); 
 };

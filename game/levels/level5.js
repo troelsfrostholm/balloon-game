@@ -2,7 +2,7 @@ levels[4] = {
     background : "assets/level5/background.jpg",
     bounds : [-1500, -2100, 3000, 4200],
     startPoint : [-954, 1288],
-    balloonStand : [-1300, -1050, 400, 300],
+    balloonStandPosition : [-630, 100],
 
     triggers : {
 	girl : {

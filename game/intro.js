@@ -2,7 +2,34 @@ var Intro = {}
 
 //imgNames : [filename, duration, skip forward to frame, skip back to frame] 
 Intro.imgNames = [
-"scene 10001.jpg", 750,
+	"scene 00001.jpg", 500,
+	"scene 00002.jpg", 500,
+	"scene 00003.jpg", 500,
+	"scene 00004.jpg", 500,
+	"scene 00001.jpg", 500,
+	"scene 00002.jpg", 500,
+	"scene 00003.jpg", 500,
+	"scene 00004.jpg", 500,
+	"scene 00001.jpg", 500,
+	"scene 00002.jpg", 500,
+	"scene 00003.jpg", 500,
+	"scene 00004.jpg", 500,
+"scene 00005.jpg", 500,
+"scene 00006.jpg", 500,
+"scene 00007.jpg", 500,
+"scene 00008.jpg", 500,
+"scene 00009.jpg", 500,
+"scene 00010.jpg", 500,
+"scene 00011.jpg", 500,
+"scene 00012.jpg", 500,
+"scene 00013.jpg", 500,
+"scene 00014.jpg", 500,
+"scene 00015jpg", 500,
+"scene 00016.jpg", 500,
+"scene 00017.jpg", 500,
+"scene 00018.jpg", 500,
+"scene 00019.jpg", 4000,
+	"scene 10001.jpg", 750,
 "scene 10002.jpg", 750,
 "scene 10001.jpg", 750,
 "scene 10002.jpg", 750,
@@ -42,14 +69,14 @@ Intro.imgNames = [
 "scene 30004.jpg", 1000,
 "scene 30005.jpg", 1000,
 	"scene 40001.jpg",750,
-"scene 40002.jpg", 750,
-"scene 40003.jpg", 750,
-"scene 40001.jpg", 750,
-"scene 40002.jpg", 750,
-"scene 40003.jpg", 750,
-"scene 40001.jpg", 750,
-"scene 40002.jpg", 750,
-"scene 40003.jpg", 750,
+"scene 40002.jpg", 850,
+"scene 40003.jpg", 850,
+"scene 40001.jpg", 850,
+"scene 40002.jpg", 850,
+"scene 40003.jpg", 850,
+"scene 40001.jpg", 850,
+"scene 40002.jpg", 850,
+"scene 40003.jpg", 850,
 	"scene 50001.jpg", 4000,
 	"scene 60001.jpg", 4000,
 "scene 70001.jpg", 3000,
@@ -93,15 +120,14 @@ Intro.imgNames = [
 
 intro = function()
 {
-    canvas.height = document.documentElement.clientHeight-40;
-    canvas.width = document.documentElement.clientWidth-20;
-
+//    document.getElementById("intro").volume = 1;
+  //  document.getElementById("intro").play();    
     var imgNames = Intro.imgNames;
     Game.behaviours = [];
     Game.sprites = [];
     Game.hudElements = {};
     frames = [];
-    var path = "assets/intro/";
+    var path = "assets/cutscene/intro/";
     var numFrames = 86;
     var frame;
     var img;
@@ -118,8 +144,9 @@ intro = function()
     var s = new Sprite();
     s.place(canvas.width/2, canvas.height/2);
     s.setAnimation(new Animation(frames));
-    s.scale = canvas.width/s.animation.frames[0].image.width;
     s.animation.onEnd = startGame;
+    
+    console.log(s.animation.frameTimes[s.animation.frameTimes.length-1]);
 
     var cursor = new Sprite();
     cursor.setImg("assets/interface/cursor-click.png");

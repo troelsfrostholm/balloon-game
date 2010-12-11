@@ -62,7 +62,7 @@ function startLevel(level)
     Game.sprites = [];
     mouseclick = function() {};
     Game.clear();
-    createBalloon();
+    createBalloon(currentLevel+1);
     setTimeout(function () { LevelLoader.load(level, initialize); }, 100);
 }
 
@@ -128,8 +128,9 @@ function createHudElements()
 	    };
 }
 
-function createBalloon()
+function createBalloon(level)
 {
+    var path = "assets/level"+level+"/boy/";
     balloon = new Sprite();
     balloon.scale = 1;
 
@@ -141,21 +142,21 @@ function createBalloon()
     translationFromSpriteCenterToBalloonCenter = 127;
 
     betterBalloon = new Sprite();
-    betterBalloon.setImg("assets/boy/02boy-normal01.png");
+    betterBalloon.setImg(path+"02boy-normal01.png");
     betterBalloon.scale=1;
 
     // Normal balloon
     var normalImg = new Image();
-    normalImg.src = "assets/boy/01_.png";
+    normalImg.src = path+"01_.png";
     var normalFrames = [new Frame(normalImg,1000)];
     balloon.normalAnimation = new Animation(normalFrames);
     balloon.normalAnimation.looping = true;
 
     // Gefahrstufe 01
     var danger01 = new Image();
-    danger01.src = "assets/boy/01_.png";
+    danger01.src = path+"01_.png";
     var danger02 = new Image();
-    danger02.src = "assets/boy/01_warning.png";
+    danger02.src = path+"01_warning.png";
     var danger01Frames = [new Frame(danger01, 500), new Frame(danger02,500)];
     balloon.dangerAnimation01 = new Animation(danger01Frames);
     balloon.dangerAnimation01.looping = true;
@@ -163,9 +164,9 @@ function createBalloon()
     
     // Gefahrstufe 02
     var dangerImg01 = new Image();
-    dangerImg01.src = "assets/boy/02_.png";
+    dangerImg01.src = path+"02_.png";
     var dangerImg02 = new Image();
-    dangerImg02.src = "assets/boy/02_warning.png";
+    dangerImg02.src = path+"02_warning.png";
     var dangerFrames = [new Frame(dangerImg01, 500), new Frame(dangerImg02,500)];
     balloon.dangerAnimation02 = new Animation(dangerFrames);
     balloon.dangerAnimation02.looping = true;
@@ -173,9 +174,9 @@ function createBalloon()
     
     // Gefahrstufe 03
     var moreDangerImg01 = new Image();
-    moreDangerImg01.src = "assets/boy/03_.png";
+    moreDangerImg01.src = path+"03_.png";
     var moreDangerImg02 = new Image();
-    moreDangerImg02.src = "assets/boy/03_warning.png";
+    moreDangerImg02.src = path+"03_warning.png";
     var moreDangerFrames = [new Frame(moreDangerImg01, 500), new Frame(moreDangerImg02,500)];
     balloon.dangerAnimation03 = new Animation(moreDangerFrames);
     balloon.dangerAnimation03.looping = true;
@@ -183,8 +184,10 @@ function createBalloon()
 
     // Todesstufe
     var boom = new Image();
-    boom.src = "assets/boy/04_balloon.png";
-    var boomFrames = [new Frame(boom, 1000), new Frame(boom, 1000)];
+    boom.src = path+"04_balloon.png";
+    var gone = new Image();
+    gone.src = path+"05_balloon.png";
+    var boomFrames = [new Frame(boom, 1000), new Frame(gone, 1000)];
     balloon.boomAnimation = new Animation(boomFrames);
     balloon.boomAnimation.looping = false;
     balloon.boomAnimation.onEnd = function()
@@ -195,15 +198,15 @@ function createBalloon()
 
     // Ballonkind, Ballonkind, alles ist vorbei. Ein Tipp: Lass dich den Ballon mit Pressluft auffüllen!
     var burst = new Image();
-    burst.src = "assets/boy/05_balloon.png";
+    burst.src = path+"05_balloon.png";
     var burstFrames = [new Frame(burst, 500)];
     balloon.burstAnimation = new Animation(burstFrames);
     balloon.burstAnimation.looping = false;
 
     var img1 = new Image();
-    img1.src = "assets/boy/boy_up_01.png";
+    img1.src = path+"boy_up_01.png";
     var img2 = new Image();
-    img2.src = "assets/boy/boy_up_02.png";
+    img2.src = path+"boy_up_02.png";
     var boyFrames = [new Frame(img1, 5000), new Frame(img2, 666)];
     balloon.startAnimation = new Animation(boyFrames);
     balloon.startAnimation.looping=false;

@@ -1,51 +1,54 @@
 var mainmenu = {
     background : {
-	image : "assets/main_menu/menu-background.jpg",
-	position : [0, 0]
+	    image : "assets/main_menu/menu-background.jpg",
+	    position : [0, 0]
     },
     credits : {
-	image : "assets/main_menu/credits.png",
-	position : [850, 70]
+	    image : "assets/main_menu/credits.png",
+	    position : [850, 70]
     },
     cloud : {
-	image : "assets/main_menu/rotating-cloud.png",
-	position : [800, 550]
+	    image : "assets/main_menu/rotating-cloud.png",
+	    position : [800, 550]
     },
     newgame : {
 	image : "assets/main_menu/start-new-game.png",
-	position : [800, 430],
-	onclick : "newgame"
+	    position : [800, 430],
+	    onclick : "newgame"
     },
     instructions : {
 	image : "assets/main_menu/instructions.png",
-	position : [800, 480],
-	onclick : "tutorial"
+	    position : [800, 480],
+	    onclick : "tutorial"
     },
     resume : {
-	image : "assets/main_menu/resume-inactive.png",
-	position : [800, 530]
+	    image : "assets/main_menu/resume-inactive.png",
+	    position : [800, 530]
     },
     title : {
-	image : "assets/main_menu/title.png",
-	position : [270, 300]
+	    image : "assets/main_menu/title.png",
+	    position : [270, 300]
     },
     cursor : {
-	image : "assets/interface/cursor-click.png",
-	position : [400, 400]
+	    image : "assets/interface/cursor-click.png",
+	    position : [400, 400]
     }
 };
 
 var Events = {
     newgame : function() {
-	intro();
+	    intro();
     },
     tutorial : function() {
-	tutorial();
+	    tutorial();
     }
 }
 
 function mainMenu()
 {
+    Game.behaviours = {};
+    Game.sprites = [];
+    Game.hudElements = {};
     document.getElementById("circus").volume = 0;
     var sprites = loadHudElements(mainmenu);
     Game.hudElements = sprites;
@@ -80,21 +83,22 @@ function loadHudElement(element)
 function loadEvent(event)
 {
     if(typeof(event) == "string") {
-	if(typeof(Events[event]) == "function")
-	    {
-		return Events[event];
-	    }
-	else
-	    {
-		console.log("Warning: event " + event + " does not exist i Events. ");
-		return undefined;
-	    }
+	    if(typeof(Events[event]) == "function")
+        {
+	        return Events[event];
+        }
+	    else
+        {
+	        console.log("Warning: event " + event + " does not exist i Events. ");
+	        return undefined;
+        }
     }
 }
 
 function resizeMainMenu()
 {
-    canvas.height = document.documentElement.clientHeight-40;
-    canvas.width = document.documentElement.clientWidth-20;
-    Game.hudElements.background.place(canvas.width/2, canvas.height/2);
+    canvas.height = 570;//document.documentElement.clientHeight-40;
+    canvas.width = 1000;//document.documentElement.clientWidth-20;
+    bg = Game.hudElements.background;
+    bg.place(canvas.width/2, canvas.height/2);
 }

@@ -476,10 +476,8 @@ function nextLevel()
 {
     currentLevel++;
     if(currentLevel >= levels.length) {
-	    //end game somehow
-        alert("you win");
-	    mainMenu();
-        return
+        ending();
+        return;
     }
     startLevel(levels[currentLevel]);
 }

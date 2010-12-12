@@ -50,7 +50,9 @@ function begin()
 
 function startFirstLevel()
 {
-    startLevel(levels[0]);
+    currentLevel = 0;
+    buoyancy = 0;
+    startLevel(levels[currentLevel]);
 }
 
 function startLevel(level)
@@ -417,13 +419,11 @@ function onResize()
     canvas.width = document.documentElement.clientWidth-20;
 
     Game.hudElements.score.place(canvas.width - 130, canvas.height - 80);
-    //    Game.hudElements.scoreElement.pos.x = canvas.width-130;
-    //    Game.hudElements.scoreElement.pos.y = canvas.height-75;
     Game.hudElements.menu.place(100, 50);
     Game.hudElements.quitButton.place(60, 50);
     Game.hudElements.pauseButton.place(100, 50);
     Game.hudElements.soundButton.place(140, 50);
-    Game.hudElements.altitudemeter.place(canvas.width - 50, canvas.height/2);
+    Game.hudElements.altitudemeter.place(canvas.width - 120, canvas.height/2);
     Game.hudElements.altitudemeter.scale = canvas.height/1000;  
 }
 

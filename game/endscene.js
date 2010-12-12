@@ -90,6 +90,8 @@ ending = function()
     document.getElementById("ending").play();
     document.getElementById("level01_start").pause();
     document.getElementById("level01").pause();
+    document.getElementById("intro").pause();
+    document.getElementById("circus").pause();
 };
 
 function endGame(point)

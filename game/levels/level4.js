@@ -1,14 +1,72 @@
 levels[3] = {
     background : "assets/level4/background.jpg",
     bounds : [-1500, -2100, 3000, 4200],
-    startPoint : [-954, 1288],
-    balloonStandPosition : [-630, 100],
+    startPoint : [592, 1787],
+    balloonStandPosition : [-1013, 1674],
+
+    parameters : {
+        pirateCount : 0
+    },
+
+    dialogue : {
+	    meetFirstTime : {
+	        image : "assets/level4/dialogue/02meetingwithoutsailors/01.png",
+	        animation : {
+		        frames : [["assets/level4/dialogue/02meetingwithoutsailors/01.png", 2000],
+			          ["assets/level4/dialogue/02meetingwithoutsailors/02.png",2000],
+			          ["assets/level4/dialogue/02meetingwithoutsailors/03.png",2000],
+			          ["assets/level4/dialogue/02meetingwithoutsailors/04.png",2000],
+			          ["assets/level4/dialogue/02meetingwithoutsailors/05.png",2000],
+			          ["assets/level4/dialogue/02meetingwithoutsailors/06.png",2000],
+			          ["assets/level4/dialogue/02meetingwithoutsailors/07.png",2000],
+			          ["assets/level4/dialogue/02meetingwithoutsailors/08.png", 2000],
+                        ["assets/level4/dialogue/02meetingwithoutsailors/09.png", 2000],
+                        ["assets/level4/dialogue/02meetingwithoutsailors/10.png", 500],
+                        ["assets/level4/dialogue/02meetingwithoutsailors/12.png", 2000],
+                        ["assets/level4/dialogue/02meetingwithoutsailors/13.png", 2000],
+                        ["assets/level4/dialogue/02meetingwithoutsailors/15.png", 2000],
+                        ["assets/level4/dialogue/02meetingwithoutsailors/16.png", 2000],
+                        ["assets/level4/dialogue/02meetingwithoutsailors/17.png", 2000],
+                        ["assets/level4/dialogue/02meetingwithoutsailors/18.png", 2000]],
+		        looping : false
+	        },
+	        position : [-900, 1600]
+	    },
+        returnWithoutSailors : {
+	        image : "assets/level4/dialogue/03returnwithoutsailors/01.png",
+	        animation : {
+		        frames : [["assets/level4/dialogue/03returnwithoutsailors/01.png", 2000],
+			          ["assets/level4/dialogue/03returnwithoutsailors/02.png",2000],
+			          ["assets/level4/dialogue/03returnwithoutsailors/03.png",2000],
+			          ["assets/level4/dialogue/03returnwithoutsailors/04.png",2000],
+			          ["assets/level4/dialogue/03returnwithoutsailors/05.png",2000]],
+		        looping : false
+	        },
+	        position : [-900, 1600]
+	    },
+        returnWithSailors : {
+	        image : "assets/level4/dialogue/04returnwithsailors/01.png",
+	        animation : {
+		        frames : [["assets/level4/dialogue/04returnwithsailors/01.png", 2000],
+			          ["assets/level4/dialogue/04returnwithsailors/02.png",2000],
+			          ["assets/level4/dialogue/04returnwithsailors/03.png",2000],
+			          ["assets/level4/dialogue/04returnwithsailors/04.png",2000],
+			          ["assets/level4/dialogue/04returnwithsailors/05.png",2000],
+			          ["assets/level4/dialogue/04returnwithsailors/06.png",2000],
+			          ["assets/level4/dialogue/04returnwithsailors/07.png",2000],
+			          ["assets/level4/dialogue/04returnwithsailors/08.png",2000],
+			          ["assets/level4/dialogue/04returnwithsailors/09.png",2000]],
+		        looping : false
+	        },
+	        position : [-900, 1600]
+	    }
+    },
 
     triggers : {
-	girl : {
-	    bounds : [-1500, -1050, 400, 300],
-	    onEnter : "girlSpeak",
-	    onInside : "hover",
+	balloonStand : {
+	    bounds : [-1250, 1431, 442, 384],
+	    onEnter : "Level.Scripts.meetPirate",
+	    onInside : "hoverBalloon",
 	    onLeave : "girlShutup",
             object : "balloon"
 	}
@@ -24,19 +82,19 @@ levels[3] = {
 	captain_morgan : {
 	    image : "assets/level4/static/captain_morgan.png",
 	    position : [350, 655],
-	    behaviours : ["collisionTest"],
+	    behaviours : ["piratePickup", "collisionTest"],
 		weight : + 0.1
 	},
 	lookout : {
 	    image : "assets/level4/static/lookout.png",
 	    position : [163, -134],
-	    behaviours : ["collisionTest"],
+	    behaviours : ["piratePickup", "collisionTest"],
 		weight : + 0.1
 	},
 	monkey_sailor : {
 	    image : "assets/level4/static/monkey_sailor.png",
 	    position : [65, 612],
-	    behaviours : ["collisionTest"],
+	    behaviours : ["piratePickup", "collisionTest"],
 		weight : + 0.1
 	},
 	red_pirate : {
@@ -48,13 +106,13 @@ levels[3] = {
 	rope_sailor : {
 	    image : "assets/level4/static/rope_sailor.png",
 	    position : [-249, 345],
-	    behaviours : ["collisionTest"],
+	    behaviours : ["piratePickup", "collisionTest"],
 		weight : + 0.1
 	},
 	terrified_sailor : {
 	    image : "assets/level4/static/terrified_sailor.png",
 	    position : [549, 289],
-	    behaviours : ["collisionTest"],
+	    behaviours : ["piratePickup", "collisionTest"],
 		weight : + 0.1
 	},
 	scared_sailor : {
@@ -65,7 +123,7 @@ levels[3] = {
 		looping : true
 	    },
 	    position : [480, 685],
-	    behaviours : ["collisionTest"],
+	    behaviours : ["piratePickup", "collisionTest"],
 	    weight : + 0.1
 	},
 	waldie : {
@@ -76,7 +134,7 @@ levels[3] = {
 		looping : true
 	    },
 	 	position : [334, -198],
-	    behaviours : ["collisionTest"],
+	    behaviours : ["piratePickup", "collisionTest"],
 	    weight : + 0.1
 	},
 	big_ship_box_01 : {

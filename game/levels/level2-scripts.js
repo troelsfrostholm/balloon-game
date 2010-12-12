@@ -26,8 +26,9 @@ levels[1].scripts = {
 	    {
 		setDialogue(Level.dialogue.returnWithCat);
 		Level.dialogue.returnWithCat.animation.onEnd = function() {
-		    balloon.setImg("assets/boy/02boy-normal01.png");
+		    balloon.setImg("assets/level2/boy/02boy-normal01.png");
 		    Level.parameters.won = true;
+            delete Game.hudElements.cat;
 		    unsetDialogue();
 		}
 	    }

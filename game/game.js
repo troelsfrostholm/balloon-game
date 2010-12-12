@@ -23,7 +23,7 @@ var translationFromSpriteCenterToBalloonCenter;
 
 
 //game parameters
-var windpower = -100;
+var windpower = -2;
 var resistance = 0.9;
 var downpos = null;
 var buoyancy = -0.15;
@@ -345,7 +345,7 @@ function distToBalloon(point)
 function pushForce(point)
 { 
     d = distToBalloon(point); 
-    d2 = d.dot(d); 
+    d2 = Math.sqrt(d.dot(d)); 
     pushforce = d.mult(windpower/d2);
     return new Point(pushforce.x, pushforce.y*0.2);
 }

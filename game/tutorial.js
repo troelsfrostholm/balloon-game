@@ -205,6 +205,7 @@ tutorial = function()
     var s = new Sprite();
     s.place(canvas.width/2, canvas.height/2);
     s.setAnimation(new Animation(frames));
+    s.scale = canvas.width/s.animation.frames[0].image.width;
     s.animation.onEnd = mainMenu;
 
     var forwardButton = new Sprite();

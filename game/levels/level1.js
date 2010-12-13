@@ -520,32 +520,32 @@ levels[2] = {
        	forest_left : {
 	    bounds : [-1500, 145, 1600, 2245],
 	    items : ["monkey", "flying_squirrel", "bat", "flying_duck", "penguin", "swan"],
-	    frequency : 0
+	    frequency : 0.5
 	},
 	forest_right : {
 	    bounds : [250, 145, 1250, 2245],
 	    items : ["monkey", "flying_squirrel", "bat", "flying_duck", "penguin", "swan"],
-	    frequency : 0
+	    frequency : 0.5
 	},
 	forest_middle : {
-	    bounds : [-1500, 145, 3000, 1150],
+	    bounds : [100, 145, 150, 1150],
 	    items : ["monkey", "flying_squirrel", "bat", "flying_duck", "penguin", "swan"],
-	    frequency : 0
+	    frequency : 0.5
 	},
 	sky : {
 	    bounds : [-636, -2100, 2136, 2000],
 	    items : ["floss_cloud1", "floss_cloud2", "floss_cloud3", "hotair_balloon1", "hotair_balloon2", "hotair_balloon3", "hotair_balloon4"],
-	    frequency : 0
+	    frequency : 0.5
 	},
 	sky_above_girl : {
 	    bounds : [-1500, -2100, 1500, 650],
 	    items : ["floss_cloud1", "floss_cloud2", "floss_cloud3", "hotair_balloon1", "hotair_balloon2", "hotair_balloon3", "hotair_balloon4"],
-	    frequency : 0
+	    frequency : 0.5
 	},
 	circus : {
 	    bounds : [-787, -1805, 2110, 1980],
 	    items : ["barbecue_chicken", "biker_bear", "canon_king", "magic_carpet_man", "music"],
-	    frequency : 0
+	    frequency : 0.5
 	    }
     }
 };

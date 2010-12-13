@@ -9,7 +9,46 @@ levels[1].scripts = {
         Game.addBehaviour(sideScrollAfterBalloon);
         balloon.place(Level.startPoint[0], Level.startPoint[1]);
     },
-	initialize : function() {
-		Level.Scripts.lookAtLady();
+    meetLady : function() {
+	if(Level.parameters.inventory.indexOf("cat") == -1) {
+	    if(!Level.parameters.metLadyBefore) {
+		setDialogue(Level.dialogue.metLadyFirstTime);
+		Level.dialogue.metLadyFirstTime.animation.onEnd = function() {
+		    unsetDialogue();
+		    Level.parameters.metLadyBefore = true;
+		}
+	    }
+	    else {
+		Level.Scripts.returnNoCat();
+	    }
 	}
+	else if(!Level.parameters.won)
+	    {
+		setDialogue(Level.dialogue.returnWithCat);
+		Level.dialogue.returnWithCat.animation.onEnd = function() {
+		    balloon.setImg("assets/level2/boy/02boy-normal01.png");
+		    Level.parameters.won = true;
+            delete Game.hudElements.cat;
+		    unsetDialogue();
+		}
+	    }
+	
+    },
+    returnNoCat : function() {
+	setDialogue(Level.dialogue.returnNoCat);
+	Level.dialogue.returnNoCat.animation.stop();
+	Level.dialogue.returnNoCat.animation.currentFrame = Math.floor(Math.random()*Level.dialogue.returnNoCat.animation.frames.length);
+    },
+    catPickup : function(obj) {
+	if(balloon.getBoundingBox().collidesWith(obj.getBoundingBox()))
+	    {
+		Level.parameters.inventory.push("cat");
+		Game.hudElements.cat = Level.staticSprites.happy_cat;
+		// The next line fucks up if it is removed. Why?
+		Game.hudElements.cat.place(canvas.width*0.9, canvas.height*0.9);
+	    }
+    },
+    initialize : function() {
+	Level.Scripts.lookAtLady();
+    }
 }

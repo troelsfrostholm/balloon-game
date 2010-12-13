@@ -144,6 +144,7 @@ intro = function()
     var s = new Sprite();
     s.place(canvas.width/2, canvas.height/2);
     s.setAnimation(new Animation(frames));
+    s.scale = canvas.width/1292;
     s.animation.onEnd = startGame;
     
     console.log(s.animation.frameTimes[s.animation.frameTimes.length-1]);

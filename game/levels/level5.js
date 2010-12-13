@@ -2,47 +2,93 @@ levels[4] = {
     background : "assets/level5/background.jpg",
     bounds : [-1500, -2100, 3000, 4200],
     startPoint : [-954, 1288],
-    balloonStandPosition : [-630, 100],
+    balloonStandPosition : [-912, -1160],
+
+    parameters : {
+        guestCount : 0
+    },
+
+   dialogue : {
+	    meetFirstTime : {
+	        image : "assets/level5/dialogue/02meetingwithouttourists/01.png",
+	        animation : {
+		        frames : [["assets/level5/dialogue/02meetingwithouttourists/01.png", 2000],
+			          ["assets/level5/dialogue/02meetingwithouttourists/02.png",2000],
+			          ["assets/level5/dialogue/02meetingwithouttourists/03.png",2000],
+			          ["assets/level5/dialogue/02meetingwithouttourists/04.png",2000],
+			          ["assets/level5/dialogue/02meetingwithouttourists/05.png",2000],
+			          ["assets/level5/dialogue/02meetingwithouttourists/06.png",2000],
+			          ["assets/level5/dialogue/02meetingwithouttourists/07.png",2000]],
+		        looping : false
+	        },
+	        position : [-912, -1160]
+	    },
+        returnWithoutSailors : {
+	        image : "assets/level5/dialogue/04returnwithouttourists/01.png",
+	        animation : {
+		        frames : [["assets/level5/dialogue/04returnwithouttourists/01.png", 2000],
+			          ["assets/level5/dialogue/04returnwithouttourists/02.png",2000],
+			          ["assets/level5/dialogue/04returnwithouttourists/03.png",2000],
+			          ["assets/level5/dialogue/04returnwithouttourists/04.png",2000],
+			          ["assets/level5/dialogue/04returnwithouttourists/05.png",2000],
+                      ["assets/level5/dialogue/04returnwithouttourists/06.png",2000]],
+		        looping : false
+	        },
+	        position : [-912, -1160]
+	    },
+        returnWithSailors : {
+	        image : "assets/level5/dialogue/03returnwithtourists/01.png",
+	        animation : {
+		        frames : [["assets/level5/dialogue/03returnwithtourists/01.png", 2000],
+			          ["assets/level5/dialogue/03returnwithtourists/02.png",2000],
+			          ["assets/level5/dialogue/03returnwithtourists/03.png",2000],
+			          ["assets/level5/dialogue/03returnwithtourists/04.png",2000],
+			          ["assets/level5/dialogue/03returnwithtourists/05.png",2000]],
+		        looping : false
+	        },
+	        position : [-912, -1160]
+	    }
+    },
 
     triggers : {
-	girl : {
-	    bounds : [-1500, -1050, 400, 300],
-	    onEnter : "girlSpeak",
-	    onInside : "hover",
-	    onLeave : "girlShutup",
-            object : "balloon"
-	}
+	    balloonStand : {
+	        bounds : [-1259, -1283, 500, 417],
+	        onEnter : "Level.Scripts.meetRobot",
+	        onInside : "hoverBalloon",
+	        onLeave : "girlShutup",
+                object : "balloon"
+	    }
     },
 
     staticSprites : {
 	bathing_beauty : {
 	    image : "assets/level5/static/bathing_beauty.png",
 	    position : [170, 1327],
-	    behaviours : ["collisionTest"],
+	    behaviours : ["touristPickup", "collisionTest"],
 		weight : + 0.1
 	},
 	bully : {
 	    image : "assets/level5/static/bully.png",
 	    position : [405, 1303],
-	    behaviours : ["collisionTest"],
+	    behaviours : ["touristPickup", "collisionTest"],
 		weight : + 0.1
 	},
 	flexing : {
 	    image : "assets/level5/static/flexing.png",
 	    position : [-45, 1284],
-	    behaviours : ["collisionTest"],
+	    behaviours : ["touristPickup", "collisionTest"],
 		weight : + 0.1
 	},
 	human_pyramid : {
 	    image : "assets/level5/static/human_pyramid.png",
 	    position : [-740, 1225],
-	    behaviours : ["collisionTest"],
+	    behaviours : ["touristPickup", "collisionTest"],
 		weight : + 0.1
 	},
 	kid_splashing_water : {
 	    image : "assets/level5/static/kid_splashing_water.png",
 	    position : [559, 1301],
-	    behaviours : ["collisionTest"],
+	    behaviours : ["touristPickup", "collisionTest"],
 		weight : + 0.1
 	},
 	plant1 : {
@@ -71,37 +117,37 @@ levels[4] = {
 		looping : true
 	    },
 	    position : [707, 354],
-	    behaviours : ["collisionTest"],
+	    behaviours : ["touristPickup", "collisionTest"],
 	    weight : + 0.1
 	},
 	school_kids : {
 	    image : "assets/level5/static/school_kids.png",
 	    position : [365, -830],
-	    behaviours : ["collisionTest"],
+	    behaviours : ["touristPickup", "collisionTest"],
 		weight : + 0.1
 	},
 	screaming_kid : {
 	    image : "assets/level5/static/screaming_kid.png",
 	    position : [550, -843],
-	    behaviours : ["collisionTest"],
+	    behaviours : ["touristPickup", "collisionTest"],
 		weight : + 0.1
 	},
 	splashing_girl : {
 	    image : "assets/level5/static/splashing_girl.png",
 	    position : [700, 1300],
-	    behaviours : ["collisionTest"],
+	    behaviours : ["touristPickup", "collisionTest"],
 		weight : + 0.1
 	},
 	sunburned_man : {
 	    image : "assets/level5/static/sunburned_man.png",
 	    position : [-326, 1314],
-	    behaviours : ["collisionTest"],
+	    behaviours : ["touristPickup", "collisionTest"],
 		weight : + 0.1
 	},
 	supermodel : {
 	    image : "assets/level5/static/supermodel.png",
 	    position : [300, 300],
-	    behaviours : ["collisionTest"],
+	    behaviours : ["touristPickup", "collisionTest"],
 		weight : + 0.1
 	},
 	swimming_pool : {
@@ -113,7 +159,7 @@ levels[4] = {
 	tall_girl : {
 	    image : "assets/level5/static/tall_girl.png",
 	    position : [751, -875],
-	    behaviours : ["collisionTest"],
+	    behaviours : ["touristPickup", "collisionTest"],
 		weight : + 0.1
 	},
 	robotic_waitress : {

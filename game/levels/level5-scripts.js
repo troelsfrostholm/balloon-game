@@ -34,7 +34,8 @@ levels[4].scripts = {
 		    Level.dialogue.returnWithSailors.animation.onEnd = function() {
 		        Level.parameters.won = true;
 		        unsetDialogue();
-                ending();
+                balloon.behave(Level.Scripts.flyHome);
+                balloon.setImg("assets/level5/boy/02boy-normal01.png");
 		    }
 	    }
         else {
@@ -54,6 +55,9 @@ levels[4].scripts = {
                 Game.hudElements.numGuests.text = (12-Level.parameters.guestCount)+" x";
             }
 	    }
+    },
+    flyHome : function(obj) {
+        obj.acc(0.5, -2);
     },
     initialize : function() {
     	Level.Scripts.lookAtBalloonStand();

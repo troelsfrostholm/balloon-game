@@ -76,13 +76,13 @@ ending = function()
     s.scale = canvas.width/s.animation.frames[0].image.width;
     s.animation.onEnd = endGame;
 
-    var cursor = new Sprite();
-    cursor.setImg("assets/interface/cursor-click.png");
+/*    var cursor = new Sprite();
+    cursor.setImg("assets/interface/cursor-click.png");*/
     
     Game.clear();
     Game.hudElements.intro = s;
     Game.hudElements.cursor = cursor;
-    Game.hudElements.cursor.behave(Behaviours.followMouse);
+//    Game.hudElements.cursor.behave(Behaviours.followMouse);
     setTimeout("mouseclick = endGame", 200);
     window.onresize = function() { };
 

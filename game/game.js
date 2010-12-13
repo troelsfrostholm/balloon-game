@@ -51,7 +51,7 @@ function begin()
 function startFirstLevel()
 {
     currentLevel = 0;
-    buoyancy = 0;
+    buoyancy = -0.3;
     startLevel(levels[currentLevel]);
 }
 
@@ -284,10 +284,16 @@ function pickAtRandom(array)
 
 function setQuotes()
 {
-    quotes.push("Wenn die Katze aus dem Haus ist tanzen die Mäuser auf dem Tisch (German proverb)");
-    quotes.push("Something a sprechstallmeister would say");
-    quotes.push("Nothing matters more to a child than a place to call home.");
-    quotes.push("It is entirely seemly for a young man killed in battle to lie mangled by the bronze spear. In his death all things appear fair.");
+    quotes.push(" Blackness swims toward you like a school \nof eels who have just seen something\n that eels like a lot.");
+    quotes.push("What really is the point of trying to \nteach anything to anybody?");
+    quotes.push("Nothing matters more to a child than \na place to call home.");
+    quotes.push("It is entirely seemly for a young man \nkilled in battle to lie mangled by the bronze spear. \nIn his death all things appear fair.");
+    quotes.push("In all things of nature there is \nsomething of the marvelous.");
+    quotes.push("Time crumbles things; everything grows \nold under the power of Time \nand is forgotten through the lapse of Time.");
+    quotes.push("But truly, Ananda, it is nothing strange \nthat human beings should die.");
+    quotes.push("Life is like riding a bicycle. \nTo keep your balance you must keep moving.");
+    quotes.push("Why not?");
+    quotes.push("Man is free at the instant he wants to be.");
 }
 
 function getQuote()
@@ -298,7 +304,7 @@ function getQuote()
 
 function die()
 {
-    var wisdom = new TextElement(getQuote(), new Point(canvas.width/2, canvas.height/2));
+    var wisdom = new TextElement(getQuote(), new Point(canvas.width*0.2, canvas.height*0.4));
 
     Game.hudElements.wisdom = wisdom;
 

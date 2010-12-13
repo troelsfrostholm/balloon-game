@@ -5,29 +5,29 @@ var mainmenu = {
     },
     credits : {
 	image : "assets/main_menu/credits.png",
-	position : [190, 600]
+	position : [190, 500]
     },
     cloud : {
 	image : "assets/main_menu/rotating-cloud.png",
-	position : [800, 620]
+	position : [800, 540]
     },
     planet : {
 	image : "assets/main_menu/planet.png",
-	position : [810, 100]
+	position : [810, 80]
     },
     newgame : {
 	image : "assets/main_menu/start-new-game.png",
-	position : [800, 470],
+	position : [800, 420],
 	onclick : "newgame"
     },
     instructions : {
 	image : "assets/main_menu/instructions.png",
-	position : [800, 520],
+	position : [800, 470],
 	onclick : "tutorial"
     },
     resume : {
 	image : "assets/main_menu/resume-inactive.png",
-	position : [800, 570]
+	position : [800, 520]
     },
     title : {
 	image : "assets/main_menu/title.png",

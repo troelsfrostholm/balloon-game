@@ -18,7 +18,7 @@ levels[2].scripts = {
         SideScroll.scrollPoint = Level.balloonStandPosition.sub(new Point(canvas.width/2, canvas.height/2));
         setTimeout("Level.Scripts.lookAtBalloon()", 6000);
     },
-    
+
     meetDaedalus : function()
     {
         if (Level.parameters.won == false)

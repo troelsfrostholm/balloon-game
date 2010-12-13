@@ -1,4 +1,4 @@
-levels[1].scripts = {
+levels[0].scripts = {
     lookAtLady : function() {
         Game.removeBehaviour(sideScrollAfterBalloon);
         SideScroll.scrollPoint = Level.balloonStandPosition.sub(new Point(canvas.width/2, canvas.height/2));
@@ -39,16 +39,42 @@ levels[1].scripts = {
 	Level.dialogue.returnNoCat.animation.stop();
 	Level.dialogue.returnNoCat.animation.currentFrame = Math.floor(Math.random()*Level.dialogue.returnNoCat.animation.frames.length);
     },
-    catPickup : function(obj) {
+    
+    catPickup : function(obj)
+    {
 	if(balloon.getBoundingBox().collidesWith(obj.getBoundingBox()))
 	    {
-		Level.parameters.inventory.push("cat");
-		Game.hudElements.cat = Level.staticSprites.happy_cat;
-		// The next line fucks up if it is removed. Why?
-		Game.hudElements.cat.place(canvas.width*0.9, canvas.height*0.9);
+            obj.behaviours = [];
+            Level.parameters.inventory.push("cat");
+            Game.hudElements.cat = obj.copy();
+            Game.removeSprite(obj);
+            Game.hudElements.cat.place(canvas.width*0.9, canvas.height*0.9);
 	    }
     },
-    initialize : function() {
-	Level.Scripts.lookAtLady();
+    
+    fadeToBossMusic : function()
+    {
+	    var center = new Point(1170 , 1280);
+	    var distance = Math.sqrt( center.squaredDistance(balloon.pos[0]) );
+	    var radius = 1000;
+	    if (distance < radius)
+		{
+		    document.getElementById("level02_cat").volume = 1 - (distance / radius);
+            document.getElementById("level02").volume = (distance / radius);
+		}
+        
+    },
+    
+    initialize : function()
+    {
+        Game.behaviours.push(Level.Scripts.fadeToBossMusic);
+        Level.Scripts.lookAtLady();
+        buoyancy = -0.3;
+        document.getElementById("level01_end").pause();
+        document.getElementById("level02").volume = 1;
+        document.getElementById("level02").play();
+        document.getElementById("level02_cat").volume = 0;
+        document.getElementById("level02_cat").play();
     }
+    
 }

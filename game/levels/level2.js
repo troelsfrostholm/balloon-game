@@ -1,4 +1,4 @@
-levels[1] = {
+levels[0] = {
     background : "assets/level2/background.jpg",
     bounds : [-1500, -2100, 3000, 4200],
     startPoint : [-1363, 1603],
@@ -32,7 +32,7 @@ levels[1] = {
 			  ["assets/level2/dialogue/01meeting/08.png", 2000]],
 		looping : false
 	    },
-	    position : [-530, 100]
+	    position : [-510, 50]
 	},
 	returnNoCat : {
 	    image : "assets/level2/dialogue/02returnnocat/01.png",
@@ -43,7 +43,7 @@ levels[1] = {
 			  ["assets/level2/dialogue/02returnnocat/04.png",2000]],
 		looping : false
 	    },
-	    position : [-530, 100]
+	    position : [-510, 50]
 	},
 	returnWithCat : {
 	    image : "assets/level2/dialogue/03returnwithcat/01.png",
@@ -60,10 +60,9 @@ levels[1] = {
 			  ["assets/level2/dialogue/03returnwithcat/10.png",2000]],
 		looping : false
 	    },
-	    position : [-530, 100]
+	    position : [-510, 50]
 	},
     },
-
 
     staticSprites : {
 	art_noveau_lamp : {

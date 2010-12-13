@@ -53,7 +53,6 @@ function mainMenu()
     Game.behaviours = {};
     Game.sprites = [];
     Game.hudElements = {};
-    document.getElementById("circus").volume = 0;
     var sprites = loadHudElements(mainmenu);
     Game.hudElements = sprites;
     Game.hudElements.cloud.spin(0.01);

@@ -1,15 +1,29 @@
-levels[3].scripts = {
-    lookAtBalloonStand: function() {
+levels[3].scripts =
+{
+    initialize : function()
+    {
+        document.getElementById("level03").volume = 0;
+        document.getElementById("level03").pause();
+    	Level.Scripts.lookAtBalloonStand();
+        buoyancy = -0.3;
+    },
+    
+    lookAtBalloonStand: function()
+    {
         Game.removeBehaviour(sideScrollAfterBalloon);
         SideScroll.scrollPoint = Level.balloonStandPosition.sub(new Point(canvas.width/2, canvas.height/2));
         setTimeout("Level.Scripts.lookAtBalloon()", 6000);
     },
-    lookAtBalloon : function() {
+    
+    lookAtBalloon : function()
+    {
         SideScroll.scrollPoint = balloon.pos[0].sub(new Point(canvas.width/2, canvas.height/2));
         Game.addBehaviour(sideScrollAfterBalloon);
         balloon.place(Level.startPoint[0], Level.startPoint[1]);
     },
-    meetPirate : function() {
+    
+    meetPirate : function()
+    {
 	    if(Level.parameters.pirateCount < 7) {
 	        if(!Level.parameters.metBefore) {
 		        setDialogue(Level.dialogue.meetFirstTime);
@@ -41,12 +55,16 @@ levels[3].scripts = {
             
         }	
     },
-    returnWithoutSailors : function() {
+    
+    returnWithoutSailors : function()
+    {
 	    setDialogue(Level.dialogue.returnWithoutSailors);
 	    Level.dialogue.returnWithoutSailors.animation.stop();
     	Level.dialogue.returnWithoutSailors.animation.currentFrame = Math.floor(Math.random()*Level.dialogue.returnWithoutSailors.animation.frames.length);
     },
-    piratePickup : function(obj) {
+    
+    piratePickup : function(obj)
+    {
 	    if(balloon.getBoundingBox().collidesWith(obj.getBoundingBox()))
 	    {
 		    Level.parameters.pirateCount++;
@@ -56,9 +74,4 @@ levels[3].scripts = {
 	    }
     },
     
-    initialize : function()
-    {
-    	Level.Scripts.lookAtBalloonStand();
-        buoyancy = -0.3;
-    }
 }

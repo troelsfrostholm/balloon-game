@@ -38,6 +38,7 @@ levels[0].scripts = {
                 {
                     Level.parameters.hasMetGirl = true;
                     unsetDialogue();
+                    document.getElementById("level01_start").volume = 0; 
                     document.getElementById("level01_start").pause(); 
                     document.getElementById("level01_end").volume = 1;
                     document.getElementById("level01_end").play();
@@ -69,7 +70,14 @@ levels[0].scripts = {
 	    if (distance < radius)
 		{
 		    document.getElementById("level01_circus").volume = 1 - (distance / radius);
-//		    document.getElementById("level01").volume = (distance / radius);
+            if (Level.parameters.hasMetGirl = true)
+            {
+                document.getElementById("level01_end").volume = (distance / radius);
+            }
+            else
+            {
+                document.getElementById("level01_start").volume = (distance / radius);
+            }
 		}
 	},
 	ponyPickup : function(obj)

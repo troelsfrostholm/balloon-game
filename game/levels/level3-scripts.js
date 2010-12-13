@@ -6,6 +6,8 @@ levels[2].scripts = {
         buoyancy = -0.3;
         Level.Scripts.lookAtDaedalus();
 		Level.parameters.won=false;	
+        document.getElementById("level02").volume = 0;
+        document.getElementById("level02").pause();
         document.getElementById("level03_waterfall").volume = 0;
         document.getElementById("level03_waterfall").play();
         document.getElementById("level03").volume = 1;

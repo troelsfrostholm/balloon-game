@@ -149,13 +149,13 @@ intro = function()
     
     console.log(s.animation.frameTimes[s.animation.frameTimes.length-1]);
 
-    var cursor = new Sprite();
-    cursor.setImg("assets/interface/cursor-click.png");
+/*    var cursor = new Sprite();
+    cursor.setImg("assets/interface/cursor-click.png");*/
     
     Game.clear();
     Game.hudElements.intro = s;
     Game.hudElements.cursor = cursor;
-    Game.hudElements.cursor.behave(Behaviours.followMouse);
+//    Game.hudElements.cursor.behave(Behaviours.followMouse);
     setTimeout("mouseclick = startGame", 200);
     window.onresize = function() { };
 

@@ -162,16 +162,6 @@ levels[3] = {
 	    position : [488, 1016],
 	    behaviours : ["impassableToBalloon"]
 	},
-	big_ship_box_06 : {
-	    image : "assets/level4/static/big_ship_box_06.png",
-	    position : [645, 913],
-	    behaviours : ["impassableToBalloon"]
-	},
-	big_ship_box_07 : {
-	    image : "assets/level4/static/big_ship_box_07.png",
-	    position : [735, 821],
-	    behaviours : ["impassableToBalloon"]
-	},
 	big_ship_box_08 : {
 	    image : "assets/level4/static/big_ship_box_08.png",
 	    position : [182, 820],

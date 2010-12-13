@@ -286,6 +286,107 @@ function pickAtRandom(array)
 
 function setQuotes()
 {
+    quotes = ["I rub my belly, because it makes me\nseem jolly.\n	circus director, level 1",
+"Brrhhmm...\n	Ciclorini, the cycling bear, level 1",
+
+"I strong. I take good care of woman. \nBut woman not want me.\n	Igor, the strong man, level 1",
+
+"My ability to be shot out of a cannon, \nimproves my status amongst the fairer sex.\n	Flydini, the cannon king, level 1",
+
+"I'm going to marry Bobby Rascal, when I \ngrow up... That's what I told him.\n	Mary Sue, the balloon girl, level 1",
+
+"My brothers left me in this treehouse, \nand now I don't know how to get back down.\n	Tiny boy in treehouse, level 1",
+
+"Behold my graceful arms and my incredibly \ntoned body.\n	Rope artist, level 1",
+
+"I'm looking at 'birds'.\n	Tree lurker, level 1",
+
+"We're just looking for some good family fun.\n	Family of four, level 1",
+
+"I mysterious man from the east.\n	Mysterious man from the east, level 1",
+
+
+"I am not Whistler's mother.\n	Whitler's mother, level 2",
+
+"I have to keep biking, or else I'll drop down.\n	Biking boy, level 2",
+
+"This moped make me seem European.\n	Man on moped, level 2",
+
+"I keep giant telescopes in order to spy on that \nhot couple on the other island.\n	Lurker, level 2",
+
+"Yes! No! Yes! No! We're not arguing, we're just contradicting \neach other. No, we aren't! Yes, we are! No...\n	Argument, level 2",
+
+
+"I wish someone would dust me off.\n	Art noveau lamp, level 2",
+
+"I smash you to smitherines! \nHow dare you help yourself to my wife!\n	Angry husband, level 2",
+
+"Aaahhh.\n	Cheating wife, level 2",
+
+"I didn't do anything to your wife, \nI was just fixing your bed in my underpants.\n	The wife's secret lover, level 2",
+
+"Off to save the world! Even if it doesn't need me.\n	Needy superhero, level 2",
+
+
+"Ugh!\n	Man walking into cactus, level 2",
+
+
+"Meow. Meow.\n	Bag lady, level 2",
+
+"I think I'm lost. The forest seems so far away.\n	Little red riding hood, level 3",
+
+"Looking for trees to chop and women to love!\n	Lumberjack, level 3",
+
+"La di da... di da.\n	Bathing angel, level 3",
+
+"I'm just sitting here, looking pretty, \nwaiting for my prince.\n	Elf princess, level 3",
+
+"Meow.\n	Ferocious lion, level 3",
+
+"Being cute is SOOO boring.\n	Angel #1, level 3",
+
+"I'm so cute, I can hardly stand myself.\n	Angel #2, level 3",
+
+"I will fly up, up UP!\n	Icarus, level 3",
+
+"I spend hours in the bathroom to escape my wife.\n	Daedalus, level 3",
+
+"Hello!\n	Waldie, level 4",
+
+"Kill... Kill... Kill...\n	RoboMonkey, level 4",
+
+"I did not volunteer for this.\n	Soldier on missile, level 4",
+
+"I can't see a thing.\n	Lookout, level 4",
+
+"Clear blue skies and waging battle makes \nthis the perfect time for a flight.\n	Pilot, level 4",
+
+
+"Attack! We must conquer this pineapple ship.\n	Pirate captain, level 4",
+
+"Aaaaaaaaaaaaaah!\n	Various sailors, level 4",
+
+"Dance monkey! Dance!\n	Betraying 'blind' sailor, level 4",
+
+
+"Come on, men! We must brave ourselves \nand protect the precious pineapple.\n	Captain Morgan, level 4",
+
+"Mr Optimistic is always... OKAY!\n	Mr Optimistic appears on courtesy from Games'R'Us, level 5",
+
+"We're so young and wholesome. We despise ourselves! Yeah!\n	Human pyramid, level 5",
+
+"Oooh, yes baby! Come on, give me fierce... fiiiierce!\n	Photographer, level 5",
+
+"Auf Ihrer linken Seite sehen sie eine schöne \nSammlung von Asteroiden. To the left...\n	Tourist guide on the Milky Way Tours, level 5",
+
+"I'm so beautiful, I don't need a brain.\n	Supermodel, level 5",
+
+"I call my right arm Charlene... \nand my left arm Michelle.\nMy abs are called Irina, Liz...\n	Flexing guy, level 5",
+
+"I'm totally working this tan. OOh yeah!\n	Sunburned man, level 5",
+
+"Timetravelling is a fascinating and \ndangerous activity all at the same time.\n	Timetravellers, level 5",];
+
     quotes.push(" Blackness swims toward you like a school \nof eels who have just seen something\n that eels like a lot.");
     quotes.push("What really is the point of trying to \nteach anything to anybody?");
     quotes.push("Nothing matters more to a child than \na place to call home.");

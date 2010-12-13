@@ -5,7 +5,7 @@ SideScroll = {
 
     transform : function()
     {
-	Game.ctx.setTransform(1, 0, 0, 1, -SideScroll.scrollPoint.x, -SideScroll.scrollPoint.y);
+	    Game.ctx.setTransform(1, 0, 0, 1, -SideScroll.scrollPoint.x, -SideScroll.scrollPoint.y);
     },
 
     followSprite : function(sprite)

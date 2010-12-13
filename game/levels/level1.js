@@ -1,5 +1,5 @@
 var levels = [];
-levels[0] = {
+levels[2] = {
     background : "assets/background.jpg",
     bounds : [-1500, -2100, 3000, 4200],
     startPoint : [0, 1300],

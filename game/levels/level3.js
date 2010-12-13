@@ -1,8 +1,14 @@
-levels[2] = {
+levels[0] = {
     background : "assets/level3/background.jpg",
     bounds : [-1500, -2100, 3000, 4200],
     startPoint : [-954, 1288],
     balloonStandPosition : [410, -920],
+
+    parameters :
+    {
+        metDaedalus : false,
+        foundIcarus : false
+    },
 
     triggers : {
 	daedalus : {
@@ -14,6 +20,59 @@ levels[2] = {
 	}
     },
 
+    dialogue : {
+	meetingDaedalusWithoutIcarus : {
+	    image : "assets/level3/dialogue/01meetingdaedalus/01.png",
+	    animation : {
+		frames : [["assets/level3/dialogue/01meetingdaedalus/01.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/02.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/03.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/04.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/05.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/06.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/07.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/08.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/09.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/10.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/11.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/12.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/13.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/14.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/15.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/16.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/17.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/18.png", 2000]],
+		looping : false
+		},
+	    position : [710, -1080],
+	},
+	meetingDaedalusWithIcarus : {
+	    image : "assets/level3/dialogue/01meetingdaedalus/01.png",
+	    animation : {
+		frames : [["assets/level3/dialogue/01meetingdaedalus/01.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/02.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/03.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/04.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/05.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/06.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/07.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/08.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/09.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/10.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/11.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/12.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/13.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/14.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/15.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/16.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/17.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/18.png", 2000]],
+		looping : false
+		},
+	    position : [410, -920],
+	}    
+    },
+    
     staticSprites : {
 	birdnest1 : {
 	    image : "assets/level3/static/birdnest.png",

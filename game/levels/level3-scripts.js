@@ -1,4 +1,4 @@
-levels[2].scripts = {
+levels[0].scripts = {
 
     lookAtDaedalus : function()
     {
@@ -9,11 +9,35 @@ levels[2].scripts = {
     
     meetDaedalus : function()
     {
-        console.log("Godaw fætter, mit navn er Daedalus.");
+        if (Level.parameters.metDaedalus == true)
+        {
+            if (Level.parameters.foundIcarus == true)
+            {
+            }
+            else
+            {
+            }
+        }
+        else
+        {
+            if (Level.parameters.foundIcarus == true)
+            {
+            }
+            else
+            {
+                setDialogue(Level.dialogue.meetingDaedalusWithoutIcarus);
+                Level.dialogue.meetingDaedalusWithoutIcarus.onEnd = function ()
+                {
+                    Level.parameters.metDaedalus = true;
+                    unsetDialogue();
+                }
+            }
+        }
     },
 
     DaedalusShutUp : function()
     {
+        
         console.log("Vi ses, fætter!");
     },
 
@@ -24,14 +48,9 @@ levels[2].scripts = {
         balloon.place(Level.startPoint[0], Level.startPoint[1]);
     },
 
-    daedalusSpeak :  function()
-    {
-        console.log("You have met daedalus.");
-    },
-
 	initialize : function()
     {
-//      Level.Scripts.lookAtDaedalus();
+        Level.Scripts.lookAtDaedalus();
 		Level.parameters.won=true;	
 	}
 }

@@ -1,4 +1,4 @@
-levels[0].scripts = {
+levels[2].scripts = {
 	panToGirlWhenAboveHeight : function()
 	{
 	    if(balloon.pos[0].y < Level.parameters.panHeight) {

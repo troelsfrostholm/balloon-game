@@ -6,8 +6,8 @@ levels[2].scripts = {
         buoyancy = -0.3;
         Level.Scripts.lookAtDaedalus();
 		Level.parameters.won=false;	
-        document.getElementById("waterfall").volume = 0;
-        document.getElementById("waterfall").play();
+        document.getElementById("level03_waterfall").volume = 0;
+        document.getElementById("level03_waterfall").play();
         document.getElementById("level03").volume = 1;
         document.getElementById("level03").play();
 	},
@@ -18,7 +18,7 @@ levels[2].scripts = {
         SideScroll.scrollPoint = Level.balloonStandPosition.sub(new Point(canvas.width/2, canvas.height/2));
         setTimeout("Level.Scripts.lookAtBalloon()", 6000);
     },
-    
+
     meetDaedalus : function()
     {
         if (Level.parameters.won == false)
@@ -52,6 +52,7 @@ levels[2].scripts = {
                     {
                         balloon.setImg("assets/level3/boy/02boy-normal01.png");
                         Level.parameters.won = true;
+                        delete Game.hudElements.icarus;
                         unsetDialogue();
                     }
                 }
@@ -81,7 +82,7 @@ levels[2].scripts = {
 	    var radius = 1200;
 	    if (distance < radius)
 		{
-		    document.getElementById("waterfall").volume = 1 - (distance / radius);
+		    document.getElementById("level03_waterfall").volume = 1 - (distance / radius);
 		    document.getElementById("level03").volume = (distance / radius);
 		}
 	},

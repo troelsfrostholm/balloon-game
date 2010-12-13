@@ -55,7 +55,10 @@ levels[3].scripts = {
             }
 	    }
     },
-    initialize : function() {
+    
+    initialize : function()
+    {
     	Level.Scripts.lookAtBalloonStand();
+        buoyancy = -0.3;
     }
 }

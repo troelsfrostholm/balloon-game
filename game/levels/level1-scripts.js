@@ -39,7 +39,8 @@ levels[0].scripts = {
                     Level.parameters.hasMetGirl = true;
                     unsetDialogue();
                     document.getElementById("level01_start").pause(); 
-                    document.getElementById("level01").play();
+                    document.getElementById("level01_end").volume = 1;
+                    document.getElementById("level01_end").play();
                 }
             }
             else
@@ -67,24 +68,27 @@ levels[0].scripts = {
 	    var radius = 900;
 	    if (distance < radius)
 		{
-		    document.getElementById("circus").volume = 1 - (distance / radius);
-		    document.getElementById("level01").volume = (distance / radius);
+		    document.getElementById("level01_circus").volume = 1 - (distance / radius);
+//		    document.getElementById("level01").volume = (distance / radius);
 		}
 	},
-	ponyPickup : function(obj) {
-	  if(balloon.getBoundingBox().collidesWith(obj.getBoundingBox()))
-      {
-	      Level.parameters.inventory.push("pony");
-	      Game.hudElements.pony = obj;
-          // The next line fucks up if it is removed. Why?
-	      obj.place(canvas.width*0.9, canvas.height*0.9);
-          console.log("placing pony at" + "(" + canvas.width*0.9 + "," + canvas.height*0.9 + ")");
-	  }
+	ponyPickup : function(obj)
+    {
+        if(balloon.getBoundingBox().collidesWith(obj.getBoundingBox()))
+        {
+            obj.behaviours = [];
+            Level.parameters.inventory.push("pony");
+            Game.hudElements.pony = obj.copy();
+            Game.removeSprite(obj);
+            Game.hudElements.pony.place(canvas.width*0.9, canvas.height*0.9);
+        }
     },
 	initialize : function() {
 	Game.behaviours.push(Level.Scripts.fadeToCrazyAssMusic);
 	Game.behaviours.push(Level.Scripts.panToGirlWhenAboveHeight);
-	document.getElementById("circus").play();
+	document.getElementById("level01_circus").volume = 0;
+	document.getElementById("level01_circus").play();
+	document.getElementById("level01_start").volume = 1;
 	document.getElementById("level01_start").play();
 	    //	    Game.behaviours.push(panToGirl...);
 	    //	    Game.winCondition = Level.Scrits.winCondition;

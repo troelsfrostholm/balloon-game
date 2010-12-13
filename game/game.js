@@ -245,6 +245,7 @@ function playWinSequence()
 
 function girlShutup()
 {
+    buoyancy = -0.3;
     unsetDialogue();
 }
 

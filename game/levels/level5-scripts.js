@@ -59,7 +59,10 @@ levels[4].scripts = {
     flyHome : function(obj) {
         obj.acc(0.5, -2);
     },
-    initialize : function() {
+    initialize : function()
+    {
     	Level.Scripts.lookAtBalloonStand();
+        document.getElementById("level05").volume = 0.8;
+        document.getElementById("level05").play();
     }
 }

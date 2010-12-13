@@ -1,7 +1,7 @@
-levels[0].scripts = {
+levels[1].scripts = {
     lookAtLady : function() {
         Game.removeBehaviour(sideScrollAfterBalloon);
-        SideScroll.scrollPoint = Level.balloonStandPosition.sub(new Point(canvas.width/2, canvas.height/2));
+        SideScroll.scrollPoint = Level.balloonStandPosition;//.sub(new Point(canvas.width/2, canvas.height/2));
         setTimeout("Level.Scripts.lookAtBalloon()", 6000);
     },
     lookAtBalloon : function() {
@@ -49,6 +49,7 @@ levels[0].scripts = {
             Game.hudElements.cat = obj.copy();
             Game.removeSprite(obj);
             Game.hudElements.cat.place(canvas.width*0.9, canvas.height*0.9);
+            spawnZones.big_island.frequency = 0;
 	    }
     },
     

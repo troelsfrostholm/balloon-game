@@ -1,8 +1,8 @@
-levels[0] = {
+levels[1] = {
     background : "assets/level2/background.jpg",
     bounds : [-1500, -2100, 3000, 4200],
-    startPoint : [-1363, 1603],
-    balloonStandPosition : [-580, 100],
+    startPoint : [-250, 1603],
+    balloonStandPosition : [-1300 , -200],
 
     parameters : {
 	inventory : []
@@ -321,28 +321,32 @@ levels[0] = {
 		velocity : [-1.5, -1.5],
 		acceleration : [0, 0.05],
 		spin : 0.15,
-		weight : .030
+		weight : .030,
+	    behaviours : ["impassableToBalloon"]
 	},
 	yarn2 : {
 		image : "assets/level2/spawnable/yarn2.png",
 		velocity : [1.5, 1.5],
 		acceleration : [0, 0.05],
 		spin : 0.15,
-		weight : .030
+		weight : .030,
+	    behaviours : ["impassableToBalloon"]
 	},
 	yarn3 : {
 		image : "assets/level2/spawnable/yarn3.png",
 		velocity : [-2, -2],
 		acceleration : [0, 0.05],
 		spin : 0.15,
-		weight : .030
+		weight : .030,
+	    behaviours : ["impassableToBalloon"]
 	},
 	yarn4 : {
 		image : "assets/level2/spawnable/yarn4.png",
 		velocity : [2, 2],
 		acceleration : [0, 0.05],
 		spin : 0.15,
-		weight : 0.030
+		weight : 0.030,
+	    behaviours : ["impassableToBalloon"]
 	},
     },
 

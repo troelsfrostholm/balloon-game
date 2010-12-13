@@ -2,90 +2,180 @@ levels[2] = {
     background : "assets/level3/background.jpg",
     bounds : [-1500, -2100, 3000, 4200],
     startPoint : [-954, 1288],
-    balloonStandPosition : [-630, 100],
+    balloonStandPosition : [410, -920],
+
+    parameters :
+    {
+        metDaedalus : false,
+        foundIcarus : false
+    },
 
     triggers : {
-	girl : {
-	    bounds : [-1500, -1050, 400, 300],
-	    onEnter : "girlSpeak",
-	    onInside : "hover",
-	    onLeave : "girlShutup",
-            object : "balloon"
+	daedalus : {
+	    object : "balloon",
+	    bounds : [380, -1030, 400, 200],
+	    onEnter : "Level.Scripts.meetDaedalus",
+	    onInside : "hoverBalloon",
+	    onLeave : "Level.Scripts.DaedalusShutUp"
 	}
     },
 
+    dialogue :
+    {
+	meetingDaedalusFirstTimeWithoutIcarus :
+    {
+	    image : "assets/level3/dialogue/01meetingdaedalus/01.png",
+	    animation :
+        {
+		frames : [["assets/level3/dialogue/01meetingdaedalus/01.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/02.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/03.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/04.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/05.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/06.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/08.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/09.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/10.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/11.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/12.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/13.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/14.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/15.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/16.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/17.png", 2000],
+				["assets/level3/dialogue/01meetingdaedalus/18.png", 2000]],
+		looping : false,
+		},
+	    position : [710, -1080],
+	},
+	meetingDaedalusFirstTimeWithIcarus : {
+	    image : "assets/level3/dialogue/04returnwithicarusbefore01/01.png",
+	    animation : {
+		frames : [["assets/level3/dialogue/04returnwithicarusbefore01/01.png", 2000],
+				["assets/level3/dialogue/04returnwithicarusbefore01/02.png", 2000],
+				["assets/level3/dialogue/04returnwithicarusbefore01/03.png", 2000],
+				["assets/level3/dialogue/04returnwithicarusbefore01/04.png", 2000],
+				["assets/level3/dialogue/04returnwithicarusbefore01/05.png", 2000],
+				["assets/level3/dialogue/04returnwithicarusbefore01/06.png", 2000],
+				["assets/level3/dialogue/04returnwithicarusbefore01/07.png", 2000],
+				["assets/level3/dialogue/04returnwithicarusbefore01/08.png", 2000],
+				["assets/level3/dialogue/04returnwithicarusbefore01/09.png", 2000],
+				["assets/level3/dialogue/04returnwithicarusbefore01/10.png", 2000],
+				["assets/level3/dialogue/04returnwithicarusbefore01/11.png", 2000],
+				["assets/level3/dialogue/04returnwithicarusbefore01/12.png", 2000],
+				["assets/level3/dialogue/04returnwithicarusbefore01/13.png", 2000],
+				["assets/level3/dialogue/04returnwithicarusbefore01/14.png", 2000],
+				["assets/level3/dialogue/04returnwithicarusbefore01/15.png", 2000]],
+		looping : false,
+		},
+	    position : [710, -1080],
+	},
+	meetingDaedalusLaterWithoutIcarus : {
+	    image : "assets/level3/dialogue/02returnwithouticarus/01.png",
+	    animation : {
+		frames : [["assets/level3/dialogue/02returnwithouticarus/01.png", 2000],
+				["assets/level3/dialogue/02returnwithouticarus/02.png", 2000],
+				["assets/level3/dialogue/02returnwithouticarus/03.png", 2000],
+				["assets/level3/dialogue/02returnwithouticarus/04.png", 2000],
+				["assets/level3/dialogue/02returnwithouticarus/05.png", 2000],
+				["assets/level3/dialogue/02returnwithouticarus/06.png", 2000]],
+		looping : false,
+		},
+	    position : [710, -1080],
+	},
+	meetingDaedalusLaterWithIcarus :
+    {
+	    image : "assets/level3/dialogue/03returnwithicarusafter01/01.png",
+	    animation :
+        {
+		frames : [["assets/level3/dialogue/03returnwithicarusafter01/01.png", 2000],
+				["assets/level3/dialogue/03returnwithicarusafter01/02.png", 2000],
+				["assets/level3/dialogue/03returnwithicarusafter01/03.png", 2000],
+				["assets/level3/dialogue/03returnwithicarusafter01/04.png", 2000],
+				["assets/level3/dialogue/03returnwithicarusafter01/05.png", 2000],
+				["assets/level3/dialogue/03returnwithicarusafter01/06.png", 2000],
+				["assets/level3/dialogue/03returnwithicarusafter01/07.png", 2000],
+				["assets/level3/dialogue/03returnwithicarusafter01/08.png", 2000],
+				["assets/level3/dialogue/03returnwithicarusafter01/09.png", 2000],
+				["assets/level3/dialogue/03returnwithicarusafter01/10.png", 2000]],
+		looping : false,
+		},
+	    position : [710, -1080],
+	},
+    },
+    
     staticSprites : {
 	birdnest1 : {
 	    image : "assets/level3/static/birdnest.png",
 	    position : [1200, 593],
 	    behaviours : ["collisionTest"],
-		weight : 35
+		weight : 0.35
 	},
 	birdnest2 : {
 	    image : "assets/level3/static/birdnest.png",
 	    position : [-1319, -566],
 	    behaviours : ["collisionTest"],
-		weight : 35
+		weight : .35
 	},
 	centaur : {
 	    image : "assets/level3/static/centaur.png",
 		position : [-113, 1013],
 		behaviours : ["collisionTest"],
-	    weight : 45
+	    weight : .45
 	},
 	elf_girl : {
 	    image : "assets/level3/static/elf_girl.png",
 	    position : [566, 1087],
 	    behaviours : ["collisionTest"],
-		weight : 45
+		weight : .45
 	},
 	lion : {
 	    image : "assets/level3/static/lion.png",
 	    position : [-570, -250],
 	    behaviours : ["collisionTest"],
-		weight : 55
+		weight : .55
 	},
 	twig1 : {
 	    image : "assets/level3/static/twig1.png",
 	    position : [1400, 300],
 	    behaviours : ["collisionTest"],
-		weight : 35
+		weight : .2
 	},
 	twig2 : {
 	    image : "assets/level3/static/twig1.png",
 	    position : [-459, -1063],
 	    behaviours : ["collisionTest"],
-		weight : 35
+		weight : .2
 	},
 	twig3 : {
 	    image : "assets/level3/static/twig2.png",
 	    position : [-300, 873],
 	    behaviours : ["collisionTest"],
-		weight : 35
+		weight : .2
 	},
 	twig4 : {
 	    image : "assets/level3/static/twig2.png",
 	    position : [400, -2],
 	    behaviours : ["collisionTest"],
-		weight : 35
+		weight : .2
 	},
 	twig5 : {
 	    image : "assets/level3/static/twig2.png",
 	    position : [-1200, -1120],
 	    behaviours : ["collisionTest"],
-		weight : 35
+		weight : .2
 	},
 	twig6 : {
 	    image : "assets/level3/static/twig3.png",
 	    position : [-225, -1739],
 	    behaviours : ["collisionTest"],
-		weight : 35
+		weight : .2
 	},
 	twig7 : {
 	    image : "assets/level3/static/twig3.png",
 	    position : [994, -69],
 	    behaviours : ["collisionTest"],
-		weight : 35
+		weight : .2
 	},
 	big_island_box_01 : {
 	    image : "assets/level3/static/big_island_box_01.png",
@@ -127,6 +217,20 @@ levels[2] = {
 	    position : [-582, -72],
 	    behaviours : ["impassableToBalloon"]
 	},
+	icarus : {
+	    image : "assets/level3/animated/icarus/icarus01.png",
+	    animation :
+        {
+            frames : [["assets/level3/animated/icarus/icarus01.png", 50], 
+                  ["assets/level3/animated/icarus/icarus02.png", 100],
+                  ["assets/level3/animated/icarus/icarus03.png", 150],
+                  ["assets/level3/animated/icarus/icarus04.png", 200],
+                  ["assets/level3/animated/icarus/icarus05.png", 250],],
+            looping : true
+	    },
+	    position : [200, 160],
+	    behaviours : ["icarus","collisionTest"]
+	},
     },
 	
 	spawnableSprites : {
@@ -139,19 +243,7 @@ levels[2] = {
 		looping : true
 	    },
 	    velocity : [-1, 0],
-	    weight : 40
-	},
-	icarus : {
-	    image : "assets/level3/animated/icarus/icarus01.png",
-	    animation : {
-		frames : [["assets/level3/animated/icarus/icarus01.png", 50], 
-			  ["assets/level3/animated/icarus/icarus02.png", 100],
-			  ["assets/level3/animated/icarus/icarus03.png", 150],
-			  ["assets/level3/animated/icarus/icarus04.png", 200],
-			  ["assets/level3/animated/icarus/icarus05.png", 250],],
-		looping : true
-	    },
-	    velocity : [-1, 0],
+	    weight : -.3,
 	},
 	lemming : {
 	    image : "assets/level3/animated/lemming/lemming01.png",
@@ -165,7 +257,7 @@ levels[2] = {
 	    },
 	    velocity : [1.5, 1.5],
 		spin : 0.05,
-		weight : 35,
+		weight : .1,
 	},
 	lumberjack : {
 	    image : "assets/level3/animated/lumberjack/lumberjack01.png",
@@ -181,7 +273,7 @@ levels[2] = {
 		looping : true
 	    },
 	    velocity : [-1.5,0],
-		weight : 45,
+		weight : .4,
 	},
 	pegasus : {
 	    image : "assets/level3/animated/pegasus/pegasus01.png",
@@ -194,7 +286,7 @@ levels[2] = {
 		looping : true
 	    },
 	    velocity : [-1.5, -1.5],
-		weight : 60,
+		weight : -.6,
 	},
 	red_riding_hood : {
 	    image : "assets/level3/animated/red_riding_hood/red_riding_hood01.png",
@@ -205,7 +297,7 @@ levels[2] = {
 		looping : true
 	    },
 	    velocity : [-1, 0],
-	    weight : 40
+	    weight : .2
 	},
 	tucan : {
 	    image : "assets/level3/animated/tucan/tucan01.png",
@@ -216,37 +308,37 @@ levels[2] = {
 		looping : true
 	    },
 	    velocity : [-1, 0],
-	    weight : 40
+	    weight : -.40
 	},
 	bathing_angel : {
 	    image : "assets/level3/spawnable/bathing_angel.png",
 		velocity : [1, 0],
-	    weight : 60
+	    weight : -.60
 	},
 	bored_angel1 : {
 	    image : "assets/level3/spawnable/bored_angel1.png",
 		velocity : [-1, 0],
-	    weight : 50
+	    weight : -.50
 	},
 	bored_angel2 : {
 	    image : "assets/level3/spawnable/bored_angel2.png",
 		velocity : [1, 0],
-	    weight : 55
+	    weight : -.55
 	},
 	flying_fish_blue : {
 	    image : "assets/level3/spawnable/flying_fish_blue.png",
 		velocity : [1.5, 1],
-	    weight : 40
+	    weight : .10
 	},
 	flying_fish_green : {
 	    image : "assets/level3/spawnable/flying_fish_green.png",
 		velocity : [1.5, 1],
-	    weight : 40
+	    weight : .10
 	},
 	flying_fish_red : {
 	    image : "assets/level3/spawnable/flying_fish_red.png",
 		velocity : [1.5, 1],
-	    weight : 40
+	    weight : .10
 	},
 	},
 
@@ -268,7 +360,7 @@ levels[2] = {
 	},
 	sky : {
 	    bounds : [-1500, -2100, 3000, 4200],
-	    items : ["bored_angel_1", "bored_angel_2", "flying_bunny", "icarus", "lemming", "pegasus", "tucan"],
+	    items : ["bored_angel_1", "bored_angel_2", "flying_bunny", "lemming", "pegasus", "tucan"],
 	    frequency : 0.5
 	},
     }

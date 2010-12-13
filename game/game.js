@@ -21,6 +21,8 @@ var cursorToBalloon = new Point();
 // var to compensate for center shifted from balloon to boy+balloon sprite
 var translationFromSpriteCenterToBalloonCenter;
 
+// temp crap
+var icaruspos = new Point();
 
 //game parameters
 var windpower = -2;
@@ -369,8 +371,10 @@ function createFollowBehaviour(object, offset) {
     }
 }
 
-function sideScrollAfterBalloon() {
+function sideScrollAfterBalloon()
+{
     SideScroll.followSprite(balloon);
+//    SideScroll.followPoint(icaruspos);
 }
 
 function randomSpawnPoint()

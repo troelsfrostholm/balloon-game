@@ -29,30 +29,35 @@ levels[0].scripts = {
 	},
 	meetGirl : function()
 	{
-	    if(Level.parameters.inventory.indexOf("pony") == -1) {
-		if(!Level.parameters.hasMetGirl) {
-		    setDialogue(Level.dialogue.meetGirlFirstTime);
-		    Level.dialogue.meetGirlFirstTime.animation.onEnd = function() {
-			Level.parameters.hasMetGirl = true;
-			unsetDialogue();
-			document.getElementById("level01_start").pause(); 
-			document.getElementById("level01").play();
-		    }
-		}
-		else {
-		    setDialogue(Level.dialogue.meetGirlAgain);
-		    Level.dialogue.meetGirlAgain.animation.stop();
-		    Level.dialogue.meetGirlAgain.animation.currentFrame = Math.floor(Math.random()*Level.dialogue.meetGirlAgain.animation.frames.length)
-		}
+	    if(Level.parameters.inventory.indexOf("pony") == -1)
+        {
+            if(!Level.parameters.hasMetGirl)
+            {
+                setDialogue(Level.dialogue.meetGirlFirstTime);
+                Level.dialogue.meetGirlFirstTime.animation.onEnd = function()
+                {
+                    Level.parameters.hasMetGirl = true;
+                    unsetDialogue();
+                    document.getElementById("level01_start").pause(); 
+                    document.getElementById("level01").play();
+                }
+            }
+            else
+            {
+                setDialogue(Level.dialogue.meetGirlAgain);
+                Level.dialogue.meetGirlAgain.animation.stop();
+                Level.dialogue.meetGirlAgain.animation.currentFrame = Math.floor(Math.random()*Level.dialogue.meetGirlAgain.animation.frames.length);
+            }
 	    }
-	    else if(!Level.parameters.won) {
-		setDialogue(Level.dialogue.giveGirlPony);
-		Level.dialogue.giveGirlPony.animation.onEnd = function() {
-		    balloon.setImg("assets/boy/02boy-normal01.png");
-		    Level.parameters.won = true;
-		    unsetDialogue();
-		}
-
+	    else if(!Level.parameters.won)
+        {
+            setDialogue(Level.dialogue.giveGirlPony);
+            Level.dialogue.giveGirlPony.animation.onEnd = function()
+            {
+                balloon.setImg("assets/boy/02boy-normal01.png");
+                Level.parameters.won = true;
+                unsetDialogue();
+            }
 	    }
 	},
 	fadeToCrazyAssMusic : function()

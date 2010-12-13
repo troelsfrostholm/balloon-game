@@ -1,4 +1,4 @@
-levels[0] = {
+levels[2] = {
     background : "assets/level3/background.jpg",
     bounds : [-1500, -2100, 3000, 4200],
     startPoint : [-954, 1288],
@@ -13,24 +13,26 @@ levels[0] = {
     triggers : {
 	daedalus : {
 	    object : "balloon",
-	    bounds : [380, -1130, 400, 400],
+	    bounds : [380, -1030, 400, 200],
 	    onEnter : "Level.Scripts.meetDaedalus",
 	    onInside : "hoverBalloon",
 	    onLeave : "Level.Scripts.DaedalusShutUp"
 	}
     },
 
-    dialogue : {
-	meetingDaedalusWithoutIcarus : {
+    dialogue :
+    {
+	meetingDaedalusFirstTimeWithoutIcarus :
+    {
 	    image : "assets/level3/dialogue/01meetingdaedalus/01.png",
-	    animation : {
+	    animation :
+        {
 		frames : [["assets/level3/dialogue/01meetingdaedalus/01.png", 2000],
 				["assets/level3/dialogue/01meetingdaedalus/02.png", 2000],
 				["assets/level3/dialogue/01meetingdaedalus/03.png", 2000],
 				["assets/level3/dialogue/01meetingdaedalus/04.png", 2000],
 				["assets/level3/dialogue/01meetingdaedalus/05.png", 2000],
 				["assets/level3/dialogue/01meetingdaedalus/06.png", 2000],
-				["assets/level3/dialogue/01meetingdaedalus/07.png", 2000],
 				["assets/level3/dialogue/01meetingdaedalus/08.png", 2000],
 				["assets/level3/dialogue/01meetingdaedalus/09.png", 2000],
 				["assets/level3/dialogue/01meetingdaedalus/10.png", 2000],
@@ -42,35 +44,64 @@ levels[0] = {
 				["assets/level3/dialogue/01meetingdaedalus/16.png", 2000],
 				["assets/level3/dialogue/01meetingdaedalus/17.png", 2000],
 				["assets/level3/dialogue/01meetingdaedalus/18.png", 2000]],
-		looping : false
+		looping : false,
 		},
 	    position : [710, -1080],
 	},
-	meetingDaedalusWithIcarus : {
-	    image : "assets/level3/dialogue/01meetingdaedalus/01.png",
+	meetingDaedalusFirstTimeWithIcarus : {
+	    image : "assets/level3/dialogue/04returnwithicarusbefore01/01.png",
 	    animation : {
-		frames : [["assets/level3/dialogue/01meetingdaedalus/01.png", 2000],
-				["assets/level3/dialogue/01meetingdaedalus/02.png", 2000],
-				["assets/level3/dialogue/01meetingdaedalus/03.png", 2000],
-				["assets/level3/dialogue/01meetingdaedalus/04.png", 2000],
-				["assets/level3/dialogue/01meetingdaedalus/05.png", 2000],
-				["assets/level3/dialogue/01meetingdaedalus/06.png", 2000],
-				["assets/level3/dialogue/01meetingdaedalus/07.png", 2000],
-				["assets/level3/dialogue/01meetingdaedalus/08.png", 2000],
-				["assets/level3/dialogue/01meetingdaedalus/09.png", 2000],
-				["assets/level3/dialogue/01meetingdaedalus/10.png", 2000],
-				["assets/level3/dialogue/01meetingdaedalus/11.png", 2000],
-				["assets/level3/dialogue/01meetingdaedalus/12.png", 2000],
-				["assets/level3/dialogue/01meetingdaedalus/13.png", 2000],
-				["assets/level3/dialogue/01meetingdaedalus/14.png", 2000],
-				["assets/level3/dialogue/01meetingdaedalus/15.png", 2000],
-				["assets/level3/dialogue/01meetingdaedalus/16.png", 2000],
-				["assets/level3/dialogue/01meetingdaedalus/17.png", 2000],
-				["assets/level3/dialogue/01meetingdaedalus/18.png", 2000]],
-		looping : false
+		frames : [["assets/level3/dialogue/04returnwithicarusbefore01/01.png", 2000],
+				["assets/level3/dialogue/04returnwithicarusbefore01/02.png", 2000],
+				["assets/level3/dialogue/04returnwithicarusbefore01/03.png", 2000],
+				["assets/level3/dialogue/04returnwithicarusbefore01/04.png", 2000],
+				["assets/level3/dialogue/04returnwithicarusbefore01/05.png", 2000],
+				["assets/level3/dialogue/04returnwithicarusbefore01/06.png", 2000],
+				["assets/level3/dialogue/04returnwithicarusbefore01/07.png", 2000],
+				["assets/level3/dialogue/04returnwithicarusbefore01/08.png", 2000],
+				["assets/level3/dialogue/04returnwithicarusbefore01/09.png", 2000],
+				["assets/level3/dialogue/04returnwithicarusbefore01/10.png", 2000],
+				["assets/level3/dialogue/04returnwithicarusbefore01/11.png", 2000],
+				["assets/level3/dialogue/04returnwithicarusbefore01/12.png", 2000],
+				["assets/level3/dialogue/04returnwithicarusbefore01/13.png", 2000],
+				["assets/level3/dialogue/04returnwithicarusbefore01/14.png", 2000],
+				["assets/level3/dialogue/04returnwithicarusbefore01/15.png", 2000]],
+		looping : false,
 		},
-	    position : [410, -920],
-	}    
+	    position : [710, -1080],
+	},
+	meetingDaedalusLaterWithoutIcarus : {
+	    image : "assets/level3/dialogue/02returnwithouticarus/01.png",
+	    animation : {
+		frames : [["assets/level3/dialogue/02returnwithouticarus/01.png", 2000],
+				["assets/level3/dialogue/02returnwithouticarus/02.png", 2000],
+				["assets/level3/dialogue/02returnwithouticarus/03.png", 2000],
+				["assets/level3/dialogue/02returnwithouticarus/04.png", 2000],
+				["assets/level3/dialogue/02returnwithouticarus/05.png", 2000],
+				["assets/level3/dialogue/02returnwithouticarus/06.png", 2000]],
+		looping : false,
+		},
+	    position : [710, -1080],
+	},
+	meetingDaedalusLaterWithIcarus :
+    {
+	    image : "assets/level3/dialogue/03returnwithicarusafter01/01.png",
+	    animation :
+        {
+		frames : [["assets/level3/dialogue/03returnwithicarusafter01/01.png", 2000],
+				["assets/level3/dialogue/03returnwithicarusafter01/02.png", 2000],
+				["assets/level3/dialogue/03returnwithicarusafter01/03.png", 2000],
+				["assets/level3/dialogue/03returnwithicarusafter01/04.png", 2000],
+				["assets/level3/dialogue/03returnwithicarusafter01/05.png", 2000],
+				["assets/level3/dialogue/03returnwithicarusafter01/06.png", 2000],
+				["assets/level3/dialogue/03returnwithicarusafter01/07.png", 2000],
+				["assets/level3/dialogue/03returnwithicarusafter01/08.png", 2000],
+				["assets/level3/dialogue/03returnwithicarusafter01/09.png", 2000],
+				["assets/level3/dialogue/03returnwithicarusafter01/10.png", 2000]],
+		looping : false,
+		},
+	    position : [710, -1080],
+	},
     },
     
     staticSprites : {
@@ -197,7 +228,6 @@ levels[0] = {
                   ["assets/level3/animated/icarus/icarus05.png", 250],],
             looping : true
 	    },
-//	    velocity : [-1, 0],
 	    position : [200, 160],
 	    behaviours : ["icarus","collisionTest"]
 	},

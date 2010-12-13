@@ -18,13 +18,6 @@ Behaviours.collisionTest = function (obj)
     }
 };
 
-Behaviours.icarus = function(obj)
-{
-    obj.pos[0].x = 1500 * Math.cos(Game.frame/75);
-    obj.pos[0].y = 300 * Math.sin(Game.frame/37) - 1600;
-    icaruspos = obj.pos[0];
-}
-
 Behaviours.dieWhenFarAway = function(obj) 
 {
     if(obj.pos[0].squaredDistance(balloon.pos[0])>squaredMaxItemDistance) {

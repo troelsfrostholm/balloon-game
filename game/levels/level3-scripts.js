@@ -1,5 +1,17 @@
 levels[2].scripts = {
 
+	initialize : function()
+    {
+        Game.behaviours.push(Level.Scripts.fadeToWaterfall);
+        buoyancy = -0.3;
+        Level.Scripts.lookAtDaedalus();
+		Level.parameters.won=false;	
+        document.getElementById("waterfall").volume = 0;
+        document.getElementById("waterfall").play();
+        document.getElementById("level03").volume = 1;
+        document.getElementById("level03").play();
+	},
+
     lookAtDaedalus : function()
     {
         Game.removeBehaviour(sideScrollAfterBalloon);
@@ -62,19 +74,24 @@ levels[2].scripts = {
         buoyancy = -0.2;
     },
 
+    fadeToWaterfall : function()
+	{
+	    var center = new Point(120 , 460);
+	    var distance = Math.sqrt( center.squaredDistance(balloon.pos[0]) );
+	    var radius = 1200;
+	    if (distance < radius)
+		{
+		    document.getElementById("waterfall").volume = 1 - (distance / radius);
+		    document.getElementById("level03").volume = (distance / radius);
+		}
+	},
+    
     lookAtBalloon : function()
     {
         SideScroll.scrollPoint = balloon.pos[0].sub(new Point(canvas.width/2, canvas.height/2));
         Game.addBehaviour(sideScrollAfterBalloon);
         balloon.place(Level.startPoint[0], Level.startPoint[1]);
     },
-
-	initialize : function()
-    {
-        buoyancy = -0.3;
-        Level.Scripts.lookAtDaedalus();
-		Level.parameters.won=false;	
-	},
 
     icarus : function(obj)
     {

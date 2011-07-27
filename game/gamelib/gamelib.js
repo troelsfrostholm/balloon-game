@@ -2,7 +2,7 @@ Behaviours = {};
 
 Game = {
 
-    framerate : 60,
+    framerate : 30,
     frame : 0.0,
     sprites : Array(),
     hudElements : Array(),

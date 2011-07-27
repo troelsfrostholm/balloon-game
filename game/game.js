@@ -53,7 +53,7 @@ function begin()
 function startFirstLevel()
 {
     currentLevel = 0;
-    buoyancy = -0.3;
+z    buoyancy = -0.3;
     startLevel(levels[currentLevel]);
 }
 
